@@ -17,8 +17,6 @@
     try {
       var t = localStorage.getItem('testrecall.theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
-      var c = localStorage.getItem('testrecall.colorTheme');
-      if (c) document.documentElement.setAttribute('data-color', c);
       var m = document.querySelector('meta[name="theme-color"]');
       if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
     } catch (e) {}
@@ -66,8 +64,10 @@
     <div class="progress"><div id="quiz-progress"></div></div>
     <div class="quiz-meta">
       <span class="qnum" id="quiz-qnum"></span>
-      <span class="qnum"><span id="quiz-pos"></span> of <span id="quiz-total"></span></span>
-      <button class="flag-btn" id="quiz-flag">☆ Flag for later</button>
+      <span class="qnum"><span id="quiz-pos"></span>/<span id="quiz-total"></span></span>
+      <button class="flag-btn" id="quiz-flag" aria-label="Flag for later" title="Flag for later">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      </button>
     </div>
     <p class="qtext" id="quiz-qtext"></p>
     <div id="quiz-options"></div>
@@ -195,20 +195,6 @@
           <span id="settings-theme-label">Dark</span>
         </button>
       </div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">Theme colour</div>
-          <div class="settings-desc">Accent colour for buttons and highlights</div>
-        </div>
-      </div>
-      <div class="color-swatches" id="color-swatches">
-        <button class="color-swatch" data-color="mint" style="--sw:#00A86B" aria-label="Mint Pop"><span class="dot"></span><span class="lbl">Mint</span></button>
-        <button class="color-swatch active" data-color="ocean" style="--sw:#2E7DD1" aria-label="Ocean"><span class="dot"></span><span class="lbl">Ocean</span></button>
-        <button class="color-swatch" data-color="royal" style="--sw:#7C5CFF" aria-label="Royal"><span class="dot"></span><span class="lbl">Royal</span></button>
-        <button class="color-swatch" data-color="sunset" style="--sw:#E86A1C" aria-label="Sunset"><span class="dot"></span><span class="lbl">Sunset</span></button>
-        <button class="color-swatch" data-color="rose" style="--sw:#D6457C" aria-label="Rose"><span class="dot"></span><span class="lbl">Rose</span></button>
-        <button class="color-swatch" data-color="amber" style="--sw:#C98420" aria-label="Amber"><span class="dot"></span><span class="lbl">Amber</span></button>
-      </div>
     </div>
     <h2 style="font-size: 17px;">Uploaded PDFs</h2>
     <p class="sub">PDFs you have uploaded, grouped by day.</p>
@@ -219,6 +205,8 @@
     </div>
     <div class="btn-row"><button class="btn ghost" id="btn-settings-home">← All sets</button></div>
   </section>
+
+  <footer class="app-foot">Made by Only1Cjay</footer>
 
   <!-- ============ CONFIRM MODAL ============ -->
   <div class="modal-backdrop hidden" id="confirm-modal">

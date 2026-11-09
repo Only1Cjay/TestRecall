@@ -138,18 +138,6 @@
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   }
 
-  /* ---------- colour theme: accent family, saved in localStorage ---------- */
-  var COLOR_KEY = 'testrecall.colorTheme';
-  var COLOR_THEMES = ['mint', 'ocean', 'royal', 'sunset', 'rose', 'amber'];
-  function applyColorTheme(id) {
-    if (COLOR_THEMES.indexOf(id) === -1) id = 'mint';
-    document.documentElement.setAttribute('data-color', id);
-    try { localStorage.setItem(COLOR_KEY, id); } catch (e) {}
-    document.querySelectorAll('#color-swatches .color-swatch').forEach(function (b) {
-      b.classList.toggle('active', b.getAttribute('data-color') === id);
-    });
-  }
-
   /* ---------- offline toast ---------- */
   var toastTimer = null;
   function showToast(msg, sticky) {
@@ -317,13 +305,15 @@
 
   function renderQuestion() {
     var item = quiz.items[quiz.pos];
-    $('quiz-pos').textContent = (quiz.pos + 1) + ' / ' + quiz.items.length;
+    $('quiz-pos').textContent = (quiz.pos + 1);
     $('quiz-progress').style.width = Math.round((answeredCount() / quiz.items.length) * 100) + '%';
     $('quiz-qnum').textContent = 'Question ' + (quiz.pos + 1);
     $('quiz-qtext').textContent = item.q;
     var flagBtn = $('quiz-flag');
-    flagBtn.classList.toggle('active', !!quiz.flagged[quiz.pos]);
-    flagBtn.textContent = quiz.flagged[quiz.pos] ? '★ Flagged — tap to unflag' : '☆ Flag for later';
+    var isFlagged = !!quiz.flagged[quiz.pos];
+    flagBtn.classList.toggle('active', isFlagged);
+    flagBtn.setAttribute('aria-label', isFlagged ? 'Flagged — tap to unflag' : 'Flag for later');
+    flagBtn.setAttribute('title', isFlagged ? 'Flagged — tap to unflag' : 'Flag for later');
 
     var box = $('quiz-options');
     box.innerHTML = '';
@@ -752,14 +742,6 @@
     applyTheme(savedTheme);
     on('theme-toggle', 'click', toggleTheme);
     on('settings-theme', 'click', toggleTheme);
-
-    /* ---------- colour theme ---------- */
-    var savedColor = null;
-    try { savedColor = localStorage.getItem(COLOR_KEY); } catch (e) {}
-    if (savedColor) applyColorTheme(savedColor);
-    document.querySelectorAll('#color-swatches .color-swatch').forEach(function (b) {
-      b.addEventListener('click', function () { applyColorTheme(b.getAttribute('data-color')); });
-    });
 
     /* ---------- hamburger menu ---------- */
     var menu = $('menu-dropdown');

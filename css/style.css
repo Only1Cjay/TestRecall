@@ -57,68 +57,7 @@ html[data-theme="dark"] {
   --overlay: rgba(0, 0, 0, 0.70);
 }
 
-/* ---------- colour themes: override the accent family (light + dark) ----------
-   Ocean is the default (the values above). Mint and the rest are overrides. */
-html[data-color="mint"][data-theme="light"] {
-  --accent: #00A86B; --accent-deep: #0B7A4B; --accent-soft: #D6F5E6;
-  --accent-glow: rgba(0, 168, 107, 0.25);
-  --btn: #1F7A54; --btn-glow: rgba(31, 122, 84, 0.22);
-}
-html[data-color="mint"][data-theme="dark"] {
-  --accent: #2FD698; --accent-deep: #00A86B; --accent-soft: rgba(47, 214, 152, 0.14);
-  --accent-glow: rgba(47, 214, 152, 0.30);
-  --btn: #2E9E6B; --btn-glow: rgba(46, 158, 107, 0.30);
-}
-html[data-color="ocean"][data-theme="light"] {
-  --accent: #2E7DD1; --accent-deep: #1D5FA8; --accent-soft: #DCEBF9;
-  --accent-glow: rgba(46, 125, 209, 0.25);
-  --btn: #2A6CB0; --btn-glow: rgba(42, 108, 176, 0.22);
-}
-html[data-color="ocean"][data-theme="dark"] {
-  --accent: #5EA8E8; --accent-deep: #2E7DD1; --accent-soft: rgba(94, 168, 232, 0.14);
-  --accent-glow: rgba(94, 168, 232, 0.30);
-  --btn: #4C92DB; --btn-glow: rgba(76, 146, 219, 0.30);
-}
-html[data-color="royal"][data-theme="light"] {
-  --accent: #7C5CFF; --accent-deep: #5B3EE0; --accent-soft: #E7E1FF;
-  --accent-glow: rgba(124, 92, 255, 0.25);
-  --btn: #6A4AE0; --btn-glow: rgba(106, 74, 224, 0.22);
-}
-html[data-color="royal"][data-theme="dark"] {
-  --accent: #A78BFA; --accent-deep: #7C5CFF; --accent-soft: rgba(167, 139, 250, 0.14);
-  --accent-glow: rgba(167, 139, 250, 0.30);
-  --btn: #9A7FFA; --btn-glow: rgba(154, 127, 250, 0.30);
-}
-html[data-color="sunset"][data-theme="light"] {
-  --accent: #E86A1C; --accent-deep: #C2520F; --accent-soft: #FFE3D1;
-  --accent-glow: rgba(232, 106, 28, 0.25);
-  --btn: #D45F16; --btn-glow: rgba(212, 95, 22, 0.22);
-}
-html[data-color="sunset"][data-theme="dark"] {
-  --accent: #F08A3C; --accent-deep: #E86A1C; --accent-soft: rgba(240, 138, 60, 0.14);
-  --accent-glow: rgba(240, 138, 60, 0.30);
-  --btn: #EE8A3E; --btn-glow: rgba(238, 138, 62, 0.30);
-}
-html[data-color="rose"][data-theme="light"] {
-  --accent: #D6457C; --accent-deep: #B02A5E; --accent-soft: #FBDCE8;
-  --accent-glow: rgba(214, 69, 124, 0.25);
-  --btn: #C23A6B; --btn-glow: rgba(194, 58, 107, 0.22);
-}
-html[data-color="rose"][data-theme="dark"] {
-  --accent: #F07BA6; --accent-deep: #D6457C; --accent-soft: rgba(240, 123, 166, 0.14);
-  --accent-glow: rgba(240, 123, 166, 0.30);
-  --btn: #E87AA5; --btn-glow: rgba(232, 122, 165, 0.30);
-}
-html[data-color="amber"][data-theme="light"] {
-  --accent: #C98420; --accent-deep: #A66E14; --accent-soft: #F7E8C8;
-  --accent-glow: rgba(201, 132, 32, 0.25);
-  --btn: #B07A1A; --btn-glow: rgba(176, 122, 26, 0.22);
-}
-html[data-color="amber"][data-theme="dark"] {
-  --accent: #E0A526; --accent-deep: #C98420; --accent-soft: rgba(224, 165, 38, 0.14);
-  --accent-glow: rgba(224, 165, 38, 0.30);
-  --btn: #D99E2B; --btn-glow: rgba(217, 158, 43, 0.30);
-}
+/* Ocean Blue is the only theme; the accent values above are the theme. */
 
 * { box-sizing: border-box; }
 
@@ -154,7 +93,7 @@ header.app-head p { margin: 1px 0 0; color: var(--muted); font-size: 12px; line-
 .theme-toggle {
   flex: 0 0 auto;
   width: 42px; height: 42px;
-  border-radius: 12px;
+  border-radius: 50%;
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--text);
@@ -259,14 +198,25 @@ html[data-theme="dark"] a { color: var(--accent); }
   background: var(--card);
   border: 1px solid var(--line);
   color: var(--text);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
+  flex: 0 0 auto;
 }
+.flag-btn svg { width: 19px; height: 19px; }
 .flag-btn.active { border-color: var(--amber); color: var(--amber); background: var(--amber-soft); }
+.flag-btn.active svg path { fill: var(--amber); }
+
+/* ---------- footer ---------- */
+.app-foot {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 28px 16px 22px;
+}
 .qtext { font-family: var(--font-head); font-size: 18px; font-weight: 700; line-height: 1.45; margin: 0 0 16px; }
 
 .option {
@@ -343,23 +293,6 @@ html[data-theme="dark"] a { color: var(--accent); }
   cursor: pointer;
 }
 .grid-panel .btn-row { flex: 0 0 auto; margin-top: 12px; }
-
-/* ---------- theme colour swatches ---------- */
-.color-swatches { display: flex; gap: 10px; flex-wrap: wrap; padding: 2px 2px 6px; }
-.color-swatch {
-  background: none; border: none; padding: 0; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 6px; width: 52px;
-}
-.color-swatch .dot {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--sw); box-shadow: var(--shadow-sm);
-}
-.color-swatch .lbl { font-size: 11px; font-weight: 600; color: var(--text-soft); }
-.color-swatch.active .dot { outline: 2px solid var(--text); outline-offset: 3px; }
-.color-swatch.active .lbl { color: var(--text); }
-.grid-num.answered { background: var(--accent-deep); border-color: var(--accent); color: #FFFFFF; }
-.grid-num.flagged { border-color: var(--amber); color: var(--amber); }
-.grid-num.current { outline: 2px solid var(--accent); }
 
 /* ---------- results ---------- */
 .score-wrap { display: flex; flex-direction: column; align-items: center; margin: 10px 0 18px; }
