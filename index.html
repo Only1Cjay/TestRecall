@@ -101,7 +101,16 @@
       <p class="score-msg" id="score-msg"></p>
     </div>
     <h2 id="missed-title">Review</h2>
+    <div class="results-heatmap" id="results-heatmap"></div>
+    <p class="sub heatmap-legend">Green = correct · Red = missed · Amber outline = flagged — tap a number to jump to it.</p>
+    <div class="tabs" id="review-filter">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="failed">Failed</button>
+      <button data-filter="correct">Correct</button>
+      <button data-filter="flagged">Flagged</button>
+    </div>
     <div id="missed-list"></div>
+    <p class="sub hidden" id="review-empty">Nothing here — try another filter.</p>
     <div class="btn-row">
       <button class="btn primary" id="btn-retry-missed">Practise missed only</button>
       <button class="btn" id="btn-retake">Retake set</button>

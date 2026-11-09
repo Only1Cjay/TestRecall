@@ -332,13 +332,16 @@
   function grade() {
     var score = 0;
     var missed = [];
+    var all = [];
     quiz.items.forEach(function (item, i) {
       var pickedIdx = quiz.picked[i];
       var pickedLetter = pickedIdx != null ? item.options[pickedIdx].letter : null;
-      if (pickedLetter === item.answer) score++;
+      var correct = pickedLetter === item.answer;
+      if (correct) score++;
       else missed.push({ item: item, pickedLetter: pickedLetter });
+      all.push({ item: item, pickedLetter: pickedLetter, correct: correct, flagged: !!quiz.flagged[i] });
     });
-    return { score: score, total: quiz.items.length, missed: missed };
+    return { score: score, total: quiz.items.length, missed: missed, all: all };
   }
 
   function submitQuiz() {
@@ -363,6 +366,7 @@
 
   /* ---------- results ---------- */
   var lastResult = null;
+  var resultsFilter = 'all';
   function renderResults(result, seconds) {
     lastResult = result;
     var pct = result.total ? Math.round((result.score / result.total) * 100) : 0;
@@ -378,15 +382,51 @@
       pct >= 50 ? 'Solid. Note every question you missed and retest only those.' :
       'Go back to the notes, rebuild the topic from memory, then retake this set.';
 
+    $('missed-title').textContent = 'Review';
+    resultsFilter = 'all';
+    renderHeatmap(result);
+    renderReviewList(result);
+    updateFilterCounts(result);
+    setReviewFilter('all');
+
+    $('btn-retry-missed').classList.toggle('hidden', result.missed.length === 0);
+  }
+
+  function renderHeatmap(result) {
+    var heat = $('results-heatmap');
+    heat.innerHTML = '';
+    result.all.forEach(function (entry, idx) {
+      var b = el('button', 'heat-num');
+      b.textContent = idx + 1;
+      b.classList.add(entry.correct ? 'correct' : 'wrong');
+      if (entry.flagged) b.classList.add('flagged');
+      b.setAttribute('aria-label', 'Question ' + (idx + 1) +
+        (entry.correct ? ' — correct' : ' — missed') +
+        (entry.flagged ? ' — flagged' : ''));
+      b.addEventListener('click', function () {
+        setReviewFilter('all');
+        var card = $('review-card-' + idx);
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      heat.appendChild(b);
+    });
+  }
+
+  function renderReviewList(result) {
     var box = $('missed-list');
     box.innerHTML = '';
-    $('missed-title').textContent = result.missed.length === 0
-      ? 'Nothing missed — perfect score.'
-      : 'Review — the ' + result.missed.length + ' you missed';
-    result.missed.forEach(function (entry, idx) {
+    result.all.forEach(function (entry, idx) {
       var item = entry.item;
       var card = el('div', 'miss-card');
-      card.appendChild(el('div', 'miss-q', (idx + 1) + '. ' + item.q));
+      card.id = 'review-card-' + idx;
+      card.setAttribute('data-status', entry.correct ? 'correct' : 'failed');
+      card.setAttribute('data-flagged', entry.flagged ? '1' : '0');
+      var head = el('div', 'miss-head');
+      head.appendChild(el('div', 'miss-q', (idx + 1) + '. ' + item.q));
+      head.appendChild(el('span', 'miss-status ' + (entry.correct ? 'ok' : 'bad'),
+        entry.correct ? 'Correct' : (entry.pickedLetter === null ? 'Unanswered' : 'Missed')));
+      if (entry.flagged) head.appendChild(el('span', 'miss-status flagged', 'Flagged'));
+      card.appendChild(head);
       item.options.forEach(function (opt) {
         var line = el('div', 'miss-opt');
         var tag = '';
@@ -406,8 +446,38 @@
       }
       box.appendChild(card);
     });
+  }
 
-    $('btn-retry-missed').classList.toggle('hidden', result.missed.length === 0);
+  function updateFilterCounts(result) {
+    var flagged = 0;
+    result.all.forEach(function (e) { if (e.flagged) flagged++; });
+    setTabLabel('all', 'All', result.total);
+    setTabLabel('failed', 'Failed', result.missed.length);
+    setTabLabel('correct', 'Correct', result.score);
+    setTabLabel('flagged', 'Flagged', flagged);
+  }
+  function setTabLabel(filter, label, n) {
+    var b = document.querySelector('#review-filter button[data-filter="' + filter + '"]');
+    if (b) b.textContent = label + ' (' + n + ')';
+  }
+  function setReviewFilter(f) {
+    resultsFilter = f;
+    document.querySelectorAll('#review-filter button').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-filter') === f);
+    });
+    applyReviewFilter();
+  }
+  function applyReviewFilter() {
+    var visible = 0;
+    document.querySelectorAll('#missed-list .miss-card').forEach(function (card) {
+      var show = resultsFilter === 'all' ||
+        (resultsFilter === 'failed' && card.getAttribute('data-status') === 'failed') ||
+        (resultsFilter === 'correct' && card.getAttribute('data-status') === 'correct') ||
+        (resultsFilter === 'flagged' && card.getAttribute('data-flagged') === '1');
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    $('review-empty').classList.toggle('hidden', visible !== 0);
   }
 
   /* ---------- add a set: PDF + paste ---------- */
@@ -678,6 +748,9 @@
       submitQuiz();
     });
 
+    document.querySelectorAll('#review-filter button').forEach(function (b) {
+      b.addEventListener('click', function () { setReviewFilter(b.getAttribute('data-filter')); });
+    });
     $('btn-retake').addEventListener('click', function () { startQuiz(quiz.setId, null); });
     $('btn-retry-missed').addEventListener('click', function () {
       // Rebuild from the original set questions (original option order),
