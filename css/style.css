@@ -82,6 +82,7 @@ header.app-head {
 header.app-head img.logo { width: 40px; height: 40px; border-radius: 12px; box-shadow: var(--shadow-sm); }
 header.app-head .head-text { flex: 1; min-width: 0; }
 header.app-head h1 { font-size: 20px; line-height: 1.1; }
+header.app-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
 .theme-toggle {
   flex: 0 0 auto;
   width: 42px; height: 42px;
@@ -96,6 +97,9 @@ header.app-head h1 { font-size: 20px; line-height: 1.1; }
   display: flex; align-items: center; justify-content: center;
 }
 .theme-toggle:active { transform: scale(0.96); }
+.theme-toggle svg { width: 20px; height: 20px; flex: 0 0 auto; }
+html[data-theme="light"] .icon-sun { display: none; }
+html[data-theme="dark"] .icon-moon { display: none; }
 
 h2 { font-size: 21px; margin: 18px 0 6px; }
 .sub { color: var(--text-soft); margin: 0 0 14px; font-size: 14px; }
@@ -418,7 +422,9 @@ input[type="text"] {
   box-shadow: var(--shadow-lg);
 }
 .menu-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   text-align: left;
   background: transparent;
@@ -431,6 +437,7 @@ input[type="text"] {
   color: var(--text);
   cursor: pointer;
 }
+.menu-item svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .menu-item:active { background: var(--card-2); }
 .menu-hint {
   margin: 4px 8px 8px;
@@ -500,7 +507,8 @@ input[type="text"] {
 }
 .settings-label { font-weight: 700; font-size: 15px; }
 .settings-desc { color: var(--text-soft); font-size: 13px; margin-top: 2px; }
-.settings-btn { width: auto; min-height: 42px; padding: 8px 16px; flex: 0 0 auto; }
+.settings-btn { width: auto; min-height: 42px; padding: 8px 16px; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; }
+.settings-btn svg { width: 17px; height: 17px; flex: 0 0 auto; }
 .upload-day {
   font-family: var(--font-head);
   font-size: 14px;

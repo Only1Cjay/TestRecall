@@ -121,10 +121,8 @@
     document.documentElement.setAttribute('data-theme', t);
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
-    var b = $('theme-toggle');
-    if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
-    var sb = $('settings-theme');
-    if (sb) sb.textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
+    var sl = $('settings-theme-label');
+    if (sl) sl.textContent = t === 'dark' ? 'Light' : 'Dark';
     try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
   }
   function toggleTheme() {
