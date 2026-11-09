@@ -2,7 +2,7 @@
 
 MCQ practice for pharmacy exams — minus the paper. Pick a set, tap your answers, get graded at the end.
 
-![TestRecall logo](icons/icon-512.png)
+![TestRecall logo](icons/icon.svg)
 
 ## What it does
 
@@ -30,7 +30,7 @@ The app can only read **text-based** PDFs (not photos/scans). The format:
 - Answer key at the very end under the heading `Answer Key`, in rows of 10: a line of question numbers, then a line of correct letters underneath.
 - Don't write `A.` / `B.` / `C.` / `D.` inside question or option text.
 
-A ready-to-send spec with a worked example is in [docs/mcq-pdf-template.pdf](docs/mcq-pdf-template.pdf) — give that file to any bot that makes your MCQ PDFs and tell it to follow the structure exactly.
+A ready-to-send spec with a worked example is in [docs/mcq-format-guide.md](docs/mcq-format-guide.md) — give that file to any bot that makes your MCQ PDFs and tell it to follow the structure exactly.
 
 ## Deploy on GitHub Pages
 
@@ -50,10 +50,10 @@ No build step: the files are served as they are from the repo root.
 | `js/pdf-parser.js` | PDF text extraction (pdf.js) + MCQ text parser |
 | `data/naming-classification-bacteria.json` | Starter set, 122 questions |
 | `data/systematic-classification-bacteria.json` | Starter set, 60 questions |
-| `icons/icon-192.png`, `icons/icon-512.png` | PWA icons (cream question mark + graduation cap on deep green) |
+| `icons/icon.svg` | PWA icon (cream question mark + graduation cap on deep green) |
 | `manifest.json` | PWA manifest (name TestRecall, deep green theme) |
 | `sw.js` | Service worker — caches the app shell and pdf.js for offline use |
-| `docs/mcq-pdf-template.pdf` | The PDF format spec to send to bots that make MCQ PDFs |
+| `docs/mcq-format-guide.md` | The PDF format spec to send to bots that make MCQ PDFs |
 
 ## Notes on the content
 

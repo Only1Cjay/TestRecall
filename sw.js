@@ -11,8 +11,7 @@ const APP_SHELL = [
   'data/naming-classification-bacteria.json',
   'data/systematic-classification-bacteria.json',
   'manifest.json',
-  'icons/icon-192.png',
-  'icons/icon-512.png',
+  'icons/icon.svg',
 ];
 
 const PDFJS_CDN = [

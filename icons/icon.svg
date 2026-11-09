@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TestRecall logo">
+  <rect x="16" y="16" width="480" height="480" rx="110" fill="#00572c"/>
+  <!-- graduation cap -->
+  <polygon points="256,92 420,168 256,244 92,168" fill="#f6f1de"/>
+  <path d="M178,222 L334,222 L334,282 Q256,314 178,282 Z" fill="#e9e2c6"/>
+  <line x1="420" y1="168" x2="420" y2="262" stroke="#f6f1de" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="420" cy="278" r="15" fill="#f6f1de"/>
+  <!-- question mark -->
+  <text x="256" y="458" font-family="Georgia, 'Times New Roman', serif" font-size="185" font-weight="bold" fill="#f6f1de" text-anchor="middle">?</text>
+</svg>
