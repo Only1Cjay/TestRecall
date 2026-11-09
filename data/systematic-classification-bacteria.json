@@ -1,0 +1,722 @@
+[
+ {
+  "n": 1,
+  "topic": "N",
+  "q": "Who introduced binomial nomenclature?",
+  "options": [
+   "Robert Koch",
+   "Louis Pasteur",
+   "Alexander Fleming",
+   "Carl Linnaeus"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 2,
+  "topic": "S",
+  "q": "What is the typical length of a bacterium?",
+  "options": [
+   "0.2-1.5 μm",
+   "20-80 μm",
+   "3-5 μm",
+   "200-600 μm"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 3,
+  "topic": "M",
+  "q": "Which shape is described as kidney-shaped?",
+  "options": [
+   "Fusiform",
+   "Coccus",
+   "Bacillus",
+   "Vibrio"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 4,
+  "topic": "A",
+  "q": "Which arrangement is cocci in a cubical group of eight or more?",
+  "options": [
+   "Tetracocci",
+   "Streptococci",
+   "Sarcina",
+   "Staphylococci"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 5,
+  "topic": "F",
+  "q": "Which flagellar arrangement has flagella all round the cell?",
+  "options": [
+   "Monotrichous",
+   "Lophotrichous",
+   "Peritrichous",
+   "Amphitrichous"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 6,
+  "topic": "C",
+  "q": "What is chemotaxis?",
+  "options": [
+   "Growth only in the presence of oxygen",
+   "Movement towards a nutrient and away from a harmful substance",
+   "Synthesis of all organic compounds from carbon dioxide",
+   "Formation of a thick grey membrane in the throat"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 7,
+  "topic": "U",
+  "q": "Which group derives its energy from sunlight?",
+  "options": [
+   "Chemotrophs",
+   "Heterotrophs",
+   "Phototrophs",
+   "Autotrophs"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 8,
+  "topic": "G",
+  "q": "Which organism requires 5-10% carbon dioxide for growth?",
+  "options": [
+   "Clostridia spp.",
+   "Escherichia coli",
+   "Thiobacillus thiooxidans",
+   "Brucella abortus"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 9,
+  "topic": "T",
+  "q": "At what optimum temperature are bacteria described as thermophilic?",
+  "options": [
+   "15°C or below",
+   "15-45°C",
+   "Greater than 45°C",
+   "Exactly 37°C"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 10,
+  "topic": "P",
+  "q": "At what pH do acidophiles grow?",
+  "options": [
+   "pH 7",
+   "pH 8.2-8.3",
+   "pH 2-4",
+   "pH 10-12"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 11,
+  "topic": "N",
+  "q": "In which book and year was binomial nomenclature introduced?",
+  "options": [
+   "Species Plantarum, 1753",
+   "On the Origin of Species, 1859",
+   "Micrographia, 1665",
+   "Systema Naturae, 1735"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 12,
+  "topic": "S",
+  "q": "About how small are the smallest bacteria?",
+  "options": [
+   "About 0.2 μm",
+   "About 20 μm",
+   "About 2 μm",
+   "About 200 μm"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 13,
+  "topic": "M",
+  "q": "Which spiral bacterium is rigid, as opposed to flexible?",
+  "options": [
+   "Spirochaete",
+   "Vibrio",
+   "Fusiform cell",
+   "Spirillum"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 14,
+  "topic": "A",
+  "q": "Cocci arranged in pairs are called:",
+  "options": [
+   "Monococci",
+   "Diplococci",
+   "Tetracocci",
+   "Sarcina"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 15,
+  "topic": "F",
+  "q": "Which is NOT one of the three parts of a bacterial flagellum?",
+  "options": [
+   "Capsule",
+   "Basal body",
+   "Hook",
+   "Filament (shaft)"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 16,
+  "topic": "C",
+  "q": "What is a chemoattractant?",
+  "options": [
+   "A substance that repels a cell",
+   "A substance that attracts a cell",
+   "A receptor in the cell envelope",
+   "A flagellar motor protein"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 17,
+  "topic": "U",
+  "q": "Which group can synthesise all its organic compounds and use atmospheric carbon dioxide as its carbon source?",
+  "options": [
+   "Autotrophs",
+   "Heterotrophs",
+   "Phototrophs",
+   "Chemotrophs"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 18,
+  "topic": "G",
+  "q": "Which group grows in the absence of oxygen and may die on exposure to it?",
+  "options": [
+   "Obligate anaerobes",
+   "Obligate aerobes",
+   "Facultative anaerobes",
+   "Capnophilic bacteria"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 19,
+  "topic": "T",
+  "q": "What is the optimum temperature range for mesophilic bacteria?",
+  "options": [
+   "Greater than 45°C",
+   "15-45°C",
+   "15°C or below",
+   "0-5°C"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 20,
+  "topic": "P",
+  "q": "Which organism is given as an alkalophile, with an optimum pH of 8.2-8.3?",
+  "options": [
+   "Thiobacillus thiooxidans",
+   "Brucella abortus",
+   "Thermobacteroides spp.",
+   "Thermomicrobium roseum"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 21,
+  "topic": "N",
+  "q": "Which is the correctly written bacterial name?",
+  "options": [
+   "Escherichia coli",
+   "escherichia Coli",
+   "Escherichia Coli",
+   "ESCHERICHIA COLI"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 22,
+  "topic": "S",
+  "q": "How large is the largest bacterium mentioned, Epulopiscium fishelsoni?",
+  "options": [
+   "About 2 μm",
+   "3-5 μm",
+   "About 200 μm",
+   "Over 600 μm"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 23,
+  "topic": "M",
+  "q": "What shape is a coccobacillus?",
+  "options": [
+   "Ovoid, between coccus and bacillus",
+   "Spherical",
+   "Rod-shaped",
+   "Comma-shaped"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 24,
+  "topic": "A",
+  "q": "Cocci arranged in chains are called:",
+  "options": [
+   "Diplococci",
+   "Tetracocci",
+   "Streptococci",
+   "Staphylococci"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 25,
+  "topic": "F",
+  "q": "What does monotrichous mean?",
+  "options": [
+   "No flagella",
+   "A tuft of flagella at one end",
+   "Flagella all round the cell",
+   "One flagellum at one end"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 26,
+  "topic": "C",
+  "q": "What is aerotaxis?",
+  "options": [
+   "Movement towards a nutrient",
+   "Movement away from a harmful substance",
+   "Movement to the oxygen level optimal for growth",
+   "Random movement in a uniform environment"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 27,
+  "topic": "U",
+  "q": "Water makes up what proportion of a bacterial cell by weight?",
+  "options": [
+   "About 20%",
+   "About 50%",
+   "About 95%",
+   "About 80%"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 28,
+  "topic": "G",
+  "q": "Microaerophilic bacteria are best described as bacteria that:",
+  "options": [
+   "Grow only with oxygen",
+   "Grow best at low oxygen tension",
+   "Die on exposure to oxygen",
+   "Require 5-10% carbon dioxide"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 29,
+  "topic": "T",
+  "q": "What is the lower limit for growth of psychrotrophic bacteria?",
+  "options": [
+   "20°C",
+   "0°C",
+   "15°C",
+   "5°C"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 30,
+  "topic": "P",
+  "q": "Most bacteria grow best at or near which pH?",
+  "options": [
+   "pH 7",
+   "pH 2-4",
+   "pH 8.2-8.3",
+   "pH 10"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 31,
+  "topic": "N",
+  "q": "Bacterial family names end in which suffix?",
+  "options": [
+   "-ales",
+   "-ella",
+   "-osis",
+   "-aceae"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 32,
+  "topic": "S",
+  "q": "Up to what size can the human eye see?",
+  "options": [
+   "2 μm",
+   "20 μm",
+   "200 μm",
+   "600 μm"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 33,
+  "topic": "M",
+  "q": "A mass of hyphae in Actinomycetes is called a:",
+  "options": [
+   "Mycelium",
+   "Capsule",
+   "Spore",
+   "Palisade"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 34,
+  "topic": "A",
+  "q": "Bacilli lying side by side are in which arrangement?",
+  "options": [
+   "Diplobacilli",
+   "Streptobacilli",
+   "Sarcina",
+   "Palisades"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 35,
+  "topic": "F",
+  "q": "What does amphitrichous mean?",
+  "options": [
+   "One or many flagella at both ends",
+   "One flagellum at one end",
+   "A tuft at one end",
+   "Flagella all round the cell"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 36,
+  "topic": "C",
+  "q": "How does a bacterial cell detect a change in chemical concentration?",
+  "options": [
+   "By its capsule",
+   "By its cell wall thickness",
+   "By its endospores",
+   "By receptors in the cell envelope"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 37,
+  "topic": "U",
+  "q": "Heterotrophs are best described as bacteria that:",
+  "options": [
+   "Depend on preformed organic compounds",
+   "Synthesise all their organic compounds",
+   "Use sunlight for energy",
+   "Grow with carbon dioxide as sole carbon source"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 38,
+  "topic": "G",
+  "q": "Which statement about facultative anaerobes is correct?",
+  "options": [
+   "They die on exposure to oxygen",
+   "They are ordinarily aerobic but can grow without oxygen, though less abundantly",
+   "They require 5-10% carbon dioxide",
+   "They grow best at low oxygen tension"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 39,
+  "topic": "T",
+  "q": "Which organism has an optimum temperature of 55-75°C?",
+  "options": [
+   "Thermomicrobium spp.",
+   "Thiobacillus thiooxidans",
+   "Thermobacteroides spp.",
+   "Brucella abortus"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 40,
+  "topic": "P",
+  "q": "Which organism is given as an acidophile?",
+  "options": [
+   "Thermomicrobium roseum",
+   "Thiobacillus thiooxidans",
+   "Escherichia coli",
+   "Epulopiscium fishelsoni"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 41,
+  "topic": "N",
+  "q": "Bacterial order names end in which suffix?",
+  "options": [
+   "-ales",
+   "-aceae",
+   "-coccus",
+   "-bacillus"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 42,
+  "topic": "S",
+  "q": "What is the typical diameter of a bacterium?",
+  "options": [
+   "3-5 μm",
+   "20-80 μm",
+   "0.2-1.5 μm",
+   "200 μm"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 43,
+  "topic": "M",
+  "q": "L forms have what shape?",
+  "options": [
+   "Spherical",
+   "Irregular",
+   "Rod-shaped",
+   "Comma-shaped"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 44,
+  "topic": "A",
+  "q": "Cocci in groups of four are called:",
+  "options": [
+   "Diplococci",
+   "Streptococci",
+   "Tetracocci",
+   "Monococci"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 45,
+  "topic": "F",
+  "q": "What does atrichous mean?",
+  "options": [
+   "One flagellum at one end",
+   "No flagella",
+   "A tuft at one end",
+   "Flagella all round the cell"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 46,
+  "topic": "C",
+  "q": "What is a chemorepellent?",
+  "options": [
+   "A substance that attracts a cell",
+   "A substance that kills a cell",
+   "A receptor in the cell envelope",
+   "A substance that causes a cell to move away"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 47,
+  "topic": "U",
+  "q": "An essential growth factor is one where:",
+  "options": [
+   "Growth is enhanced but it is not absolutely necessary",
+   "Growth does not occur in its absence",
+   "It is needed only in trace amounts",
+   "It replaces the need for carbon"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 48,
+  "topic": "G",
+  "q": "In anaerobic respiration, which compounds are used instead of oxygen as final electron acceptors?",
+  "options": [
+   "Carbon dioxide and water",
+   "Organic acids and alcohols",
+   "Glucose and lactose",
+   "Nitrates or sulphates"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 49,
+  "topic": "T",
+  "q": "Which group includes the bacteria pathogenic to man and animals?",
+  "options": [
+   "Thermophiles",
+   "Psychrotrophs",
+   "Mesophiles",
+   "Acidophiles"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 50,
+  "topic": "P",
+  "q": "Which statement about pH and bacteria is correct?",
+  "options": [
+   "Most bacteria grow best at pH 2-4",
+   "Acidophiles grow best at pH 8-9",
+   "Most bacteria grow best near pH 7",
+   "Alkalophiles grow best at pH 2-4"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 51,
+  "topic": "N",
+  "q": "When may Escherichia coli be abbreviated to E. coli?",
+  "options": [
+   "Always, from the first mention",
+   "Only when the full genus name has been mentioned earlier",
+   "Only in handwritten notes",
+   "Never; abbreviations are not allowed"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 52,
+  "topic": "S",
+  "q": "Where does the largest bacterium, Epulopiscium fishelsoni, live?",
+  "options": [
+   "In hot springs",
+   "In the gut of the surgeonfish Acanthurus nigrofuscus",
+   "In soil",
+   "In the human gut"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 53,
+  "topic": "M",
+  "q": "Pleomorphism is a change in bacterial shape that:",
+  "options": [
+   "Varies quickly from cell to cell and can be induced by temperature or physical or chemical stimulus",
+   "Is permanent and inherited",
+   "Occurs only in spore-formers",
+   "Occurs only at pH 2-4"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 54,
+  "topic": "A",
+  "q": "A single bacillus is called a:",
+  "options": [
+   "Diplobacillus",
+   "Streptobacillus",
+   "Coccobacillus",
+   "Monobacillus"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 55,
+  "topic": "F",
+  "q": "What does lophotrichous mean?",
+  "options": [
+   "Two or more flagella at one end",
+   "One flagellum at one end",
+   "Flagella at both ends",
+   "No flagella"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 56,
+  "topic": "C",
+  "q": "In a chemically uniform environment, flagellated cells adopt a:",
+  "options": [
+   "Directed run towards oxygen",
+   "Fixed palisade",
+   "Spiral movement",
+   "Random walk"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 57,
+  "topic": "U",
+  "q": "Which of these is listed as a B-group vitamin acting as a bacterial growth factor?",
+  "options": [
+   "Thiamine",
+   "Vitamin C",
+   "Vitamin D",
+   "Vitamin K"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 58,
+  "topic": "G",
+  "q": "In aerobic respiration, what is the final electron acceptor?",
+  "options": [
+   "Nitrate",
+   "Oxygen",
+   "Sulphate",
+   "Carbon dioxide"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 59,
+  "topic": "T",
+  "q": "Thermophilic bacteria occur mostly in:",
+  "options": [
+   "The human gut",
+   "Cold seawater",
+   "Acidic mine water",
+   "Compost and hot springs"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 60,
+  "topic": "P",
+  "q": "A bacterium isolated growing at pH 3 is most likely an:",
+  "options": [
+   "Alkalophile",
+   "Acidophile",
+   "Neutrophile",
+   "Mesophile"
+  ],
+  "answer": "B"
+ }
+]

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TestRecall — MCQ Practice</title>
+<meta name="description" content="MCQ practice for pharmacy exams. Tap answers, get graded, add your own sets from a PDF. Works offline.">
+<meta name="theme-color" content="#00572c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="app-head">
+    <img class="logo" src="icons/icon-192.png" alt="TestRecall logo" width="52" height="52">
+    <div>
+      <h1>TestRecall</h1>
+      <p>MCQ practice, minus the paper</p>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home">
+    <h2>Your sets</h2>
+    <p class="sub">Pick a set, tap your answers, get graded at the end. Questions and options shuffle every attempt.</p>
+    <button class="btn primary" id="btn-add-set">+ Add a set</button>
+    <div id="set-list" style="margin-top: 16px;"></div>
+    <p class="add-hint">Works offline once opened — your sets and scores live on this device.</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="hidden">
+    <div class="quiz-top">
+      <button class="icon-btn" id="quiz-exit" title="Leave attempt">←</button>
+      <span class="title" id="quiz-title"></span>
+      <span class="timer" id="quiz-timer">00:00</span>
+    </div>
+    <div class="progress"><div id="quiz-progress"></div></div>
+    <div class="quiz-meta">
+      <span class="qnum" id="quiz-qnum"></span>
+      <span class="qnum"><span id="quiz-pos"></span> of <span id="quiz-total"></span></span>
+      <button class="flag-btn" id="quiz-flag">☆ Flag for later</button>
+    </div>
+    <p class="qtext" id="quiz-qtext"></p>
+    <div id="quiz-options"></div>
+    <div class="quiz-nav">
+      <button class="btn ghost" id="quiz-prev">← Previous</button>
+      <button class="btn ghost" id="quiz-grid-btn">Grid</button>
+      <button class="btn primary" id="quiz-next">Next →</button>
+    </div>
+    <div class="submit-wrap">
+      <button class="btn" id="quiz-submit">Submit answers</button>
+    </div>
+    <div class="grid-panel hidden" id="grid-panel">
+      <h3>Jump to a question</h3>
+      <p class="sub">Green = answered · Amber border = flagged</p>
+      <div class="grid-nums" id="quiz-grid"></div>
+      <div class="btn-row"><button class="btn" id="grid-close">Close</button></div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="screen-results" class="hidden">
+    <h2>Your score</h2>
+    <div class="score-wrap">
+      <div class="score-ring">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="54"></circle>
+          <circle class="ring-fg" id="score-ring-fg" cx="70" cy="70" r="54"></circle>
+        </svg>
+        <div class="score-pct" id="score-pct">0%</div>
+      </div>
+      <div class="score-line" id="score-line"></div>
+      <p class="score-msg" id="score-msg"></p>
+    </div>
+    <h2 id="missed-title">Review</h2>
+    <div id="missed-list"></div>
+    <div class="btn-row">
+      <button class="btn primary" id="btn-retry-missed">Practise missed only</button>
+      <button class="btn" id="btn-retake">Retake set</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn ghost" id="btn-results-home">Back to sets</button>
+    </div>
+  </section>
+
+  <!-- ============ ADD A SET ============ -->
+  <section id="screen-add" class="hidden">
+    <h2>Add a set</h2>
+    <p class="sub">Drop in an MCQ PDF — the app reads the questions, options and answer key itself. You’ll get to check everything before it’s saved.</p>
+    <div class="tabs">
+      <button id="tab-pdf" class="active">PDF file</button>
+      <button id="tab-paste">Paste text</button>
+    </div>
+
+    <div id="panel-pdf">
+      <label class="dropzone" for="pdf-input">
+        <strong>Choose an MCQ PDF</strong>
+        Questions + options + the answer key at the end, all in one file.
+      </label>
+      <input type="file" id="pdf-input" accept=".pdf,application/pdf" class="hidden">
+      <div class="status" id="pdf-status"></div>
+      <p class="fineprint">Need the format? <a href="docs/mcq-pdf-template.pdf">Download the MCQ PDF template</a> — it shows exactly how questions, options and the key should be laid out, so you can send it to any bot that makes your PDFs.</p>
+    </div>
+
+    <div id="panel-paste" class="hidden">
+      <textarea id="paste-input" placeholder="Paste the questions here, in the same format as the PDF:&#10;&#10;1. Question text?&#10;A. Option one&#10;B. Option two&#10;C. Option three&#10;D. Option four&#10;&#10;...then the answer key at the end, in rows of 10."></textarea>
+      <div class="btn-row"><button class="btn primary" id="btn-parse-paste">Read questions</button></div>
+      <div class="status" id="paste-status"></div>
+    </div>
+
+    <div class="btn-row"><button class="btn ghost" id="btn-back-home">← All sets</button></div>
+  </section>
+
+  <!-- ============ IMPORT REVIEW ============ -->
+  <section id="screen-review" class="hidden">
+    <h2>Check this set</h2>
+    <p class="sub">Look it over before saving. Fix any wrong answer, or remove a bad question.</p>
+    <label for="review-title">Set title</label>
+    <input type="text" id="review-title" style="margin: 6px 0 10px;">
+    <p class="sub" id="review-meta"></p>
+    <div id="review-warnings"></div>
+    <div id="review-samples"></div>
+    <h2 style="font-size: 17px;">All questions</h2>
+    <div id="review-list"></div>
+    <div class="btn-row">
+      <button class="btn ghost" id="btn-review-cancel">Cancel</button>
+      <button class="btn primary" id="btn-review-save">Save set</button>
+    </div>
+  </section>
+
+  <!-- ============ CONFIRM MODAL ============ -->
+  <div class="modal-backdrop hidden" id="confirm-modal">
+    <div class="modal">
+      <h3>Submit your answers?</h3>
+      <p id="confirm-text"></p>
+      <div class="btn-row">
+        <button class="btn ghost" id="confirm-cancel">Keep answering</button>
+        <button class="btn primary" id="confirm-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>TestRecall · your sets and scores stay on this device · no account needed</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/pdf-parser.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

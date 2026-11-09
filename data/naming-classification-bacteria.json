@@ -1,0 +1,1344 @@
+[
+ {
+  "n": 1,
+  "q": "In binomial nomenclature, the first word of a bacterial name is the:",
+  "options": [
+   "Species",
+   "Genus",
+   "Family",
+   "Strain"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 2,
+  "q": "In the name Escherichia coli, the word Escherichia honours:",
+  "options": [
+   "The colon",
+   "A German city",
+   "A spiral shape",
+   "Theodor Escherich"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 3,
+  "q": "In Escherichia coli, the species name coli refers to:",
+  "options": [
+   "A disease caused",
+   "The colon",
+   "A curved shape",
+   "A discoverer"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 4,
+  "q": "How should a bacterial name be written when typed?",
+  "options": [
+   "Genus capitalised, species lower case, both in",
+   "Genus lower case, species capitalised, both in italics italics",
+   "Both words lower case with no special formatting",
+   "Both words capitalised and underlined throughout"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 5,
+  "q": "After its first full mention, Escherichia coli may correctly be shortened to:",
+  "options": [
+   "E. Coli",
+   "coli E.",
+   "E. coli",
+   "Es. coli"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 6,
+  "q": "In the name Bacillus sp., the abbreviation sp. means:",
+  "options": [
+   "The species is a named spore-former",
+   "The species is spiral in shape",
+   "The species is a pathogen",
+   "The exact species is not specified"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 7,
+  "q": "The plural of the abbreviation sp. is:",
+  "options": [
+   "sps.",
+   "spp.",
+   "specieses",
+   "sp."
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 8,
+  "q": "Bacillus with a capital B refers to:",
+  "options": [
+   "A single flagellum",
+   "Any rod-shaped cell",
+   "A cluster of cocci",
+   "A genus of bacteria"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 9,
+  "q": "bacillus with a small b simply means:",
+  "options": [
+   "A spore-forming cell",
+   "A genus of bacteria",
+   "A rod-shaped bacterium",
+   "A comma-shaped cell"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 10,
+  "q": "A bacterium that is a short, oval rod between a coccus and a bacillus in form is a:",
+  "options": [
+   "Coccobacillus",
+   "Streptobacillus",
+   "Spirochaete",
+   "Diplobacillus"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 11,
+  "q": "Cocci are bacteria that are:",
+  "options": [
+   "Comma-shaped",
+   "Spherical or oval",
+   "Spiral and rigid",
+   "Rod-shaped and long"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 12,
+  "q": "Bacilli are bacteria that are:",
+  "options": [
+   "Spiral and flexible",
+   "Comma-shaped",
+   "Spherical or oval",
+   "Rod-shaped"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 13,
+  "q": "A vibrio is best described as:",
+  "options": [
+   "Comma-shaped",
+   "A rigid spiral",
+   "A straight rod",
+   "Spherical"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 14,
+  "q": "Which shape is Vibrio cholerae?",
+  "options": [
+   "Spherical",
+   "Rod-shaped",
+   "Comma-shaped",
+   "Spiral-shaped"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 15,
+  "q": "Which shape is Escherichia coli?",
+  "options": [
+   "Spiral-shaped",
+   "Spherical",
+   "Comma-shaped",
+   "Rod-shaped"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 16,
+  "q": "Staphylococcus aureus is an example of a bacterium that is:",
+  "options": [
+   "Rod in shape",
+   "Spherical in shape",
+   "Comma in shape",
+   "Spiral in shape"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 17,
+  "q": "Streptococcus pneumoniae is classified by shape as a:",
+  "options": [
+   "Vibrio",
+   "Coccus",
+   "Bacillus",
+   "Spirillum"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 18,
+  "q": "Bacillus anthracis is classified by shape as a:",
+  "options": [
+   "Bacillus",
+   "Coccus",
+   "Vibrio",
+   "Spirillum"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 19,
+  "q": "Spirilla differ from spirochaetes because spirilla are:",
+  "options": [
+   "Flexible spirals",
+   "Comma-shaped",
+   "Rigid spirals",
+   "Without any wall"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 20,
+  "q": "Treponema pallidum, the cause of syphilis, is a:",
+  "options": [
+   "Spirochaete",
+   "Vibrio",
+   "Diplococcus",
+   "Coccobacillus"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 21,
+  "q": "Haemophilus influenzae is the classic example of a:",
+  "options": [
+   "Diplobacillus",
+   "Streptobacillus",
+   "Spirochaete",
+   "Coccobacillus"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 22,
+  "q": "Coccobacillus is classified as a type of:",
+  "options": [
+   "Oxygen requirement",
+   "Flagellar pattern",
+   "Shape",
+   "Arrangement"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 23,
+  "q": "Mycoplasma has no fixed shape because it:",
+  "options": [
+   "Has many flagella",
+   "Forms endospores",
+   "Needs no oxygen",
+   "Has no cell wall"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 24,
+  "q": "A bacterium with no fixed shape, able to take many forms, is called:",
+  "options": [
+   "Facultative",
+   "Mesophilic",
+   "Pleomorphic",
+   "Peritrichous"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 25,
+  "q": "Penicillin fails against Mycoplasma mainly because Mycoplasma:",
+  "options": [
+   "Has no cell wall to attack",
+   "Lives inside host cells only",
+   "Grows only in the cold",
+   "Forms resistant endospores in soil"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 26,
+  "q": "Spirillum spp. are classified by shape as:",
+  "options": [
+   "Spherical",
+   "Spiral-shaped",
+   "Comma-shaped",
+   "Rod-shaped"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 27,
+  "q": "Diplococci are cocci arranged:",
+  "options": [
+   "In clusters",
+   "In fours",
+   "In chains",
+   "In pairs"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 28,
+  "q": "Tetracocci (tetrads) are cocci arranged:",
+  "options": [
+   "In groups of four",
+   "In grape clusters",
+   "In pairs",
+   "In long chains"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 29,
+  "q": "Streptococci are cocci arranged:",
+  "options": [
+   "In pairs",
+   "In fours",
+   "In clusters",
+   "In chains"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 30,
+  "q": "Staphylococci are cocci arranged:",
+  "options": [
+   "In grape-like clusters",
+   "In pairs only",
+   "In straight chains",
+   "In groups of four"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 31,
+  "q": "Micrococcus spp. typically occur as:",
+  "options": [
+   "Tetrads in fours",
+   "A single coccus",
+   "Chains of cocci",
+   "Diplococci in pairs"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 32,
+  "q": "Pediococcus spp. are the example given for:",
+  "options": [
+   "Tetracocci",
+   "Streptococci",
+   "Staphylococci",
+   "Diplococci"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 33,
+  "q": "Neisseria gonorrhoeae is an example of:",
+  "options": [
+   "Tetracocci",
+   "Diplococci",
+   "Streptococci",
+   "Staphylococci"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 34,
+  "q": "Neisseria meningitidis is arranged as:",
+  "options": [
+   "Streptococci",
+   "Diplococci",
+   "Staphylococci",
+   "Tetracocci"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 35,
+  "q": "Moraxella catarrhalis is an example of:",
+  "options": [
+   "Streptobacilli",
+   "Staphylococci",
+   "Tetracocci",
+   "Diplococci"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 36,
+  "q": "Streptococcus pneumoniae is arranged as:",
+  "options": [
+   "Streptobacilli",
+   "Diplococci",
+   "Tetracocci",
+   "Staphylococci"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 37,
+  "q": "Streptococcus pyogenes is arranged as:",
+  "options": [
+   "Chains of cocci",
+   "Clusters of cocci",
+   "Fours of cocci",
+   "Pairs of cocci"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 38,
+  "q": "Staphylococcus aureus is arranged as:",
+  "options": [
+   "Pairs of cocci",
+   "Chains of cocci",
+   "Clusters of cocci",
+   "Fours of cocci"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 39,
+  "q": "A palisade arrangement means rods are:",
+  "options": [
+   "Lying side by side",
+   "In pairs only",
+   "In long chains",
+   "All over a cell"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 40,
+  "q": "Corynebacterium diphtheriae typically shows which arrangement?",
+  "options": [
+   "Clusters",
+   "Chains of cocci",
+   "Palisade",
+   "Tetrads"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 41,
+  "q": "Moraxella bovis is the example given for:",
+  "options": [
+   "Palisade rods",
+   "Streptobacilli",
+   "Diplococci",
+   "Diplobacilli"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 42,
+  "q": "Streptobacillus moniliformis is the example given for:",
+  "options": [
+   "Streptobacilli",
+   "Palisade rods",
+   "Diplobacilli",
+   "Streptococci"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 43,
+  "q": "An obligate aerobe is a bacterium that:",
+  "options": [
+   "Must have oxygen to grow",
+   "Needs only a little oxygen",
+   "Grows with or without oxygen",
+   "Is killed by any oxygen"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 44,
+  "q": "An obligate anaerobe is a bacterium that:",
+  "options": [
+   "Tolerates oxygen well",
+   "Must have oxygen to grow",
+   "Needs about 5% oxygen",
+   "Is killed by oxygen"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 45,
+  "q": "A facultative anaerobe is a bacterium that:",
+  "options": [
+   "Grows only without oxygen",
+   "Needs only a little oxygen",
+   "Grows only with oxygen",
+   "Grows with or without oxygen"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 46,
+  "q": "A microaerophile requires:",
+  "options": [
+   "A complete absence of oxygen",
+   "A minute amount of oxygen",
+   "Oxygen only to form spores",
+   "The full oxygen level of air"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 47,
+  "q": "An aerotolerant anaerobe is a bacterium that:",
+  "options": [
+   "Does not use oxygen but tolerates it",
+   "Is killed by any oxygen present",
+   "Needs about 5% oxygen to grow",
+   "Must have oxygen in order to grow"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 48,
+  "q": "Microaerophiles grow best at an oxygen level of about:",
+  "options": [
+   "5-10%",
+   "21%",
+   "50%",
+   "0%"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 49,
+  "q": "Mycobacterium tuberculosis is classified by oxygen requirement as an:",
+  "options": [
+   "Microaerophile",
+   "Obligate aerobe",
+   "Facultative anaerobe",
+   "Obligate anaerobe"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 50,
+  "q": "Pseudomonas aeruginosa is classified by oxygen requirement as an:",
+  "options": [
+   "Microaerophile",
+   "Obligate anaerobe",
+   "Aerotolerant anaerobe",
+   "Obligate aerobe"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 51,
+  "q": "Clostridium tetani is classified by oxygen requirement as an:",
+  "options": [
+   "Obligate aerobe",
+   "Facultative anaerobe",
+   "Microaerophile",
+   "Obligate anaerobe"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 52,
+  "q": "Clostridium perfringens is classified by oxygen requirement as an:",
+  "options": [
+   "Obligate anaerobe",
+   "Aerotolerant anaerobe",
+   "Facultative anaerobe",
+   "Obligate aerobe"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 53,
+  "q": "Bacteroides spp. are classified by oxygen requirement as:",
+  "options": [
+   "Obligate anaerobes",
+   "Microaerophiles",
+   "Facultative anaerobes",
+   "Obligate aerobes"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 54,
+  "q": "Escherichia coli is classified by oxygen requirement as a:",
+  "options": [
+   "Obligate anaerobe",
+   "Facultative anaerobe",
+   "Microaerophile",
+   "Obligate aerobe"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 55,
+  "q": "Staphylococcus aureus is classified by oxygen requirement as a:",
+  "options": [
+   "Facultative anaerobe",
+   "Obligate anaerobe",
+   "Aerotolerant anaerobe",
+   "Obligate aerobe"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 56,
+  "q": "Salmonella spp. are classified by oxygen requirement as:",
+  "options": [
+   "Microaerophiles",
+   "Obligate aerobes",
+   "Facultative anaerobes",
+   "Obligate anaerobes"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 57,
+  "q": "Campylobacter jejuni is the example given for a:",
+  "options": [
+   "Obligate aerobe",
+   "Aerotolerant anaerobe",
+   "Microaerophile",
+   "Facultative anaerobe"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 58,
+  "q": "Helicobacter pylori is classified by oxygen requirement as a:",
+  "options": [
+   "Obligate aerobe",
+   "Facultative anaerobe",
+   "Obligate anaerobe",
+   "Microaerophile"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 59,
+  "q": "Lactobacillus spp. are classified by oxygen requirement as:",
+  "options": [
+   "Microaerophiles",
+   "Obligate aerobes",
+   "Aerotolerant anaerobes",
+   "Obligate anaerobes"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 60,
+  "q": "Oxygen kills obligate anaerobes mainly because they lack:",
+  "options": [
+   "A cell wall",
+   "Detoxifying enzymes",
+   "Endospores",
+   "Flagella for movement"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 61,
+  "q": "An endospore is best described as a:",
+  "options": [
+   "Dormant survival structure",
+   "Method of bacterial reproduction",
+   "Form of arrangement",
+   "Type of flagellum"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 62,
+  "q": "One bacterial cell forming one spore, which later forms one cell, shows that spores are for:",
+  "options": [
+   "Reproduction, not survival",
+   "Growth in oxygen",
+   "Survival, not reproduction",
+   "Movement in the host"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 63,
+  "q": "The aerobic spore-forming genus in these notes is:",
+  "options": [
+   "Clostridium",
+   "Bacillus",
+   "Staphylococcus",
+   "Vibrio"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 64,
+  "q": "The anaerobic spore-forming genus in these notes is:",
+  "options": [
+   "Pseudomonas",
+   "Escherichia",
+   "Bacillus",
+   "Clostridium"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 65,
+  "q": "Bacillus anthracis is classified by spore formation as:",
+  "options": [
+   "Atypical L-form",
+   "Spore-forming",
+   "Non-spore-forming",
+   "Obligate intracellular"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 66,
+  "q": "Clostridium tetani is classified by spore formation as:",
+  "options": [
+   "Atypical L-form",
+   "Non-spore-forming",
+   "Obligate intracellular",
+   "Spore-forming"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 67,
+  "q": "Clostridium botulinum is classified by spore formation as:",
+  "options": [
+   "Atypical L-form",
+   "Non-spore-forming",
+   "Obligate intracellular",
+   "Spore-forming"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 68,
+  "q": "Staphylococcus aureus is classified by spore formation as:",
+  "options": [
+   "Non-spore-forming",
+   "Obligate intracellular",
+   "Spore-forming",
+   "Atypical L-form"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 69,
+  "q": "Vibrio cholerae is classified by spore formation as:",
+  "options": [
+   "Obligate intracellular",
+   "Atypical L-form",
+   "Spore-forming",
+   "Non-spore-forming"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 70,
+  "q": "Escherichia coli is classified by spore formation as:",
+  "options": [
+   "Obligate intracellular",
+   "Non-spore-forming",
+   "Spore-forming",
+   "Atypical L-form"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 71,
+  "q": "Endospores are important in sterilisation because they resist:",
+  "options": [
+   "Cold, heat and acidity",
+   "Acid, alkali and drying",
+   "Heat, drying and disinfectants",
+   "Oxygen, cold, acidity and alkali"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 72,
+  "q": "Most spore-forming bacteria in soil are:",
+  "options": [
+   "Without a cell wall",
+   "Not pathogenic",
+   "Obligate intracellular",
+   "Always pathogenic"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 73,
+  "q": "Psychrophiles grow best:",
+  "options": [
+   "Only without oxygen",
+   "At extremely high temperatures",
+   "At low temperatures",
+   "At moderate temperatures"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 74,
+  "q": "Mesophiles grow best over the range:",
+  "options": [
+   "25-45 degrees C",
+   "0-20 degrees C",
+   "Below 5 degrees C only",
+   "Above 50 degrees C"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 75,
+  "q": "The optimum temperature for most mesophiles is about:",
+  "options": [
+   "55 degrees C",
+   "37 degrees C",
+   "25 degrees C",
+   "15 degrees C"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 76,
+  "q": "Thermophiles grow best:",
+  "options": [
+   "Only at body temperature",
+   "At low, near-freezing temperatures",
+   "At extremely high temperatures",
+   "At moderate temperatures"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 77,
+  "q": "Most human pathogens are classified by temperature as:",
+  "options": [
+   "Psychrophiles",
+   "Thermophiles",
+   "Mesophiles",
+   "Microaerophiles"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 78,
+  "q": "Escherichia coli is classified by temperature as a:",
+  "options": [
+   "Mesophile",
+   "Thermophile",
+   "Acidophile",
+   "Psychrophile"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 79,
+  "q": "Staphylococcus aureus is classified by temperature as a:",
+  "options": [
+   "Psychrophile",
+   "Alkalophile",
+   "Mesophile",
+   "Thermophile"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 80,
+  "q": "Listeria monocytogenes is a food-safety concern because it can:",
+  "options": [
+   "Grow only at high heat",
+   "Grow slowly in the fridge",
+   "Form resistant spores in chilled food",
+   "Live only inside cells"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 81,
+  "q": "Thermus aquaticus is classified by temperature as a:",
+  "options": [
+   "Neutrophile",
+   "Thermophile",
+   "Psychrophile",
+   "Mesophile"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 82,
+  "q": "Thermus aquaticus is important as the source of:",
+  "options": [
+   "Penicillin for treatment",
+   "Alkaline peptone water",
+   "Taq polymerase for PCR",
+   "Catalase for detoxifying"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 83,
+  "q": "Acidophiles grow best at a pH:",
+  "options": [
+   "Of 8.5 to 9",
+   "Below 7",
+   "Above 7",
+   "At about 7"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 84,
+  "q": "Neutrophiles grow best at a pH:",
+  "options": [
+   "Below 4",
+   "Around 7",
+   "Of 1 to 2",
+   "Above 9"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 85,
+  "q": "Alkalophiles grow best at a pH:",
+  "options": [
+   "At exactly 7",
+   "Of 1 to 2",
+   "Below 7",
+   "Above 7"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 86,
+  "q": "Thiobacillus spp. are the example given for:",
+  "options": [
+   "Neutrophiles",
+   "Thermophiles",
+   "Acidophiles",
+   "Alkalophiles"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 87,
+  "q": "Escherichia coli is classified by pH requirement as a:",
+  "options": [
+   "Psychrophile",
+   "Acidophile",
+   "Neutrophile",
+   "Alkalophile"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 88,
+  "q": "Vibrio cholerae is classified by pH requirement as an:",
+  "options": [
+   "Alkalophile",
+   "Neutrophile",
+   "Thermophile",
+   "Acidophile"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 89,
+  "q": "Vibrio cholerae grows especially well at about:",
+  "options": [
+   "pH about 4",
+   "pH exactly 7",
+   "pH 1-2",
+   "pH 8.5-9"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 90,
+  "q": "The pH of human blood, at which neutrophiles grow well, is about:",
+  "options": [
+   "7.4",
+   "2.0",
+   "4.0",
+   "8.8"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 91,
+  "q": "Most microorganisms are both:",
+  "options": [
+   "Mesophiles and acidophiles",
+   "Psychrophiles and alkalophiles",
+   "Mesophiles and neutrophiles",
+   "Thermophiles and acidophiles"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 92,
+  "q": "The healthy vagina is kept at about pH 4 mainly by:",
+  "options": [
+   "Vibrio cholerae",
+   "Lactobacillus spp.",
+   "Escherichia coli",
+   "Thiobacillus spp."
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 93,
+  "q": "Alkaline peptone water is used in the laboratory to favour:",
+  "options": [
+   "Mycoplasma spp.",
+   "Escherichia coli",
+   "Vibrio cholerae",
+   "Clostridium tetani"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 94,
+  "q": "Vibrio cholerae infection is more likely when stomach acid is reduced because:",
+  "options": [
+   "More organisms survive the stomach",
+   "Oxygen rises in the stomach",
+   "Resistant spores form in the stomach",
+   "Flagella grow in the stomach"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 95,
+  "q": "Atrichous bacteria have:",
+  "options": [
+   "A tuft at one end",
+   "One flagellum",
+   "No flagella",
+   "Flagella all over"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 96,
+  "q": "Monotrichous bacteria have:",
+  "options": [
+   "A tuft at both ends",
+   "Flagella all over the body",
+   "No flagella at either end at all",
+   "One flagellum at one end"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 97,
+  "q": "Lophotrichous bacteria have:",
+  "options": [
+   "No flagella at all on the cell",
+   "A tuft of flagella at one end",
+   "A tuft at both ends of the cell",
+   "One single flagellum at one pole"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 98,
+  "q": "Amphitrichous bacteria have:",
+  "options": [
+   "Flagella at one end only",
+   "Flagella at both ends",
+   "No flagella at all on it",
+   "Flagella all over the body"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 99,
+  "q": "Peritrichous bacteria have flagella:",
+  "options": [
+   "Only at both ends of the bacterial body",
+   "Nowhere on the body surface at all",
+   "Evenly distributed all over the body",
+   "Only at one end of the bacterial body"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 100,
+  "q": "Corynebacterium diphtheriae is classified by flagella as:",
+  "options": [
+   "Atrichous",
+   "Monotrichous",
+   "Peritrichous",
+   "Lophotrichous"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 101,
+  "q": "Shigella spp. are classified by flagella as:",
+  "options": [
+   "Monotrichous",
+   "Atrichous",
+   "Peritrichous",
+   "Amphitrichous"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 102,
+  "q": "Vibrio cholerae is classified by flagella as:",
+  "options": [
+   "Monotrichous",
+   "Lophotrichous",
+   "Atrichous",
+   "Peritrichous"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 103,
+  "q": "Pseudomonas aeruginosa is classified by flagella as:",
+  "options": [
+   "Atrichous",
+   "Peritrichous",
+   "Monotrichous",
+   "Amphitrichous"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 104,
+  "q": "Spirillum spp. are the example given for:",
+  "options": [
+   "Peritrichous",
+   "Lophotrichous",
+   "Atrichous",
+   "Monotrichous"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 105,
+  "q": "Rhodospirillum spp. are the example given for:",
+  "options": [
+   "Lophotrichous",
+   "Atrichous",
+   "Amphitrichous",
+   "Monotrichous"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 106,
+  "q": "Escherichia coli is classified by flagella as:",
+  "options": [
+   "Atrichous",
+   "Amphitrichous",
+   "Peritrichous",
+   "Monotrichous"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 107,
+  "q": "Salmonella spp. are classified by flagella as:",
+  "options": [
+   "Atrichous",
+   "Monotrichous",
+   "Lophotrichous",
+   "Peritrichous"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 108,
+  "q": "Proteus spp. are classified by flagella as:",
+  "options": [
+   "Peritrichous",
+   "Atrichous",
+   "Monotrichous",
+   "Amphitrichous"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 109,
+  "q": "A pathogenic bacterium is one that:",
+  "options": [
+   "Causes disease only in weak defences",
+   "Never causes disease in any healthy person",
+   "Is always part of normal flora",
+   "Can cause disease in a healthy person"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 110,
+  "q": "An opportunistic bacterium causes disease mainly when:",
+  "options": [
+   "It is taken in a very large dose",
+   "Host defences are weakened",
+   "It grows at a high temperature",
+   "It forms a resistant spore"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 111,
+  "q": "Salmonella Typhi, the cause of typhoid fever, is classified as:",
+  "options": [
+   "Atypical L-form",
+   "Opportunistic only",
+   "Pathogenic",
+   "Non-pathogenic"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 112,
+  "q": "Mycobacterium tuberculosis is classified by pathogenicity as:",
+  "options": [
+   "Pathogenic",
+   "Normal flora",
+   "Non-pathogenic",
+   "Opportunistic only"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 113,
+  "q": "Lactobacillus spp. are given as an example of:",
+  "options": [
+   "Spore-forming bacteria",
+   "Non-pathogenic bacteria",
+   "Intracellular bacteria",
+   "Pathogenic bacteria"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 114,
+  "q": "Pseudomonas aeruginosa is given as an example of an:",
+  "options": [
+   "Obligate anaerobe",
+   "Non-pathogenic organism",
+   "Obligate intracellular organism",
+   "Opportunistic pathogen"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 115,
+  "q": "Staphylococcus epidermidis is given as an example of an:",
+  "options": [
+   "True pathogen",
+   "Spore-forming pathogen",
+   "Opportunistic pathogen",
+   "Intracellular pathogen"
+  ],
+  "answer": "C"
+ },
+ {
+  "n": 116,
+  "q": "Normal commensal Escherichia coli is most abundant in the:",
+  "options": [
+   "Stomach and oesophagus",
+   "Lungs and bronchi",
+   "Small intestine only",
+   "Large intestine (colon)"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 117,
+  "q": "Escherichia coli is best described overall as a:",
+  "options": [
+   "Pathogen in every strain and every body site",
+   "Commensal that can become pathogenic",
+   "Non-pathogen in every site",
+   "Spore-forming commensal"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 118,
+  "q": "An L-form bacterium is atypical because it has:",
+  "options": [
+   "Lost all of its flagella",
+   "Lost all or part of its cell wall",
+   "Formed a resistant endospore",
+   "Gained an extra thick cell wall layer"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 119,
+  "q": "Chlamydia trachomatis is atypical because it is:",
+  "options": [
+   "Obligate intracellular",
+   "Without a cell wall",
+   "A free-living aerobe",
+   "Spore-forming"
+  ],
+  "answer": "A"
+ },
+ {
+  "n": 120,
+  "q": "Rickettsia prowazekii, the cause of typhus, is usually spread by:",
+  "options": [
+   "Sexual contact only",
+   "Inhaled soil spores",
+   "Contaminated drinking water supplies",
+   "Insects such as lice and ticks"
+  ],
+  "answer": "D"
+ },
+ {
+  "n": 121,
+  "q": "Chlamydia and Rickettsia cannot be grown on ordinary agar plates because they need:",
+  "options": [
+   "A complete absence of oxygen",
+   "Living host cells",
+   "A very low temperature",
+   "A very alkaline medium"
+  ],
+  "answer": "B"
+ },
+ {
+  "n": 122,
+  "q": "Which full description correctly fits Vibrio cholerae?",
+  "options": [
+   "Spherical, atrichous, spore-forming, acidophile,",
+   "Rod-shaped, peritrichous, non-spore-forming, mesophile neutrophile, mesophile",
+   "Spiral, amphitrichous, spore-forming, thermophile,",
+   "Comma-shaped, monotrichous, non-spore-forming, acidophile alkalophile"
+  ],
+  "answer": "D"
+ }
+]
