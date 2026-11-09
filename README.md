@@ -46,13 +46,13 @@ No build step: the files are served as they are from the repo root.
 | File | What it is |
 |---|---|
 | `index.html` | The app shell — home, quiz, results and settings screens, plus an add-a-set modal |
-| `css/style.css` | Ocean Blue styling (light-first, Sora + Inter), mobile-first |
+| `css/style.css` | Ocean Blue styling on a soft blue background (light-first, Sora + Inter), mobile-first |
 | `js/app.js` | Quiz engine, grading, heatmap + filter tabs + pagination, install prompt, offline toast, localStorage saving, service worker registration |
 | `js/pdf-parser.js` | PDF text extraction (pdf.js) + MCQ text parser |
 | `data/naming-classification-bacteria.json` | Starter set, 122 questions |
 | `data/systematic-classification-bacteria.json` | Starter set, 60 questions |
 | `icons/icon.svg` | PWA icon (bold question mark on a blue gradient) |
-| `manifest.json` | PWA manifest (name TestRecall, theme colour #EFF4F1) |
+| `manifest.json` | PWA manifest (name TestRecall, theme colour #EAF1F9) |
 | `sw.js` | Service worker — caches the app shell and pdf.js for offline use |
 | `docs/mcq-format-guide.md` | The PDF format spec to send to bots that make MCQ PDFs |
 

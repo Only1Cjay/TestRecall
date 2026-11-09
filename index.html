@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TestRecall — MCQ Practice</title>
 <meta name="description" content="MCQ practice for pharmacy exams. Tap answers, get graded, add your own sets from a PDF. Works offline.">
-<meta name="theme-color" content="#EFF4F1">
+<meta name="theme-color" content="#EAF1F9">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 <link rel="apple-touch-icon" href="icons/icon.svg">
@@ -18,7 +18,7 @@
       var t = localStorage.getItem('testrecall.theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
       var m = document.querySelector('meta[name="theme-color"]');
-      if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
+      if (m) m.setAttribute('content', t === 'dark' ? '#0D1526' : '#EAF1F9');
     } catch (e) {}
   })();
 </script>
@@ -64,16 +64,21 @@
     <div class="progress"><div id="quiz-progress"></div></div>
     <div class="quiz-meta">
       <span class="qnum" id="quiz-qnum"></span>
-      <span class="qnum"><span id="quiz-pos"></span>/<span id="quiz-total"></span></span>
-      <button class="flag-btn" id="quiz-flag" aria-label="Flag for later" title="Flag for later">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-      </button>
+      <span class="quiz-meta-right">
+        <span class="qnum" id="quiz-answered"></span>
+        <button class="flag-btn" id="quiz-flag" aria-label="Flag for later" title="Flag for later">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        </button>
+      </span>
     </div>
     <p class="qtext" id="quiz-qtext"></p>
     <div id="quiz-options"></div>
     <div class="quiz-nav">
       <button class="btn ghost" id="quiz-prev">← Previous</button>
-      <button class="btn ghost" id="quiz-grid-btn">Grid</button>
+      <button class="btn grid-nav-btn" id="quiz-grid-btn" aria-label="Jump to a question">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span id="quiz-grid-label"></span>
+      </button>
       <button class="btn primary" id="quiz-next">Next →</button>
     </div>
     <div class="submit-wrap">

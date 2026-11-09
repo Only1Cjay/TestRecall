@@ -1,17 +1,17 @@
-/* TestRecall — Ocean theme by default, with six colour themes.
-   Light-first with a dark toggle, Sora + Inter.
+/* TestRecall — Ocean Blue on a soft blue background, minimalist like the
+   theme-picker preview. Light-first with a dark toggle, Sora + Inter.
    Mobile-first, no framework. Tokens follow the user's other apps:
    tinted background, white cards, layered soft shadows, 22px radii. */
 :root,
 html[data-theme="light"] {
-  --bg: #EFF4F1;
+  --bg: #EAF1F9;
   --card: #FFFFFF;
-  --card-2: #E7EEE9;
-  --line: #D9E2DB;
-  --line-strong: #BFCDBF;
-  --text: #101812;
-  --text-soft: #45524A;
-  --muted: #8A938C;
+  --card-2: #E2EAF4;
+  --line: #D4DFEC;
+  --line-strong: #BCCBDD;
+  --text: #0F1B2D;
+  --text-soft: #4A5B70;
+  --muted: #7E8CA0;
   --accent: #2E7DD1;
   --accent-deep: #1D5FA8;
   --accent-soft: #DCEBF9;
@@ -22,10 +22,10 @@ html[data-theme="light"] {
   --danger-soft: #FDECEC;
   --amber: #C98420;
   --amber-soft: #FBEED3;
-  --shadow-sm: 0 2px 6px rgba(16, 24, 18, 0.05);
-  --shadow: 0 8px 22px rgba(16, 24, 18, 0.08), 0 2px 6px rgba(16, 24, 18, 0.05);
-  --shadow-lg: 0 16px 40px rgba(16, 24, 18, 0.12);
-  --overlay: rgba(10, 18, 14, 0.55);
+  --shadow-sm: 0 2px 6px rgba(15, 30, 55, 0.05);
+  --shadow: 0 8px 22px rgba(15, 30, 55, 0.08), 0 2px 6px rgba(15, 30, 55, 0.05);
+  --shadow-lg: 0 16px 40px rgba(15, 30, 55, 0.12);
+  --overlay: rgba(13, 25, 45, 0.55);
   --radius: 22px;
   --radius-sm: 14px;
   --font-head: 'Sora', system-ui, sans-serif;
@@ -33,14 +33,14 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --bg: #0E1712;
-  --card: #16241C;
-  --card-2: #1E2F25;
-  --line: #26382C;
-  --line-strong: #33473A;
-  --text: #EFF6F1;
-  --text-soft: #B3C4B8;
-  --muted: #7E9384;
+  --bg: #0D1526;
+  --card: #152238;
+  --card-2: #1B3049;
+  --line: #24384F;
+  --line-strong: #2E4763;
+  --text: #EAF2FB;
+  --text-soft: #A9BCD4;
+  --muted: #7E94B0;
   --accent: #5EA8E8;
   --accent-deep: #2E7DD1;
   --accent-soft: rgba(94, 168, 232, 0.14);
@@ -194,6 +194,16 @@ html[data-theme="dark"] a { color: var(--accent); }
 .progress > div { height: 100%; background: var(--accent); width: 0; transition: width 0.25s; }
 .quiz-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .quiz-meta .qnum { color: var(--muted); font-size: 13px; }
+#quiz-qnum { text-transform: uppercase; letter-spacing: 0.03em; }
+.quiz-meta-right { display: flex; align-items: center; gap: 10px; }
+.grid-nav-btn {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent-deep);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.grid-nav-btn svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.grid-nav-btn span { font-weight: 700; }
 .flag-btn {
   background: var(--card);
   border: 1px solid var(--line);

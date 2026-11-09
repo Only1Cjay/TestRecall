@@ -128,7 +128,7 @@
   function applyTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
     var m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
+    if (m) m.setAttribute('content', t === 'dark' ? '#0D1526' : '#EAF1F9');
     var sl = $('settings-theme-label');
     if (sl) sl.textContent = t === 'dark' ? 'Light' : 'Dark';
     try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
@@ -291,7 +291,6 @@
       picked: {}, flagged: {}, startedAt: Date.now(), elapsed: 0, timerId: null,
     };
     $('quiz-title').textContent = set.title;
-    $('quiz-total').textContent = items.length;
     quiz.timerId = setInterval(function () {
       quiz.elapsed = Math.floor((Date.now() - quiz.startedAt) / 1000);
       $('quiz-timer').textContent = fmtTime(quiz.elapsed);
@@ -305,9 +304,12 @@
 
   function renderQuestion() {
     var item = quiz.items[quiz.pos];
-    $('quiz-pos').textContent = (quiz.pos + 1);
+    $('quiz-qnum').textContent = 'Question ' + (quiz.pos + 1) + ' of ' + quiz.items.length;
+    var gl = $('quiz-grid-label');
+    if (gl) gl.textContent = (quiz.pos + 1) + ' / ' + quiz.items.length;
+    var an = $('quiz-answered');
+    if (an) an.textContent = '• Answered ' + answeredCount();
     $('quiz-progress').style.width = Math.round((answeredCount() / quiz.items.length) * 100) + '%';
-    $('quiz-qnum').textContent = 'Question ' + (quiz.pos + 1);
     $('quiz-qtext').textContent = item.q;
     var flagBtn = $('quiz-flag');
     var isFlagged = !!quiz.flagged[quiz.pos];
