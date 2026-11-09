@@ -1,4 +1,5 @@
-/* TestRecall — Mint Pop theme. Light-first with a dark toggle, Sora + Inter.
+/* TestRecall — Ocean theme by default, with six colour themes.
+   Light-first with a dark toggle, Sora + Inter.
    Mobile-first, no framework. Tokens follow the user's other apps:
    tinted background, white cards, layered soft shadows, 22px radii. */
 :root,
@@ -11,12 +12,12 @@ html[data-theme="light"] {
   --text: #101812;
   --text-soft: #45524A;
   --muted: #8A938C;
-  --accent: #00A86B;
-  --accent-deep: #0B7A4B;
-  --accent-soft: #D6F5E6;
-  --accent-glow: rgba(0, 168, 107, 0.25);
-  --btn: #1F7A54;
-  --btn-glow: rgba(31, 122, 84, 0.22);
+  --accent: #2E7DD1;
+  --accent-deep: #1D5FA8;
+  --accent-soft: #DCEBF9;
+  --accent-glow: rgba(46, 125, 209, 0.25);
+  --btn: #2A6CB0;
+  --btn-glow: rgba(42, 108, 176, 0.22);
   --danger: #D64545;
   --danger-soft: #FDECEC;
   --amber: #C98420;
@@ -40,12 +41,12 @@ html[data-theme="dark"] {
   --text: #EFF6F1;
   --text-soft: #B3C4B8;
   --muted: #7E9384;
-  --accent: #2FD698;
-  --accent-deep: #00A86B;
-  --accent-soft: rgba(47, 214, 152, 0.14);
-  --accent-glow: rgba(47, 214, 152, 0.30);
-  --btn: #2E9E6B;
-  --btn-glow: rgba(46, 158, 107, 0.30);
+  --accent: #5EA8E8;
+  --accent-deep: #2E7DD1;
+  --accent-soft: rgba(94, 168, 232, 0.14);
+  --accent-glow: rgba(94, 168, 232, 0.30);
+  --btn: #4C92DB;
+  --btn-glow: rgba(76, 146, 219, 0.30);
   --danger: #F08A7C;
   --danger-soft: rgba(240, 138, 124, 0.14);
   --amber: #E0A93E;
@@ -57,7 +58,17 @@ html[data-theme="dark"] {
 }
 
 /* ---------- colour themes: override the accent family (light + dark) ----------
-   Mint is the default (the values above), so it needs no rules here. */
+   Ocean is the default (the values above). Mint and the rest are overrides. */
+html[data-color="mint"][data-theme="light"] {
+  --accent: #00A86B; --accent-deep: #0B7A4B; --accent-soft: #D6F5E6;
+  --accent-glow: rgba(0, 168, 107, 0.25);
+  --btn: #1F7A54; --btn-glow: rgba(31, 122, 84, 0.22);
+}
+html[data-color="mint"][data-theme="dark"] {
+  --accent: #2FD698; --accent-deep: #00A86B; --accent-soft: rgba(47, 214, 152, 0.14);
+  --accent-glow: rgba(47, 214, 152, 0.30);
+  --btn: #2E9E6B; --btn-glow: rgba(46, 158, 107, 0.30);
+}
 html[data-color="ocean"][data-theme="light"] {
   --accent: #2E7DD1; --accent-deep: #1D5FA8; --accent-soft: #DCEBF9;
   --accent-glow: rgba(46, 125, 209, 0.25);

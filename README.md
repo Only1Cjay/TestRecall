@@ -12,7 +12,7 @@ MCQ practice for pharmacy exams — minus the paper. Pick a set to start. Questi
 - **Auto-graded** — submit (with a confirm step) and get your score plus a review of every question: a colour heatmap (green = correct, red = missed, amber outline = flagged), filter tabs for All / Failed / Correct / Flagged, and pages of 20 questions at a time. You can also re-practise just the missed ones.
 - **Add your own sets** — tap the floating (+) button to open the add-a-set modal, upload an MCQ PDF and the app reads the questions, options and answer key out of it, then shows you a review screen to check everything (and fix any wrong key) before saving. Or paste questions as text instead.
 - **Offline-first PWA** — after the first visit, a service worker caches the app and the PDF reader, so it works with no connection. Your sets and scores live in your browser's local storage; there is no server and no account. Install it from the banner or the menu for an app icon on your home screen, and a toast tells you when you're offline.
-- **Settings** — switch light/dark theme from the header or Settings, pick one of six accent colours (Mint Pop, Ocean, Royal, Sunset, Rose, Amber) in Settings, and see the PDFs you've uploaded, grouped by day.
+- **Settings** — switch light/dark theme from the header or Settings, pick one of six accent colours in Settings — Ocean is the default (Mint Pop, Royal, Sunset, Rose and Amber also available) — and see the PDFs you've uploaded, grouped by day.
 
 ## How to use it
 
@@ -46,13 +46,13 @@ No build step: the files are served as they are from the repo root.
 | File | What it is |
 |---|---|
 | `index.html` | The app shell — home, quiz, results and settings screens, plus an add-a-set modal |
-| `css/style.css` | Mint Pop styling (light-first, Sora + Inter), mobile-first |
+| `css/style.css` | Ocean styling by default (light-first, Sora + Inter), mobile-first, with six colour themes |
 | `js/app.js` | Quiz engine, grading, heatmap + filter tabs + pagination, install prompt, offline toast, localStorage saving, service worker registration |
 | `js/pdf-parser.js` | PDF text extraction (pdf.js) + MCQ text parser |
 | `data/naming-classification-bacteria.json` | Starter set, 122 questions |
 | `data/systematic-classification-bacteria.json` | Starter set, 60 questions |
-| `icons/icon.svg` | PWA icon (bold question mark on a green gradient) |
-| `manifest.json` | PWA manifest (name TestRecall, mint theme #EFF4F1) |
+| `icons/icon.svg` | PWA icon (bold question mark on a blue gradient) |
+| `manifest.json` | PWA manifest (name TestRecall, theme colour #EFF4F1) |
 | `sw.js` | Service worker — caches the app shell and pdf.js for offline use |
 | `docs/mcq-format-guide.md` | The PDF format spec to send to bots that make MCQ PDFs |
 
