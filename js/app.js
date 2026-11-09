@@ -687,6 +687,30 @@
     pendingQuiz = null;
   }
 
+  /* ---------- how to use guide ---------- */
+  function openGuideModal() { $('guide-modal').classList.remove('hidden'); }
+  function closeGuideModal() { $('guide-modal').classList.add('hidden'); }
+  function copyGuidePrompt() {
+    var text = $('guide-prompt').textContent;
+    function done() { showToast('Prompt copied', false); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text);
+      done();
+    }
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   function answeredCount() { return Object.keys(quiz.picked).length; }
 
   function renderQuestion() {
@@ -1230,6 +1254,7 @@
       if (ev.key !== 'Escape') return;
       if (!$('course-modal').classList.contains('hidden')) closeCourseModal();
       else if (!$('add-modal').classList.contains('hidden')) closeAddModal();
+      else if (!$('guide-modal').classList.contains('hidden')) closeGuideModal();
       else if (!$('start-modal').classList.contains('hidden')) closeStartModal();
       else if (!$('grid-backdrop').classList.contains('hidden')) $('grid-backdrop').classList.add('hidden');
       else if (!$('confirm-modal').classList.contains('hidden')) closeConfirm();
@@ -1268,6 +1293,12 @@
       renderSettings();
       renderHome();
     });
+
+    /* ---------- how to use guide ---------- */
+    on('btn-howto', 'click', openGuideModal);
+    on('guide-close', 'click', closeGuideModal);
+    on('guide-modal', 'click', function (ev) { if (ev.target === $('guide-modal')) closeGuideModal(); });
+    on('btn-copy-prompt', 'click', copyGuidePrompt);
 
     /* ---------- review course select ---------- */
     on('review-course', 'change', function () {

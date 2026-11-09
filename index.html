@@ -265,6 +265,15 @@
         </button>
       </div>
     </div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">How to use</div>
+          <div class="settings-desc">A quick guide to the app, plus the prompt for making MCQ sets.</div>
+        </div>
+        <button class="btn ghost settings-btn" id="btn-howto">Open</button>
+      </div>
+    </div>
     <div class="settings-card hidden" id="restore-starters-card">
       <div class="settings-row">
         <div>
@@ -303,6 +312,41 @@
         <button class="btn ghost" id="course-cancel">Cancel</button>
         <button class="btn primary" id="course-save">Add course</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ============ HOW TO USE (modal) ============ -->
+  <div class="modal-backdrop hidden" id="guide-modal" role="dialog" aria-modal="true" aria-label="How to use TestRecall">
+    <div class="modal wide">
+      <div class="modal-head">
+        <h3>How to use TestRecall</h3>
+        <button class="icon-btn" id="guide-close" aria-label="Close">✕</button>
+      </div>
+      <ol class="guide-steps">
+        <li>Open the app and install it if you want it on your home screen: menu → Install app (Android), or Safari Share → Add to Home Screen (iPhone).</li>
+        <li>Pick a course on the home screen (PHM 201, PCG, PCH 201, PCT, PIO), then tap a set. Use the search bar to find a set by name.</li>
+        <li>Choose how to practise: Exam simulation — answer everything first, score and review at the end, like the real thing. Instant marking — each answer is marked the moment you tap it, and the correct answer is shown. Then set a timer in minutes, or tap Untimed.</li>
+        <li>Answer the questions: tap an option to answer. Tap the flag to mark a question. Tap the middle grid button (e.g. 24/122) to jump to any question. Use Prev / Next to move. Tap Submit answers when you're done. If the timer runs out, it submits itself.</li>
+        <li>See your results: your score, a heatmap of every question, and filters for All / Failed / Correct / Flagged. Tap any question to review it. Then Retake the set or Practise missed only.</li>
+        <li>Review everything you missed: the blue card on the home screen builds one mixed session from every question you missed across all your sets (or inside a course, just that course's missed questions).</li>
+        <li>Add your own sets: tap the + button (bottom right) and upload an MCQ PDF, or paste the questions as text. Pick the course it belongs to, or create a new one. The app reads the PDF on your phone.</li>
+        <li>Delete a set: tap the trash icon on a set card and confirm. The built-in starter sets only hide on your own phone; bring them back in Settings → Restore starter sets.</li>
+        <li>Create a course: tap the circular + at the top right of the home screen, enter the course code (e.g. PCH 201) and the full name (e.g. Pharmaceutical Chemistry). A course with no sets stays hidden until you add one.</li>
+        <li>Streaks: every set you submit counts for that day.</li>
+        <li>Offline: after the first time you open the app online, everything works offline, including uploading and reading PDFs.</li>
+      </ol>
+      <h3 class="guide-sub">Making your own MCQ sets</h3>
+      <p class="sub">Use this prompt with any AI when you upload your lecture notes or textbook pages, so the questions come out in the exact format TestRecall accepts.</p>
+      <pre class="guide-prompt" id="guide-prompt">Create as many exam-style multiple choice questions as you can from my uploaded material. Follow this strict format exactly:
+1. Number the questions in order, one per line: '1. Question text?'
+2. Each question has exactly four options, one per line: 'A. ...', 'B. ...', 'C. ...', 'D. ...'
+3. Exactly one correct answer per question.
+4. Do not write 'A.', 'B.', 'C.' or 'D.' anywhere inside a question or option text.
+5. Do not use section headings. Mix the questions fully, like a real exam: do not follow the order of the source material, and do not cluster questions on the same topic or example together.
+6. Spread the correct answers evenly across A, B, C and D, with no pattern, and do not make the correct option longer or shorter than the others.
+7. Test examples and applications, not just definitions.
+8. At the very end, under the heading 'Answer Key', give the key in rows of 10: one line with the question numbers, then one line with the matching letters. Nothing after the key.</pre>
+      <div class="btn-row"><button class="btn primary" id="btn-copy-prompt">Copy prompt</button></div>
     </div>
   </div>
 
