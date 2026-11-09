@@ -131,6 +131,16 @@
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   }
 
+  /* ---------- offline toast ---------- */
+  var toastTimer = null;
+  function showToast(msg, sticky) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.remove('hidden');
+    if (toastTimer) { clearTimeout(toastTimer); toastTimer = null; }
+    if (!sticky) toastTimer = setTimeout(function () { t.classList.add('hidden'); }, 3500);
+  }
+
   /* ---------- install prompt ---------- */
   var INSTALL_KEY = 'testrecall.installDismissed';
   var deferredPrompt = null;
@@ -699,6 +709,11 @@
       try { localStorage.setItem(INSTALL_KEY, '1'); } catch (e) {}
     });
     showInstallBanner();
+
+    /* ---------- offline / online toast ---------- */
+    window.addEventListener('offline', function () { showToast("You're offline — your saved sets still work.", true); });
+    window.addEventListener('online', function () { showToast('Back online.', false); });
+    if (!navigator.onLine) showToast("You're offline — your saved sets still work.", true);
 
     $('btn-add-fab').addEventListener('click', openAddModal);
     $('btn-close-add').addEventListener('click', closeAddModal);

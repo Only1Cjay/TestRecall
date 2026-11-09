@@ -31,7 +31,7 @@
     <img class="logo" src="icons/icon.svg" alt="TestRecall logo" width="40" height="40">
     <div class="head-text">
       <h1>TestRecall</h1>
-      <p>Practice like a Pro</p>
+      <p>Practice like a Pro.</p>
     </div>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
@@ -52,7 +52,6 @@
     <h2>Your sets</h2>
     <p class="sub">Pick a set to start. Questions and options shuffle every attempt, so you learn the answers, not the order.</p>
     <div id="set-list" style="margin-top: 16px;"></div>
-    <p class="add-hint">Works offline once opened — your sets and scores live on this device.</p>
   </section>
 
   <!-- ============ QUIZ ============ -->
@@ -188,6 +187,10 @@
     <h2 style="font-size: 17px;">Uploaded PDFs</h2>
     <p class="sub">PDFs you have uploaded, grouped by day.</p>
     <div id="uploads-list"></div>
+    <h2 style="font-size: 17px;">About</h2>
+    <div class="settings-card">
+      <p class="sub" style="margin: 0;">Works offline once opened — your sets and scores live on this device. No account needed.</p>
+    </div>
     <div class="btn-row"><button class="btn ghost" id="btn-settings-home">← All sets</button></div>
   </section>
 
@@ -203,8 +206,6 @@
     </div>
   </div>
 
-  <footer>TestRecall · your sets and scores stay on this device · no account needed</footer>
-
   <div class="install-banner hidden" id="install-banner">
     <div class="install-text">
       <strong>Install TestRecall</strong>
@@ -217,6 +218,8 @@
   <button class="fab" id="btn-add-fab" aria-label="Add a set" title="Add a set">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
   </button>
+
+  <div class="toast hidden" id="toast" role="status"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
