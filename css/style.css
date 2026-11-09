@@ -109,8 +109,6 @@ header.app-head p { margin: 1px 0 0; color: var(--muted); font-size: 12px; line-
 }
 .theme-toggle:active { transform: scale(0.96); }
 .theme-toggle svg { width: 20px; height: 20px; flex: 0 0 auto; }
-html[data-theme="light"] .icon-sun { display: none; }
-html[data-theme="dark"] .icon-moon { display: none; }
 
 h2 { font-size: 21px; margin: 18px 0 6px; }
 .sub { color: var(--text-soft); margin: 0 0 14px; font-size: 14px; }
