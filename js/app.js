@@ -392,7 +392,8 @@
     var card = el('div', 'set-card');
     var head = el('div', 'set-head');
     head.appendChild(el('div', 'set-title', set.title));
-    var del = el('button', 'icon-btn', '✕');
+    var del = el('button', 'set-del');
+    del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
     del.title = 'Delete this set';
     del.setAttribute('aria-label', 'Delete ' + set.title);
     del.addEventListener('click', function (ev) {
@@ -407,24 +408,35 @@
     });
     head.appendChild(del);
     card.appendChild(head);
-    card.appendChild(el('div', 'set-desc', set.desc));
+    // Subtitle: just the question count, like the preview.
+    card.appendChild(el('div', 'set-desc', set.questions ? set.questions.length + ' questions' : set.desc));
     var stats = el('div', 'set-stats');
     if (showCourse) stats.appendChild(el('span', 'pill', set.course));
-    if (set.builtin) stats.appendChild(el('span', 'pill starter', 'Starter'));
+    if (set.builtin) stats.appendChild(el('span', 'pill starter', 'STARTER SET'));
+    if (stats.children.length) card.appendChild(stats);
     if (set.questions) {
-      stats.appendChild(el('span', 'pill', set.questions.length + ' questions'));
+      // Progress bar filled to the last score, like the preview —
+      // empty when the set has not been attempted yet.
       var last = lastAttempt(set.id);
+      var lastPct = last && last.total ? Math.round((last.score / last.total) * 100) : 0;
+      var bar = el('div', 'set-progress');
+      var fill = el('div', 'set-progress-fill');
+      fill.style.width = lastPct + '%';
+      bar.appendChild(fill);
+      card.appendChild(bar);
+      var scoreRow = el('div', 'set-stats set-score');
       if (last) {
-        var lastPct = last.total ? Math.round((last.score / last.total) * 100) : 0;
-        stats.appendChild(el('span', 'pill', 'LAST SCORE ' + lastPct + '%'));
-        stats.appendChild(el('span', 'pill', last.score + '/' + last.total));
+        scoreRow.appendChild(el('span', 'pill', 'LAST SCORE ' + lastPct + '%'));
+        scoreRow.appendChild(el('span', 'pill', last.score + '/' + last.total));
       } else {
-        stats.appendChild(el('span', 'pill', 'Not tried yet'));
+        scoreRow.appendChild(el('span', 'pill', 'NOT ATTEMPTED YET'));
       }
+      card.appendChild(scoreRow);
     } else {
-      stats.appendChild(el('span', 'pill warn', 'Could not load — check connection, then reopen'));
+      var warnRow = el('div', 'set-stats');
+      warnRow.appendChild(el('span', 'pill warn', 'Could not load — check connection, then reopen'));
+      card.appendChild(warnRow);
     }
-    card.appendChild(stats);
     var btn = el('button', 'btn primary', set.questions ? 'Start practice' : 'Retry loading');
     btn.addEventListener('click', function () {
       if (!set.questions) {
@@ -516,7 +528,7 @@
     var st = courseStats(course);
     var full = courseFullName(course);
     $('course-title').textContent = course;
-    $('course-sub').textContent = st.sets + (st.sets === 1 ? ' set' : ' sets') + (full ? ' · ' + full : '');
+    $('course-sub').textContent = (full ? full + ' · ' : '') + st.sets + (st.sets === 1 ? ' set' : ' sets');
     var missedBox = $('missed-card-course');
     if (missedBox) {
       missedBox.innerHTML = '';
@@ -718,7 +730,7 @@
     });
 
     $('quiz-prev').disabled = quiz.pos === 0;
-    $('quiz-next').textContent = quiz.pos === quiz.items.length - 1 ? 'Finish' : 'Next →';
+    $('quiz-next').textContent = quiz.pos === quiz.items.length - 1 ? 'Finish' : 'Next';
     renderGrid();
   }
 

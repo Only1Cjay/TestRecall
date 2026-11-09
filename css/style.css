@@ -297,6 +297,27 @@ html[data-theme="dark"] .course-icon { color: var(--accent); }
 }
 .upload-card:active { transform: scale(0.99); }
 
+/* ---------- course screen header: circular back chevron + title ---------- */
+.course-head { display: flex; align-items: flex-start; gap: 12px; margin: 16px 0 4px; }
+.course-head-text { flex: 1; min-width: 0; }
+.course-head-text h2 { margin: 0; }
+.course-head-text .sub { margin: 2px 0 0; }
+.icon-circle {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+  padding: 0;
+}
+.icon-circle:active { transform: scale(0.96); }
+.icon-circle svg { width: 20px; height: 20px; }
+
 /* ---------- home: set cards ---------- */
 .set-card {
   background: var(--card);
@@ -323,6 +344,26 @@ html[data-theme="dark"] .course-icon { color: var(--accent); }
 .pill.warn { color: var(--amber); border-color: var(--amber); background: var(--amber-soft); }
 .pill.starter { color: var(--accent-deep); border-color: var(--accent); background: var(--accent-soft); }
 html[data-theme="dark"] .pill.starter { color: var(--accent); }
+/* Progress bar on set cards, filled to the last score (empty when not
+   attempted), like the preview. */
+.set-progress { height: 8px; background: var(--card-2); border-radius: 99px; overflow: hidden; margin: 0 0 12px; }
+.set-progress-fill { height: 100%; background: var(--accent); width: 0; border-radius: 99px; }
+/* Delete control on set cards: a trash icon in a rounded square, like the
+   preview (top right of the card). */
+.set-del {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card-2);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.set-del svg { width: 18px; height: 18px; }
+.set-del:active { transform: scale(0.96); }
+.set-del:hover { color: var(--danger); }
 
 .add-hint { color: var(--muted); font-size: 13px; text-align: center; margin-top: 18px; }
 
@@ -413,6 +454,8 @@ html[data-theme="dark"] .pill.starter { color: var(--accent); }
 
 .quiz-nav { display: flex; gap: 10px; margin-top: 18px; }
 .quiz-nav .btn { flex: 1; }
+/* Prev is a filled pill like the preview (not a ghost outline). */
+#quiz-prev { background: var(--card-2); border-color: transparent; }
 .submit-wrap { margin-top: 22px; }
 
 /* grid panel: a centered dialog inside its blurred backdrop, not a bottom sheet */
