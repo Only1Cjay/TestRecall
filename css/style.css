@@ -355,6 +355,17 @@ html[data-theme="dark"] .miss-opt.correct .miss-tag { color: var(--accent); }
 .miss-status.flagged { color: var(--amber); background: var(--amber-soft); }
 #review-empty { text-align: center; margin: 18px 0; }
 
+/* ---------- pagers ---------- */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+.pager-btn { flex: 0 0 auto; width: auto; min-height: 40px; padding: 8px 18px; }
+.pager-label { font-size: 14px; font-weight: 600; color: var(--text-soft); text-align: center; }
+
 /* ---------- add a set ---------- */
 .tabs { display: flex; background: var(--card-2); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 16px; }
 .tabs button {

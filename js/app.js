@@ -389,6 +389,10 @@
   /* ---------- results ---------- */
   var lastResult = null;
   var resultsFilter = 'all';
+  var HEAT_PER_PAGE = 25;
+  var REVIEW_PER_PAGE = 20;
+  var heatPage = 1;
+  var reviewPage = 1;
   function renderResults(result, seconds) {
     lastResult = result;
     var pct = result.total ? Math.round((result.score / result.total) * 100) : 0;
@@ -406,6 +410,8 @@
 
     $('missed-title').textContent = 'Review';
     resultsFilter = 'all';
+    heatPage = 1;
+    reviewPage = 1;
     renderHeatmap(result);
     renderResultsList(result);
     updateFilterCounts(result);
@@ -418,21 +424,45 @@
     var heat = $('results-heatmap');
     if (!heat) return;
     heat.innerHTML = '';
-    result.all.forEach(function (entry, idx) {
-      var b = el('button', 'heat-num');
-      b.textContent = idx + 1;
-      b.classList.add(entry.correct ? 'correct' : 'wrong');
-      if (entry.flagged) b.classList.add('flagged');
-      b.setAttribute('aria-label', 'Question ' + (idx + 1) +
-        (entry.correct ? ' — correct' : ' — missed') +
-        (entry.flagged ? ' — flagged' : ''));
-      b.addEventListener('click', function () {
-        setReviewFilter('all');
-        var card = $('review-card-' + idx);
-        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      heat.appendChild(b);
-    });
+    var pages = Math.max(1, Math.ceil(result.all.length / HEAT_PER_PAGE));
+    if (heatPage > pages) heatPage = pages;
+    var start = (heatPage - 1) * HEAT_PER_PAGE;
+    var end = Math.min(start + HEAT_PER_PAGE, result.all.length);
+    for (var idx = start; idx < end; idx++) {
+      (function (i) {
+        var entry = result.all[i];
+        var b = el('button', 'heat-num');
+        b.textContent = i + 1;
+        b.classList.add(entry.correct ? 'correct' : 'wrong');
+        if (entry.flagged) b.classList.add('flagged');
+        b.setAttribute('aria-label', 'Question ' + (i + 1) +
+          (entry.correct ? ' — correct' : ' — missed') +
+          (entry.flagged ? ' — flagged' : ''));
+        b.addEventListener('click', function () {
+          setReviewFilter('all');
+          goToReviewPageFor(i);
+          var card = $('review-card-' + i);
+          if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        heat.appendChild(b);
+      })(idx);
+    }
+    updateHeatPager(result.all.length);
+  }
+  function updateHeatPager(total) {
+    var pages = Math.max(1, Math.ceil(total / HEAT_PER_PAGE));
+    var pager = $('heat-pager');
+    if (pager) pager.classList.toggle('hidden', total <= HEAT_PER_PAGE);
+    var label = $('heat-label');
+    if (label) label.textContent = 'Page ' + heatPage + ' of ' + pages;
+    var prev = $('heat-prev');
+    if (prev) prev.disabled = heatPage <= 1;
+    var next = $('heat-next');
+    if (next) next.disabled = heatPage >= pages;
+  }
+  function goToReviewPageFor(idx) {
+    reviewPage = Math.floor(idx / REVIEW_PER_PAGE) + 1;
+    applyReviewFilter();
   }
 
   function renderResultsList(result) {
@@ -486,23 +516,41 @@
   }
   function setReviewFilter(f) {
     resultsFilter = f;
+    reviewPage = 1;
     document.querySelectorAll('#review-filter button').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-filter') === f);
     });
     applyReviewFilter();
   }
   function applyReviewFilter() {
-    var visible = 0;
-    document.querySelectorAll('#missed-list .miss-card').forEach(function (card) {
-      var show = resultsFilter === 'all' ||
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#missed-list .miss-card'));
+    var shown = cards.filter(function (card) {
+      return resultsFilter === 'all' ||
         (resultsFilter === 'failed' && card.getAttribute('data-status') === 'failed') ||
         (resultsFilter === 'correct' && card.getAttribute('data-status') === 'correct') ||
         (resultsFilter === 'flagged' && card.getAttribute('data-flagged') === '1');
-      card.classList.toggle('hidden', !show);
-      if (show) visible++;
     });
+    var pages = Math.max(1, Math.ceil(shown.length / REVIEW_PER_PAGE));
+    if (reviewPage > pages) reviewPage = pages;
+    if (reviewPage < 1) reviewPage = 1;
+    var start = (reviewPage - 1) * REVIEW_PER_PAGE;
+    var end = Math.min(start + REVIEW_PER_PAGE, shown.length);
+    cards.forEach(function (card) { card.classList.add('hidden'); });
+    shown.slice(start, end).forEach(function (card) { card.classList.remove('hidden'); });
     var empty = $('review-empty');
-    if (empty) empty.classList.toggle('hidden', visible !== 0);
+    if (empty) empty.classList.toggle('hidden', shown.length !== 0);
+    updateReviewPager(shown.length);
+  }
+  function updateReviewPager(total) {
+    var pages = Math.max(1, Math.ceil(total / REVIEW_PER_PAGE));
+    var pager = $('review-pager');
+    if (pager) pager.classList.toggle('hidden', total <= REVIEW_PER_PAGE);
+    var label = $('review-label');
+    if (label) label.textContent = 'Page ' + reviewPage + ' of ' + pages;
+    var prev = $('review-prev');
+    if (prev) prev.disabled = reviewPage <= 1;
+    var next = $('review-next');
+    if (next) next.disabled = reviewPage >= pages;
   }
 
   /* ---------- add a set: PDF + paste ---------- */
@@ -783,6 +831,10 @@
     document.querySelectorAll('#review-filter button').forEach(function (b) {
       b.addEventListener('click', function () { setReviewFilter(b.getAttribute('data-filter')); });
     });
+    on('heat-prev', 'click', function () { if (lastResult && heatPage > 1) { heatPage--; renderHeatmap(lastResult); } });
+    on('heat-next', 'click', function () { if (lastResult && heatPage < Math.ceil(lastResult.all.length / HEAT_PER_PAGE)) { heatPage++; renderHeatmap(lastResult); } });
+    on('review-prev', 'click', function () { if (reviewPage > 1) { reviewPage--; applyReviewFilter(); } });
+    on('review-next', 'click', function () { reviewPage++; applyReviewFilter(); });
     on('btn-retake', 'click', function () { startQuiz(quiz.setId, null); });
     on('btn-retry-missed', 'click', function () {
       // Rebuild from the original set questions (original option order),

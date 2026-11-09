@@ -101,6 +101,11 @@
     </div>
     <h2 id="missed-title">Review</h2>
     <div class="results-heatmap" id="results-heatmap"></div>
+    <div class="pager" id="heat-pager">
+      <button class="btn ghost pager-btn" id="heat-prev">‹ Prev</button>
+      <span class="pager-label" id="heat-label">Page 1 of 1</span>
+      <button class="btn ghost pager-btn" id="heat-next">Next ›</button>
+    </div>
     <p class="sub heatmap-legend">Green = correct · Red = missed · Amber outline = flagged — tap a number to jump to it.</p>
     <div class="tabs" id="review-filter">
       <button data-filter="all" class="active">All</button>
@@ -110,6 +115,11 @@
     </div>
     <div id="missed-list"></div>
     <p class="sub hidden" id="review-empty">Nothing here — try another filter.</p>
+    <div class="pager" id="review-pager">
+      <button class="btn ghost pager-btn" id="review-prev">‹ Prev</button>
+      <span class="pager-label" id="review-label">Page 1 of 1</span>
+      <button class="btn ghost pager-btn" id="review-next">Next ›</button>
+    </div>
     <div class="btn-row">
       <button class="btn primary" id="btn-retry-missed">Practise missed only</button>
       <button class="btn" id="btn-retake">Retake set</button>
