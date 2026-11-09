@@ -138,6 +138,18 @@
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   }
 
+  /* ---------- colour theme: accent family, saved in localStorage ---------- */
+  var COLOR_KEY = 'testrecall.colorTheme';
+  var COLOR_THEMES = ['mint', 'ocean', 'royal', 'sunset', 'rose', 'amber'];
+  function applyColorTheme(id) {
+    if (COLOR_THEMES.indexOf(id) === -1) id = 'mint';
+    document.documentElement.setAttribute('data-color', id);
+    try { localStorage.setItem(COLOR_KEY, id); } catch (e) {}
+    document.querySelectorAll('#color-swatches .color-swatch').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-color') === id);
+    });
+  }
+
   /* ---------- offline toast ---------- */
   var toastTimer = null;
   function showToast(msg, sticky) {
@@ -335,6 +347,8 @@
 
   function renderGrid() {
     var grid = $('quiz-grid');
+    if (!grid) return;
+    var st = grid.scrollTop;
     grid.innerHTML = '';
     quiz.items.forEach(function (_, i) {
       var b = el('button', 'grid-num');
@@ -349,6 +363,7 @@
       });
       grid.appendChild(b);
     });
+    grid.scrollTop = st;
   }
 
   function grade() {
@@ -738,6 +753,14 @@
     on('theme-toggle', 'click', toggleTheme);
     on('settings-theme', 'click', toggleTheme);
 
+    /* ---------- colour theme ---------- */
+    var savedColor = null;
+    try { savedColor = localStorage.getItem(COLOR_KEY); } catch (e) {}
+    if (savedColor) applyColorTheme(savedColor);
+    document.querySelectorAll('#color-swatches .color-swatch').forEach(function (b) {
+      b.addEventListener('click', function () { applyColorTheme(b.getAttribute('data-color')); });
+    });
+
     /* ---------- hamburger menu ---------- */
     var menu = $('menu-dropdown');
     var menuBtn = $('menu-btn');
@@ -810,7 +833,15 @@
     });
     on('quiz-grid-btn', 'click', function () {
       renderGrid();
-      $('grid-panel').classList.toggle('hidden');
+      var panel = $('grid-panel');
+      panel.classList.toggle('hidden');
+      if (!panel.classList.contains('hidden')) {
+        var cur = panel.querySelector('.grid-num.current');
+        var nums = $('quiz-grid');
+        if (cur && nums && cur.offsetTop != null) {
+          nums.scrollTop = Math.max(0, cur.offsetTop - nums.clientHeight / 2 + cur.offsetHeight / 2);
+        }
+      }
     });
     on('grid-close', 'click', function () { $('grid-panel').classList.add('hidden'); });
     on('quiz-submit', 'click', askSubmit);

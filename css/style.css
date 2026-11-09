@@ -56,6 +56,59 @@ html[data-theme="dark"] {
   --overlay: rgba(0, 0, 0, 0.70);
 }
 
+/* ---------- colour themes: override the accent family (light + dark) ----------
+   Mint is the default (the values above), so it needs no rules here. */
+html[data-color="ocean"][data-theme="light"] {
+  --accent: #2E7DD1; --accent-deep: #1D5FA8; --accent-soft: #DCEBF9;
+  --accent-glow: rgba(46, 125, 209, 0.25);
+  --btn: #2A6CB0; --btn-glow: rgba(42, 108, 176, 0.22);
+}
+html[data-color="ocean"][data-theme="dark"] {
+  --accent: #5EA8E8; --accent-deep: #2E7DD1; --accent-soft: rgba(94, 168, 232, 0.14);
+  --accent-glow: rgba(94, 168, 232, 0.30);
+  --btn: #4C92DB; --btn-glow: rgba(76, 146, 219, 0.30);
+}
+html[data-color="royal"][data-theme="light"] {
+  --accent: #7C5CFF; --accent-deep: #5B3EE0; --accent-soft: #E7E1FF;
+  --accent-glow: rgba(124, 92, 255, 0.25);
+  --btn: #6A4AE0; --btn-glow: rgba(106, 74, 224, 0.22);
+}
+html[data-color="royal"][data-theme="dark"] {
+  --accent: #A78BFA; --accent-deep: #7C5CFF; --accent-soft: rgba(167, 139, 250, 0.14);
+  --accent-glow: rgba(167, 139, 250, 0.30);
+  --btn: #9A7FFA; --btn-glow: rgba(154, 127, 250, 0.30);
+}
+html[data-color="sunset"][data-theme="light"] {
+  --accent: #E86A1C; --accent-deep: #C2520F; --accent-soft: #FFE3D1;
+  --accent-glow: rgba(232, 106, 28, 0.25);
+  --btn: #D45F16; --btn-glow: rgba(212, 95, 22, 0.22);
+}
+html[data-color="sunset"][data-theme="dark"] {
+  --accent: #F08A3C; --accent-deep: #E86A1C; --accent-soft: rgba(240, 138, 60, 0.14);
+  --accent-glow: rgba(240, 138, 60, 0.30);
+  --btn: #EE8A3E; --btn-glow: rgba(238, 138, 62, 0.30);
+}
+html[data-color="rose"][data-theme="light"] {
+  --accent: #D6457C; --accent-deep: #B02A5E; --accent-soft: #FBDCE8;
+  --accent-glow: rgba(214, 69, 124, 0.25);
+  --btn: #C23A6B; --btn-glow: rgba(194, 58, 107, 0.22);
+}
+html[data-color="rose"][data-theme="dark"] {
+  --accent: #F07BA6; --accent-deep: #D6457C; --accent-soft: rgba(240, 123, 166, 0.14);
+  --accent-glow: rgba(240, 123, 166, 0.30);
+  --btn: #E87AA5; --btn-glow: rgba(232, 122, 165, 0.30);
+}
+html[data-color="amber"][data-theme="light"] {
+  --accent: #C98420; --accent-deep: #A66E14; --accent-soft: #F7E8C8;
+  --accent-glow: rgba(201, 132, 32, 0.25);
+  --btn: #B07A1A; --btn-glow: rgba(176, 122, 26, 0.22);
+}
+html[data-color="amber"][data-theme="dark"] {
+  --accent: #E0A526; --accent-deep: #C98420; --accent-soft: rgba(224, 165, 38, 0.14);
+  --accent-glow: rgba(224, 165, 38, 0.30);
+  --btn: #D99E2B; --btn-glow: rgba(217, 158, 43, 0.30);
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -247,25 +300,52 @@ html[data-theme="dark"] a { color: var(--accent); }
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 22px 22px 0 0;
-  padding: 18px 16px 28px;
+  padding: 18px 16px 20px;
   max-width: 560px;
   margin: 0 auto;
   z-index: 20;
   box-shadow: var(--shadow-lg);
+  max-height: 82vh;
+  max-height: 82dvh;
+  display: flex;
+  flex-direction: column;
 }
-.grid-panel h3 { margin: 0 0 4px; font-size: 17px; }
-.grid-panel .sub { margin-bottom: 12px; }
-.grid-nums { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.grid-panel h3 { margin: 0 0 4px; font-size: 17px; flex: 0 0 auto; }
+.grid-panel .sub { margin-bottom: 12px; flex: 0 0 auto; }
+.grid-nums {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  padding-right: 2px;
+}
 .grid-num {
-  height: 44px;
-  border-radius: 12px;
+  height: 40px;
+  border-radius: 10px;
   border: 1px solid var(--line);
   background: var(--card-2);
   color: var(--text);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
+.grid-panel .btn-row { flex: 0 0 auto; margin-top: 12px; }
+
+/* ---------- theme colour swatches ---------- */
+.color-swatches { display: flex; gap: 10px; flex-wrap: wrap; padding: 2px 2px 6px; }
+.color-swatch {
+  background: none; border: none; padding: 0; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; width: 52px;
+}
+.color-swatch .dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--sw); box-shadow: var(--shadow-sm);
+}
+.color-swatch .lbl { font-size: 11px; font-weight: 600; color: var(--text-soft); }
+.color-swatch.active .dot { outline: 2px solid var(--text); outline-offset: 3px; }
+.color-swatch.active .lbl { color: var(--text); }
 .grid-num.answered { background: var(--accent-deep); border-color: var(--accent); color: #FFFFFF; }
 .grid-num.flagged { border-color: var(--amber); color: var(--amber); }
 .grid-num.current { outline: 2px solid var(--accent); }
