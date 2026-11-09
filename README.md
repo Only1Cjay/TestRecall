@@ -6,19 +6,24 @@ MCQ practice for pharmacy exams — minus the paper. Pick a set to start. Questi
 
 ## What it does
 
-- **Two starter sets baked in** — Naming and Classification of Bacteria (122 questions) and Systematic Classification of Bacteria (60 questions), from Dr Mrs Oboh's PHM 201 lecture notes.
+- **Two starter sets baked in** — Naming and Classification of Bacteria (122 questions) and Systematic Classification of Bacteria (60 questions), from Dr Mrs Oboh's PHM 201 lecture notes. Both live under **PHM 201**, and either can be deleted from its card (they hide on your device only — bring them back from Settings → Restore starter sets).
+- **Course folders** — the home screen shows your courses (PHM 201, PCG, PCH 201, PCT, PIO, plus any you add); tap one to see its sets. Uploading a set asks which course it belongs to, and you can type a new course name.
+- **Two practice modes** — before every session, one popup asks how you want to practise: **Exam simulation** (answer everything first, score and review at the end) or **Instant marking** (each answer is marked the moment you tap it, green for correct, red for wrong with the right answer shown), plus the timer choice (minutes or Untimed) in the same popup.
+- **Review everything missed** — a card on the home screen and on each course screen gathers the missed questions from your latest attempt of every set in scope into one mixed session.
+- **Day streak** — a small flame chip on the home screen counts the days in a row you've submitted a quiz.
+- **Search** — find a set by name, on the home screen or inside a course.
 - **Tap to answer** — one question at a time, with a timer, progress bar, flag-for-later and a jump-to-question grid.
 - **Shuffled every attempt** — questions and options are shuffled each time, so you're answering, not memorising positions.
 - **Auto-graded** — submit (with a confirm step) and get your score plus a review of every question: a colour heatmap (green = correct, red = missed, amber outline = flagged), filter tabs for All / Failed / Correct / Flagged, and pages of 20 questions at a time. You can also re-practise just the missed ones.
 - **Add your own sets** — tap the floating (+) button to open the add-a-set modal, upload an MCQ PDF and the app reads the questions, options and answer key out of it, then shows you a review screen to check everything (and fix any wrong key) before saving. Or paste questions as text instead.
 - **Offline-first PWA** — after the first visit, a service worker caches the app and the PDF reader, so it works with no connection. Your sets and scores live in your browser's local storage; there is no server and no account. Install it from the banner or the menu for an app icon on your home screen, and a toast tells you when you're offline.
-- **Timer** — before each set, choose a custom timer in minutes or go Untimed. A timed session counts down in the header (red under a minute) and submits automatically when it runs out.
-- **Settings** — switch light/dark theme from the header or Settings, and see the PDFs you've uploaded, grouped by day.
+- **Timer** — before each set, the start popup asks for a custom timer in minutes or Untimed. A timed session counts down in the header (red under a minute) and submits automatically when it runs out.
+- **Settings** — switch light/dark theme from the header or Settings, see the PDFs you've uploaded, grouped by day, and restore hidden starter sets.
 
 ## How to use it
 
-1. Open the app and pick a set.
-2. Tap an option to answer, use **Next** / **Previous** to move around, **☆ Flag** to mark one for later, **Grid** to jump to any question.
+1. Open the app and pick a course, then a set. Or search for a set by name.
+2. Before it starts, a popup asks how you want to practise — **Exam simulation** or **Instant marking** — and whether you want a timer. Tap an option to answer, use **Next** / **Previous** to move around, **☆ Flag** to mark one for later, **Grid** to jump to any question.
 3. Tap **Submit answers**, confirm, and see your score, the heatmap, and the review. Use the tabs to look at only the ones you failed or flagged.
 4. To add a set: tap the floating **(+)** button → choose a PDF (or paste text) → check the review screen → **Save set**.
 

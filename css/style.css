@@ -20,6 +20,8 @@ html[data-theme="light"] {
   --btn-glow: rgba(42, 108, 176, 0.22);
   --danger: #D64545;
   --danger-soft: #FDECEC;
+  --ok: #2FA36B;
+  --ok-soft: #E6F4EC;
   --amber: #C98420;
   --amber-soft: #FBEED3;
   --shadow-sm: 0 2px 6px rgba(15, 30, 55, 0.05);
@@ -49,6 +51,8 @@ html[data-theme="dark"] {
   --btn-glow: rgba(76, 146, 219, 0.30);
   --danger: #F08A7C;
   --danger-soft: rgba(240, 138, 124, 0.14);
+  --ok: #4CC38A;
+  --ok-soft: rgba(76, 195, 138, 0.16);
   --amber: #E0A93E;
   --amber-soft: rgba(224, 169, 62, 0.14);
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
@@ -153,6 +157,44 @@ html[data-theme="dark"] a { color: var(--accent); }
 }
 .icon-btn:hover { color: var(--danger); }
 
+/* ---------- home: streak, search, missed review, courses ---------- */
+.streak-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--amber-soft);
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 14px 0 0;
+}
+.streak-chip svg { width: 15px; height: 15px; flex: 0 0 auto; }
+.search-input { margin-bottom: 14px; }
+.missed-card { background: var(--accent-soft); border-color: var(--accent); }
+.missed-card .set-desc { margin-bottom: 12px; }
+.course-card { cursor: pointer; }
+.course-card:active { transform: scale(0.99); }
+.course-chev { color: var(--muted); font-size: 26px; line-height: 1; font-weight: 400; }
+.upload-card {
+  display: block;
+  width: 100%;
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.upload-card:active { transform: scale(0.99); }
+
 /* ---------- home: set cards ---------- */
 .set-card {
   background: var(--card);
@@ -203,7 +245,7 @@ html[data-theme="dark"] a { color: var(--accent); }
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .grid-nav-btn svg { width: 18px; height: 18px; flex: 0 0 auto; }
-.grid-nav-btn span { font-weight: 700; }
+.grid-nav-btn span { font-weight: 700; font-size: 12.5px; white-space: nowrap; }
 .flag-btn {
   background: var(--card);
   border: 1px solid var(--line);
@@ -248,6 +290,11 @@ html[data-theme="dark"] a { color: var(--accent); }
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .option.selected { border-color: var(--accent); background: var(--accent-soft); }
+.option.correct { border-color: var(--ok); background: var(--ok-soft); }
+.option.wrong { border-color: var(--danger); background: var(--danger-soft); }
+.option.correct .opt-letter { background: var(--ok); border-color: var(--ok); color: #FFFFFF; }
+.option.wrong .opt-letter { background: var(--danger); border-color: var(--danger); color: #FFFFFF; }
+.opt-check { margin-left: auto; font-weight: 800; color: var(--ok); font-size: 18px; line-height: 1; padding-top: 4px; flex: 0 0 auto; }
 .opt-letter {
   flex: 0 0 auto;
   width: 30px; height: 30px;
@@ -264,16 +311,15 @@ html[data-theme="dark"] a { color: var(--accent); }
 .quiz-nav .btn { flex: 1; }
 .submit-wrap { margin-top: 22px; }
 
-/* grid panel */
+/* grid panel: a centered dialog inside its blurred backdrop, not a bottom sheet */
 .grid-panel {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
+  position: relative;
+  width: 100%;
+  max-width: 560px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 22px 22px 0 0;
+  border-radius: 22px;
   padding: 18px 16px 20px;
-  max-width: 560px;
-  margin: 0 auto;
   z-index: 20;
   box-shadow: var(--shadow-lg);
   max-height: 82vh;
@@ -482,18 +528,23 @@ input[type="text"] {
   font-size: 15px;
 }
 
-/* ---------- confirm modal ---------- */
+/* ---------- confirm modal: centered dialog with a blurred backdrop ----------
+   All modals use this backdrop, so every popup is centered with the page
+   blurred behind it. */
 .modal-backdrop {
   position: fixed; inset: 0;
   background: var(--overlay);
-  display: flex; align-items: flex-end; justify-content: center;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
   z-index: 30;
 }
 .modal {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 22px 22px 0 0;
-  padding: 20px 16px 28px;
+  border-radius: 22px;
+  padding: 20px 16px 24px;
   width: 100%;
   max-width: 560px;
   box-shadow: var(--shadow-lg);
@@ -511,6 +562,26 @@ input[type="text"] {
 .modal-head h2 { margin: 0; font-size: 20px; }
 .modal-head h3 { margin: 0; font-size: 18px; }
 
+/* ---------- mode cards (start modal) ---------- */
+.mode-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.mode-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--font-body);
+  box-shadow: var(--shadow-sm);
+}
+.mode-card strong { display: block; font-family: var(--font-head); font-size: 16px; margin-bottom: 2px; }
+.mode-card span { display: block; font-size: 14px; color: var(--text-soft); line-height: 1.45; }
+.mode-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+#start-untimed.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-deep); }
+
 /* ---------- timer modal ---------- */
 .timer-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-soft); margin-bottom: 6px; }
 .timer-input {
@@ -527,10 +598,6 @@ input[type="text"] {
 .timer-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 .timer-error { color: var(--danger); font-size: 13px; margin: 2px 0 8px; }
 .timer-low { color: var(--danger); }
-@media (min-width: 640px) {
-  .modal-backdrop { align-items: center; padding: 24px; }
-  .modal { border-radius: 22px; padding-bottom: 24px; }
-}
 
 /* ---------- floating action button ---------- */
 .fab {
