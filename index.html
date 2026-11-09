@@ -28,13 +28,18 @@
 <div class="app">
 
   <header class="app-head">
-    <img class="logo" src="icons/icon.svg" alt="TestRecall logo" width="52" height="52">
+    <img class="logo" src="icons/icon.svg" alt="TestRecall logo" width="40" height="40">
     <div class="head-text">
       <h1>TestRecall</h1>
-      <p>MCQ practice, minus the paper</p>
     </div>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+    <button class="theme-toggle" id="menu-btn" aria-label="Open menu" title="Menu" aria-expanded="false">☰</button>
   </header>
+  <nav class="menu-dropdown hidden" id="menu-dropdown" aria-label="Main menu">
+    <button class="menu-item" id="menu-settings">⚙️ Settings</button>
+    <button class="menu-item" id="menu-install">⤓ Install app</button>
+    <p class="menu-hint hidden" id="menu-install-hint">To install: open your browser menu and tap “Install app” or “Add to Home screen”.</p>
+  </nav>
 
   <!-- ============ HOME ============ -->
   <section id="screen-home">
@@ -146,6 +151,24 @@
     </div>
   </section>
 
+  <!-- ============ SETTINGS ============ -->
+  <section id="screen-settings" class="hidden">
+    <h2>Settings</h2>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Appearance</div>
+          <div class="settings-desc">Light or dark theme</div>
+        </div>
+        <button class="btn ghost settings-btn" id="settings-theme">🌙 Dark</button>
+      </div>
+    </div>
+    <h2 style="font-size: 17px;">Uploaded PDFs</h2>
+    <p class="sub">PDFs you have uploaded, grouped by day.</p>
+    <div id="uploads-list"></div>
+    <div class="btn-row"><button class="btn ghost" id="btn-settings-home">← All sets</button></div>
+  </section>
+
   <!-- ============ CONFIRM MODAL ============ -->
   <div class="modal-backdrop hidden" id="confirm-modal">
     <div class="modal">
@@ -159,6 +182,15 @@
   </div>
 
   <footer>TestRecall · your sets and scores stay on this device · no account needed</footer>
+
+  <div class="install-banner hidden" id="install-banner">
+    <div class="install-text">
+      <strong>Install TestRecall</strong>
+      <span>Add to your home screen for quick access</span>
+    </div>
+    <button class="install-btn" id="install-accept">Install</button>
+    <button class="install-dismiss" id="install-dismiss" aria-label="Dismiss">✕</button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>

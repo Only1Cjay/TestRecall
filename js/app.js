@@ -25,9 +25,9 @@
   function loadState() {
     try {
       var s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-      if (s && typeof s === 'object') return { sets: s.sets || {}, attempts: s.attempts || {} };
+      if (s && typeof s === 'object') return { sets: s.sets || {}, attempts: s.attempts || {}, uploads: s.uploads || [] };
     } catch (e) { /* corrupted storage: start fresh */ }
-    return { sets: {}, attempts: {} };
+    return { sets: {}, attempts: {}, uploads: [] };
   }
   function saveState() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { /* storage full/blocked */ }
@@ -63,7 +63,7 @@
   }
 
   /* ---------- screens ---------- */
-  var screens = ['home', 'quiz', 'results', 'add', 'review'];
+  var screens = ['home', 'quiz', 'results', 'add', 'review', 'settings'];
   function show(name) {
     screens.forEach(function (s) { $('screen-' + s).classList.toggle('hidden', s !== name); });
     window.scrollTo(0, 0);
@@ -113,6 +113,94 @@
       if (best === null || pct > best) best = pct;
     });
     return best;
+  }
+
+  /* ---------- theme: light-first, toggle saved in localStorage ---------- */
+  var THEME_KEY = 'testrecall.theme';
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
+    var b = $('theme-toggle');
+    if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
+    var sb = $('settings-theme');
+    if (sb) sb.textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  function toggleTheme() {
+    var cur = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  }
+
+  /* ---------- install prompt ---------- */
+  var INSTALL_KEY = 'testrecall.installDismissed';
+  var deferredPrompt = null;
+  var isInstalled = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    window.navigator.standalone === true;
+  function installDismissed() {
+    try { return localStorage.getItem(INSTALL_KEY) === '1'; } catch (e) { return false; }
+  }
+  function showInstallBanner() {
+    if (isInstalled || installDismissed() || !deferredPrompt) return;
+    $('install-banner').classList.remove('hidden');
+  }
+  function hideInstallBanner() { $('install-banner').classList.add('hidden'); }
+  window.addEventListener('beforeinstallprompt', function (ev) {
+    ev.preventDefault();
+    deferredPrompt = ev;
+    showInstallBanner();
+  });
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    isInstalled = true;
+    hideInstallBanner();
+  });
+  function promptInstall() {
+    if (!deferredPrompt) return false;
+    var p = deferredPrompt;
+    deferredPrompt = null;
+    hideInstallBanner();
+    p.prompt();
+    return true;
+  }
+
+  /* ---------- settings: uploaded PDFs, grouped by day ---------- */
+  function dayLabel(ts) {
+    var d = new Date(ts);
+    var now = new Date();
+    var startOf = function (x) { return new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime(); };
+    var diff = Math.round((startOf(now) - startOf(d)) / 86400000);
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Yesterday';
+    return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function fmtClock(ts) {
+    return new Date(ts).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+  function renderSettings() {
+    applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+    var list = $('uploads-list');
+    list.innerHTML = '';
+    var uploads = state.uploads || [];
+    if (!uploads.length) {
+      list.appendChild(el('p', 'uploads-empty', 'No PDFs uploaded yet — files you upload will appear here, grouped by day.'));
+      return;
+    }
+    var lastDay = null;
+    uploads.forEach(function (u) {
+      var day = dayLabel(u.at);
+      if (day !== lastDay) {
+        list.appendChild(el('div', 'upload-day', day));
+        lastDay = day;
+      }
+      var row = el('div', 'upload-item');
+      var name = el('div', 'upload-name', u.name);
+      var stem = (u.name || '').replace(/\.pdf$/i, '');
+      if (u.title && u.title !== stem) name.appendChild(el('span', 'upload-set', '→ ' + u.title));
+      row.appendChild(name);
+      row.appendChild(el('div', 'upload-time', fmtClock(u.at)));
+      list.appendChild(row);
+    });
   }
 
   /* ---------- home ---------- */
@@ -356,7 +444,7 @@
         status.className = 'status error';
         return;
       }
-      openReview(file.name.replace(/\.pdf$/i, ''), parsed);
+      openReview(file.name.replace(/\.pdf$/i, ''), parsed, file.name);
       status.textContent = '';
     } catch (e) {
       console.error(e);
@@ -376,14 +464,15 @@
       status.className = 'status error';
       return;
     }
-    openReview('Pasted set', parsed);
+    openReview('Pasted set', parsed, null);
     status.textContent = '';
   }
 
   /* ---------- import review ---------- */
-  function openReview(suggestedTitle, parsed) {
+  function openReview(suggestedTitle, parsed, sourceFile) {
     pendingImport = {
       title: suggestedTitle,
+      sourceFile: sourceFile || null,
       questions: parsed.questions.map(function (q) {
         return { n: q.n, q: q.q, options: q.options.slice(), answer: q.answer };
       }),
@@ -457,6 +546,11 @@
     }
     var id = 'user-' + Date.now();
     state.sets[id] = { title: title, questions: pendingImport.questions, createdAt: Date.now() };
+    if (pendingImport.sourceFile) {
+      state.uploads = state.uploads || [];
+      state.uploads.unshift({ name: pendingImport.sourceFile, title: title, at: Date.now() });
+      if (state.uploads.length > 100) state.uploads.length = 100;
+    }
     saveState();
     pendingImport = null;
     renderHome();
@@ -465,23 +559,47 @@
 
   /* ---------- wire up ---------- */
   function init() {
-    /* ---------- theme: light-first, toggle saved in localStorage ---------- */
-    var THEME_KEY = 'testrecall.theme';
-    function applyTheme(t) {
-      document.documentElement.setAttribute('data-theme', t);
-      var m = document.querySelector('meta[name="theme-color"]');
-      if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
-      var b = $('theme-toggle');
-      if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
-      try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
-    }
+    /* ---------- theme ---------- */
     var savedTheme = 'light';
     try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
     applyTheme(savedTheme);
-    $('theme-toggle').addEventListener('click', function () {
-      var cur = document.documentElement.getAttribute('data-theme') || 'light';
-      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    $('theme-toggle').addEventListener('click', toggleTheme);
+    $('settings-theme').addEventListener('click', toggleTheme);
+
+    /* ---------- hamburger menu ---------- */
+    var menu = $('menu-dropdown');
+    var menuBtn = $('menu-btn');
+    function closeMenu() {
+      menu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = menu.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', String(!open));
+      if (!open) $('menu-install-hint').classList.add('hidden');
     });
+    document.addEventListener('click', function (ev) {
+      if (!menu.classList.contains('hidden') && !menu.contains(ev.target) && ev.target !== menuBtn) closeMenu();
+    });
+    $('menu-settings').addEventListener('click', function () {
+      closeMenu();
+      renderSettings();
+      show('settings');
+    });
+    $('menu-install').addEventListener('click', function () {
+      if (promptInstall()) { closeMenu(); return; }
+      $('menu-install-hint').classList.remove('hidden');
+    });
+    $('btn-settings-home').addEventListener('click', function () { renderHome(); show('home'); });
+
+    /* ---------- install banner ---------- */
+    $('install-accept').addEventListener('click', function () { promptInstall(); });
+    $('install-dismiss').addEventListener('click', function () {
+      hideInstallBanner();
+      try { localStorage.setItem(INSTALL_KEY, '1'); } catch (e) {}
+    });
+    showInstallBanner();
 
     $('btn-add-set').addEventListener('click', function () { setAddTab('pdf'); show('add'); });
     $('btn-back-home').addEventListener('click', function () { show('home'); });
