@@ -465,6 +465,24 @@
 
   /* ---------- wire up ---------- */
   function init() {
+    /* ---------- theme: light-first, toggle saved in localStorage ---------- */
+    var THEME_KEY = 'testrecall.theme';
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
+      var b = $('theme-toggle');
+      if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
+      try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    }
+    var savedTheme = 'light';
+    try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
+    applyTheme(savedTheme);
+    $('theme-toggle').addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+
     $('btn-add-set').addEventListener('click', function () { setAddTab('pdf'); show('add'); });
     $('btn-back-home').addEventListener('click', function () { show('home'); });
     $('tab-pdf').addEventListener('click', function () { setAddTab('pdf'); });

@@ -5,10 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TestRecall — MCQ Practice</title>
 <meta name="description" content="MCQ practice for pharmacy exams. Tap answers, get graded, add your own sets from a PDF. Works offline.">
-<meta name="theme-color" content="#00572c">
+<meta name="theme-color" content="#EFF4F1">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 <link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('testrecall.theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', t === 'dark' ? '#0E1712' : '#EFF4F1');
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,10 +29,11 @@
 
   <header class="app-head">
     <img class="logo" src="icons/icon.svg" alt="TestRecall logo" width="52" height="52">
-    <div>
+    <div class="head-text">
       <h1>TestRecall</h1>
       <p>MCQ practice, minus the paper</p>
     </div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
   </header>
 
   <!-- ============ HOME ============ -->
