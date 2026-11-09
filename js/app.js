@@ -36,6 +36,12 @@
 
   /* ---------- helpers ---------- */
   function $(id) { return document.getElementById(id); }
+  /* Wire a listener only if the element exists, so an older cached page
+     running newer code degrades instead of dying in init. */
+  function on(id, ev, fn) {
+    var n = $(id);
+    if (n) n.addEventListener(ev, fn);
+  }
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -66,7 +72,8 @@
   var screens = ['home', 'quiz', 'results', 'settings'];
   function show(name) {
     screens.forEach(function (s) { $('screen-' + s).classList.toggle('hidden', s !== name); });
-    $('btn-add-fab').classList.toggle('hidden', name !== 'home');
+    var fab = $('btn-add-fab');
+    if (fab) fab.classList.toggle('hidden', name !== 'home');
     window.scrollTo(0, 0);
   }
 
@@ -151,12 +158,16 @@
   }
   function showInstallBanner() {
     if (isInstalled || installDismissed() || !deferredPrompt) return;
-    $('install-banner').classList.remove('hidden');
-    $('btn-add-fab').classList.add('fab-raised');
+    var banner = $('install-banner');
+    if (banner) banner.classList.remove('hidden');
+    var fab = $('btn-add-fab');
+    if (fab) fab.classList.add('fab-raised');
   }
   function hideInstallBanner() {
-    $('install-banner').classList.add('hidden');
-    $('btn-add-fab').classList.remove('fab-raised');
+    var banner = $('install-banner');
+    if (banner) banner.classList.add('hidden');
+    var fab = $('btn-add-fab');
+    if (fab) fab.classList.remove('fab-raised');
   }
   window.addEventListener('beforeinstallprompt', function (ev) {
     ev.preventDefault();
@@ -193,6 +204,7 @@
   function renderSettings() {
     applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
     var list = $('uploads-list');
+    if (!list) return;
     list.innerHTML = '';
     var uploads = state.uploads || [];
     if (!uploads.length) {
@@ -395,7 +407,7 @@
     $('missed-title').textContent = 'Review';
     resultsFilter = 'all';
     renderHeatmap(result);
-    renderReviewList(result);
+    renderResultsList(result);
     updateFilterCounts(result);
     setReviewFilter('all');
 
@@ -404,6 +416,7 @@
 
   function renderHeatmap(result) {
     var heat = $('results-heatmap');
+    if (!heat) return;
     heat.innerHTML = '';
     result.all.forEach(function (entry, idx) {
       var b = el('button', 'heat-num');
@@ -422,8 +435,9 @@
     });
   }
 
-  function renderReviewList(result) {
+  function renderResultsList(result) {
     var box = $('missed-list');
+    if (!box) return;
     box.innerHTML = '';
     result.all.forEach(function (entry, idx) {
       var item = entry.item;
@@ -487,7 +501,8 @@
       card.classList.toggle('hidden', !show);
       if (show) visible++;
     });
-    $('review-empty').classList.toggle('hidden', visible !== 0);
+    var empty = $('review-empty');
+    if (empty) empty.classList.toggle('hidden', visible !== 0);
   }
 
   /* ---------- add a set: PDF + paste ---------- */
@@ -672,39 +687,41 @@
     var savedTheme = 'light';
     try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
     applyTheme(savedTheme);
-    $('theme-toggle').addEventListener('click', toggleTheme);
-    $('settings-theme').addEventListener('click', toggleTheme);
+    on('theme-toggle', 'click', toggleTheme);
+    on('settings-theme', 'click', toggleTheme);
 
     /* ---------- hamburger menu ---------- */
     var menu = $('menu-dropdown');
     var menuBtn = $('menu-btn');
     function closeMenu() {
+      if (!menu) return;
       menu.classList.add('hidden');
-      menuBtn.setAttribute('aria-expanded', 'false');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
     }
-    menuBtn.addEventListener('click', function (ev) {
+    on('menu-btn', 'click', function (ev) {
       ev.stopPropagation();
+      if (!menu) return;
       var open = menu.classList.toggle('hidden');
-      menuBtn.setAttribute('aria-expanded', String(!open));
-      if (!open) $('menu-install-hint').classList.add('hidden');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', String(!open));
+      if (!open) { var hint = $('menu-install-hint'); if (hint) hint.classList.add('hidden'); }
     });
     document.addEventListener('click', function (ev) {
-      if (!menu.classList.contains('hidden') && !menu.contains(ev.target) && ev.target !== menuBtn) closeMenu();
+      if (menu && !menu.classList.contains('hidden') && !menu.contains(ev.target) && ev.target !== menuBtn) closeMenu();
     });
-    $('menu-settings').addEventListener('click', function () {
+    on('menu-settings', 'click', function () {
       closeMenu();
       renderSettings();
       show('settings');
     });
-    $('menu-install').addEventListener('click', function () {
+    on('menu-install', 'click', function () {
       if (promptInstall()) { closeMenu(); return; }
       $('menu-install-hint').classList.remove('hidden');
     });
-    $('btn-settings-home').addEventListener('click', function () { renderHome(); show('home'); });
+    on('btn-settings-home', 'click', function () { renderHome(); show('home'); });
 
     /* ---------- install banner ---------- */
-    $('install-accept').addEventListener('click', function () { promptInstall(); });
-    $('install-dismiss').addEventListener('click', function () {
+    on('install-accept', 'click', function () { promptInstall(); });
+    on('install-dismiss', 'click', function () {
       hideInstallBanner();
       try { localStorage.setItem(INSTALL_KEY, '1'); } catch (e) {}
     });
@@ -715,41 +732,41 @@
     window.addEventListener('online', function () { showToast('Back online.', false); });
     if (!navigator.onLine) showToast("You're offline — your saved sets still work.", true);
 
-    $('btn-add-fab').addEventListener('click', openAddModal);
-    $('btn-close-add').addEventListener('click', closeAddModal);
-    $('add-modal').addEventListener('click', function (ev) { if (ev.target === $('add-modal')) closeAddModal(); });
+    on('btn-add-fab', 'click', openAddModal);
+    on('btn-close-add', 'click', closeAddModal);
+    on('add-modal', 'click', function (ev) { if (ev.target === $('add-modal')) closeAddModal(); });
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && !$('add-modal').classList.contains('hidden')) closeAddModal();
     });
-    $('tab-pdf').addEventListener('click', function () { setAddTab('pdf'); });
-    $('tab-paste').addEventListener('click', function () { setAddTab('paste'); });
-    $('pdf-input').addEventListener('change', function (ev) {
+    on('tab-pdf', 'click', function () { setAddTab('pdf'); });
+    on('tab-paste', 'click', function () { setAddTab('paste'); });
+    on('pdf-input', 'change', function (ev) {
       var f = ev.target.files && ev.target.files[0];
       if (f) handlePdfFile(f);
       ev.target.value = '';
     });
-    $('btn-parse-paste').addEventListener('click', handlePasteText);
-    $('btn-review-cancel').addEventListener('click', showAddPanel);
-    $('btn-review-save').addEventListener('click', saveImport);
+    on('btn-parse-paste', 'click', handlePasteText);
+    on('btn-review-cancel', 'click', showAddPanel);
+    on('btn-review-save', 'click', saveImport);
 
-    $('quiz-flag').addEventListener('click', function () {
+    on('quiz-flag', 'click', function () {
       quiz.flagged[quiz.pos] = !quiz.flagged[quiz.pos];
       renderQuestion();
     });
-    $('quiz-prev').addEventListener('click', function () {
+    on('quiz-prev', 'click', function () {
       if (quiz.pos > 0) { quiz.pos--; renderQuestion(); }
     });
-    $('quiz-next').addEventListener('click', function () {
+    on('quiz-next', 'click', function () {
       if (quiz.pos < quiz.items.length - 1) { quiz.pos++; renderQuestion(); }
       else askSubmit();
     });
-    $('quiz-grid-btn').addEventListener('click', function () {
+    on('quiz-grid-btn', 'click', function () {
       renderGrid();
       $('grid-panel').classList.toggle('hidden');
     });
-    $('grid-close').addEventListener('click', function () { $('grid-panel').classList.add('hidden'); });
-    $('quiz-submit').addEventListener('click', askSubmit);
-    $('quiz-exit').addEventListener('click', function () {
+    on('grid-close', 'click', function () { $('grid-panel').classList.add('hidden'); });
+    on('quiz-submit', 'click', askSubmit);
+    on('quiz-exit', 'click', function () {
       if (confirm('Leave this attempt? Your answers so far will not be saved.')) {
         clearInterval(quiz.timerId);
         quiz = null;
@@ -757,8 +774,8 @@
         show('home');
       }
     });
-    $('confirm-cancel').addEventListener('click', function () { $('confirm-modal').classList.add('hidden'); });
-    $('confirm-submit').addEventListener('click', function () {
+    on('confirm-cancel', 'click', function () { $('confirm-modal').classList.add('hidden'); });
+    on('confirm-submit', 'click', function () {
       $('confirm-modal').classList.add('hidden');
       submitQuiz();
     });
@@ -766,8 +783,8 @@
     document.querySelectorAll('#review-filter button').forEach(function (b) {
       b.addEventListener('click', function () { setReviewFilter(b.getAttribute('data-filter')); });
     });
-    $('btn-retake').addEventListener('click', function () { startQuiz(quiz.setId, null); });
-    $('btn-retry-missed').addEventListener('click', function () {
+    on('btn-retake', 'click', function () { startQuiz(quiz.setId, null); });
+    on('btn-retry-missed', 'click', function () {
       // Rebuild from the original set questions (original option order),
       // not the shuffled quiz items, so the answer letters still match.
       var set = getSet(quiz.setId);
@@ -776,7 +793,7 @@
       var missedQs = set.questions.filter(function (q) { return missedNums[q.n]; });
       startQuiz(quiz.setId, missedQs);
     });
-    $('btn-results-home').addEventListener('click', function () { renderHome(); show('home'); });
+    on('btn-results-home', 'click', function () { renderHome(); show('home'); });
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(function (e) {
