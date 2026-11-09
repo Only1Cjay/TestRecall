@@ -63,9 +63,10 @@
   }
 
   /* ---------- screens ---------- */
-  var screens = ['home', 'quiz', 'results', 'add', 'review', 'settings'];
+  var screens = ['home', 'quiz', 'results', 'settings'];
   function show(name) {
     screens.forEach(function (s) { $('screen-' + s).classList.toggle('hidden', s !== name); });
+    $('btn-add-fab').classList.toggle('hidden', name !== 'home');
     window.scrollTo(0, 0);
   }
 
@@ -141,8 +142,12 @@
   function showInstallBanner() {
     if (isInstalled || installDismissed() || !deferredPrompt) return;
     $('install-banner').classList.remove('hidden');
+    $('btn-add-fab').classList.add('fab-raised');
   }
-  function hideInstallBanner() { $('install-banner').classList.add('hidden'); }
+  function hideInstallBanner() {
+    $('install-banner').classList.add('hidden');
+    $('btn-add-fab').classList.remove('fab-raised');
+  }
   window.addEventListener('beforeinstallprompt', function (ev) {
     ev.preventDefault();
     deferredPrompt = ev;
@@ -408,6 +413,31 @@
   /* ---------- add a set: PDF + paste ---------- */
   var pendingImport = null; // {title, questions, warnings}
 
+  function openAddModal() {
+    setAddTab('pdf');
+    $('modal-add-panel').classList.remove('hidden');
+    $('modal-review-panel').classList.add('hidden');
+    $('add-modal-title').textContent = 'Add a set';
+    $('pdf-status').textContent = '';
+    $('paste-status').textContent = '';
+    $('add-modal').classList.remove('hidden');
+  }
+  function closeAddModal() {
+    $('add-modal').classList.add('hidden');
+    pendingImport = null;
+  }
+  function showReviewPanel() {
+    $('modal-add-panel').classList.add('hidden');
+    $('modal-review-panel').classList.remove('hidden');
+    $('add-modal-title').textContent = 'Check this set';
+  }
+  function showAddPanel() {
+    pendingImport = null;
+    $('modal-review-panel').classList.add('hidden');
+    $('modal-add-panel').classList.remove('hidden');
+    $('add-modal-title').textContent = 'Add a set';
+  }
+
   function setAddTab(tab) {
     $('tab-pdf').classList.toggle('active', tab === 'pdf');
     $('tab-paste').classList.toggle('active', tab === 'paste');
@@ -493,7 +523,7 @@
     });
 
     renderReviewList();
-    show('review');
+    showReviewPanel();
   }
 
   function renderReviewList() {
@@ -551,6 +581,7 @@
     }
     saveState();
     pendingImport = null;
+    closeAddModal();
     renderHome();
     show('home');
   }
@@ -599,8 +630,12 @@
     });
     showInstallBanner();
 
-    $('btn-add-set').addEventListener('click', function () { setAddTab('pdf'); show('add'); });
-    $('btn-back-home').addEventListener('click', function () { show('home'); });
+    $('btn-add-fab').addEventListener('click', openAddModal);
+    $('btn-close-add').addEventListener('click', closeAddModal);
+    $('add-modal').addEventListener('click', function (ev) { if (ev.target === $('add-modal')) closeAddModal(); });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !$('add-modal').classList.contains('hidden')) closeAddModal();
+    });
     $('tab-pdf').addEventListener('click', function () { setAddTab('pdf'); });
     $('tab-paste').addEventListener('click', function () { setAddTab('paste'); });
     $('pdf-input').addEventListener('change', function (ev) {
@@ -609,7 +644,7 @@
       ev.target.value = '';
     });
     $('btn-parse-paste').addEventListener('click', handlePasteText);
-    $('btn-review-cancel').addEventListener('click', function () { pendingImport = null; show('add'); });
+    $('btn-review-cancel').addEventListener('click', showAddPanel);
     $('btn-review-save').addEventListener('click', saveImport);
 
     $('quiz-flag').addEventListener('click', function () {

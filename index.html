@@ -51,7 +51,6 @@
   <section id="screen-home">
     <h2>Your sets</h2>
     <p class="sub">Pick a set, tap your answers, get graded at the end. Questions and options shuffle every attempt.</p>
-    <button class="btn primary" id="btn-add-set">+ Add a set</button>
     <div id="set-list" style="margin-top: 16px;"></div>
     <p class="add-hint">Works offline once opened — your sets and scores live on this device.</p>
   </section>
@@ -112,50 +111,54 @@
     </div>
   </section>
 
-  <!-- ============ ADD A SET ============ -->
-  <section id="screen-add" class="hidden">
-    <h2>Add a set</h2>
-    <p class="sub">Drop in an MCQ PDF — the app reads the questions, options and answer key itself. You’ll get to check everything before it’s saved.</p>
-    <div class="tabs">
-      <button id="tab-pdf" class="active">PDF file</button>
-      <button id="tab-paste">Paste text</button>
-    </div>
+  <!-- ============ ADD A SET (modal) ============ -->
+  <div class="modal-backdrop hidden" id="add-modal" role="dialog" aria-modal="true" aria-label="Add a set">
+    <div class="modal wide" id="add-modal-card">
+      <div class="modal-head">
+        <h2 id="add-modal-title">Add a set</h2>
+        <button class="icon-btn" id="btn-close-add" aria-label="Close">✕</button>
+      </div>
 
-    <div id="panel-pdf">
-      <label class="dropzone" for="pdf-input">
-        <strong>Choose an MCQ PDF</strong>
-        Questions + options + the answer key at the end, all in one file.
-      </label>
-      <input type="file" id="pdf-input" accept=".pdf,application/pdf" class="hidden">
-      <div class="status" id="pdf-status"></div>
-      <p class="fineprint">Need the format? <a href="docs/mcq-format-guide.md">Read the MCQ format guide</a> — it shows exactly how questions, options and the key should be laid out, so you can send it to any bot that makes your PDFs.</p>
-    </div>
+      <div id="modal-add-panel">
+        <p class="sub">Drop in an MCQ PDF — the app reads the questions, options and answer key itself. You’ll get to check everything before it’s saved.</p>
+        <div class="tabs">
+          <button id="tab-pdf" class="active">PDF file</button>
+          <button id="tab-paste">Paste text</button>
+        </div>
 
-    <div id="panel-paste" class="hidden">
-      <textarea id="paste-input" placeholder="Paste the questions here, in the same format as the PDF:&#10;&#10;1. Question text?&#10;A. Option one&#10;B. Option two&#10;C. Option three&#10;D. Option four&#10;&#10;...then the answer key at the end, in rows of 10."></textarea>
-      <div class="btn-row"><button class="btn primary" id="btn-parse-paste">Read questions</button></div>
-      <div class="status" id="paste-status"></div>
-    </div>
+        <div id="panel-pdf">
+          <label class="dropzone" for="pdf-input">
+            <strong>Choose an MCQ PDF</strong>
+            Questions + options + the answer key at the end, all in one file.
+          </label>
+          <input type="file" id="pdf-input" accept=".pdf,application/pdf" class="hidden">
+          <div class="status" id="pdf-status"></div>
+          <p class="fineprint">Need the format? <a href="docs/mcq-format-guide.md">Read the MCQ format guide</a> — it shows exactly how questions, options and the key should be laid out, so you can send it to any bot that makes your PDFs.</p>
+        </div>
 
-    <div class="btn-row"><button class="btn ghost" id="btn-back-home">← All sets</button></div>
-  </section>
+        <div id="panel-paste" class="hidden">
+          <textarea id="paste-input" placeholder="Paste the questions here, in the same format as the PDF:&#10;&#10;1. Question text?&#10;A. Option one&#10;B. Option two&#10;C. Option three&#10;D. Option four&#10;&#10;...then the answer key at the end, in rows of 10."></textarea>
+          <div class="btn-row"><button class="btn primary" id="btn-parse-paste">Read questions</button></div>
+          <div class="status" id="paste-status"></div>
+        </div>
+      </div>
 
-  <!-- ============ IMPORT REVIEW ============ -->
-  <section id="screen-review" class="hidden">
-    <h2>Check this set</h2>
-    <p class="sub">Look it over before saving. Fix any wrong answer, or remove a bad question.</p>
-    <label for="review-title">Set title</label>
-    <input type="text" id="review-title" style="margin: 6px 0 10px;">
-    <p class="sub" id="review-meta"></p>
-    <div id="review-warnings"></div>
-    <div id="review-samples"></div>
-    <h2 style="font-size: 17px;">All questions</h2>
-    <div id="review-list"></div>
-    <div class="btn-row">
-      <button class="btn ghost" id="btn-review-cancel">Cancel</button>
-      <button class="btn primary" id="btn-review-save">Save set</button>
+      <div id="modal-review-panel" class="hidden">
+        <p class="sub">Look it over before saving. Fix any wrong answer, or remove a bad question.</p>
+        <label for="review-title">Set title</label>
+        <input type="text" id="review-title" style="margin: 6px 0 10px;">
+        <p class="sub" id="review-meta"></p>
+        <div id="review-warnings"></div>
+        <div id="review-samples"></div>
+        <h2 style="font-size: 17px;">All questions</h2>
+        <div id="review-list"></div>
+        <div class="btn-row">
+          <button class="btn ghost" id="btn-review-cancel">Cancel</button>
+          <button class="btn primary" id="btn-review-save">Save set</button>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 
   <!-- ============ SETTINGS ============ -->
   <section id="screen-settings" class="hidden">
@@ -201,6 +204,10 @@
     <button class="install-btn" id="install-accept">Install</button>
     <button class="install-dismiss" id="install-dismiss" aria-label="Dismiss">✕</button>
   </div>
+
+  <button class="fab" id="btn-add-fab" aria-label="Add a set" title="Add a set">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
