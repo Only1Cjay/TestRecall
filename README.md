@@ -1,6 +1,6 @@
 # TestRecall
 
-MCQ practice for pharmacy exams — minus the paper. Pick a set, tap your answers, get graded at the end.
+MCQ practice for pharmacy exams — minus the paper. Pick a set to start. Questions and options shuffle every attempt, so you learn the answers, not the order.
 
 ![TestRecall logo](icons/icon.svg)
 
@@ -9,16 +9,17 @@ MCQ practice for pharmacy exams — minus the paper. Pick a set, tap your answer
 - **Two starter sets baked in** — Naming and Classification of Bacteria (122 questions) and Systematic Classification of Bacteria (60 questions), from Dr Mrs Oboh's PHM 201 lecture notes.
 - **Tap to answer** — one question at a time, with a timer, progress bar, flag-for-later and a jump-to-question grid.
 - **Shuffled every attempt** — questions and options are shuffled each time, so you're answering, not memorising positions.
-- **Auto-graded** — submit (with a confirm step) and get your score plus a review of only the questions you missed, showing your answer vs the correct one. You can also re-practise just the missed ones.
-- **Add your own sets** — upload an MCQ PDF and the app reads the questions, options and answer key out of it, then shows you a review screen to check everything (and fix any wrong key) before saving. Or paste questions as text instead.
-- **Offline-first PWA** — after the first visit, a service worker caches the app and the PDF reader, so it works with no connection. Your sets and scores live in your browser's local storage; there is no server and no account.
+- **Auto-graded** — submit (with a confirm step) and get your score plus a review of every question: a colour heatmap (green = correct, red = missed, amber outline = flagged), filter tabs for All / Failed / Correct / Flagged, and pages of 20 questions at a time. You can also re-practise just the missed ones.
+- **Add your own sets** — tap the floating (+) button to open the add-a-set modal, upload an MCQ PDF and the app reads the questions, options and answer key out of it, then shows you a review screen to check everything (and fix any wrong key) before saving. Or paste questions as text instead.
+- **Offline-first PWA** — after the first visit, a service worker caches the app and the PDF reader, so it works with no connection. Your sets and scores live in your browser's local storage; there is no server and no account. Install it from the banner or the menu for an app icon on your home screen, and a toast tells you when you're offline.
+- **Settings** — switch light/dark theme from the header or Settings, and see the PDFs you've uploaded, grouped by day.
 
 ## How to use it
 
 1. Open the app and pick a set.
 2. Tap an option to answer, use **Next** / **Previous** to move around, **☆ Flag** to mark one for later, **Grid** to jump to any question.
-3. Tap **Submit answers**, confirm, and see your score and the review of what you missed.
-4. To add a set: **+ Add a set** → choose a PDF (or paste text) → check the review screen → **Save set**.
+3. Tap **Submit answers**, confirm, and see your score, the heatmap, and the review. Use the tabs to look at only the ones you failed or flagged.
+4. To add a set: tap the floating **(+)** button → choose a PDF (or paste text) → check the review screen → **Save set**.
 
 ## The PDF format (for bots that make your MCQs)
 
@@ -44,14 +45,14 @@ No build step: the files are served as they are from the repo root.
 
 | File | What it is |
 |---|---|
-| `index.html` | The app shell — home, quiz, results, add-a-set and review screens |
-| `css/style.css` | Dark green + cream styling, mobile-first |
-| `js/app.js` | Quiz engine, grading, review, localStorage saving, service worker registration |
+| `index.html` | The app shell — home, quiz, results and settings screens, plus an add-a-set modal |
+| `css/style.css` | Mint Pop styling (light-first, Sora + Inter), mobile-first |
+| `js/app.js` | Quiz engine, grading, heatmap + filter tabs + pagination, install prompt, offline toast, localStorage saving, service worker registration |
 | `js/pdf-parser.js` | PDF text extraction (pdf.js) + MCQ text parser |
 | `data/naming-classification-bacteria.json` | Starter set, 122 questions |
 | `data/systematic-classification-bacteria.json` | Starter set, 60 questions |
-| `icons/icon.svg` | PWA icon (cream question mark + graduation cap on deep green) |
-| `manifest.json` | PWA manifest (name TestRecall, deep green theme) |
+| `icons/icon.svg` | PWA icon (bold question mark on a green gradient) |
+| `manifest.json` | PWA manifest (name TestRecall, mint theme #EFF4F1) |
 | `sw.js` | Service worker — caches the app shell and pdf.js for offline use |
 | `docs/mcq-format-guide.md` | The PDF format spec to send to bots that make MCQ PDFs |
 
