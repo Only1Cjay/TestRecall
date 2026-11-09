@@ -7,10 +7,10 @@ MCQ practice for pharmacy exams — minus the paper. Pick a set to start. Questi
 ## What it does
 
 - **Two starter sets baked in** — Naming and Classification of Bacteria (122 questions) and Systematic Classification of Bacteria (60 questions), from Dr Mrs Oboh's PHM 201 lecture notes. Both live under **PHM 201**, and either can be deleted from its card (they hide on your device only — bring them back from Settings → Restore starter sets).
-- **Course folders** — the home screen shows your courses (PHM 201, PCG, PCH 201, PCT, PIO, plus any you add); tap one to see its sets. Uploading a set asks which course it belongs to, and you can type a new course name.
+- **Course folders** — the home screen shows your courses, each card with its full name ("PHM 201 · Microbiology"); tap one to see its sets. Only courses with a set show up — empty ones stay hidden, and the circular (+) at the top right adds a course (code + optional full name). Uploading a set asks which course it belongs to, and you can type a new course name.
 - **Two practice modes** — before every session, one popup asks how you want to practise: **Exam simulation** (answer everything first, score and review at the end) or **Instant marking** (each answer is marked the moment you tap it, green for correct, red for wrong with the right answer shown), plus the timer choice (minutes or Untimed) in the same popup.
-- **Review everything missed** — a card on the home screen and on each course screen gathers the missed questions from your latest attempt of every set in scope into one mixed session.
-- **Day streak** — a small flame chip on the home screen counts the days in a row you've submitted a quiz.
+- **Review everything missed** — a blue card on the home screen and on each course screen gathers the missed questions from your latest attempt of every set in scope into one mixed session. Tap the × on the card to dismiss it for now; it comes back on its own when your missed count changes after a quiz.
+- **Day streak** — a small flame chip on the home screen ("N-day streak · keep it going") counts the days in a row you've submitted a quiz.
 - **Search** — find a set by name, on the home screen or inside a course.
 - **Tap to answer** — one question at a time, with a timer, progress bar, flag-for-later and a jump-to-question grid.
 - **Shuffled every attempt** — questions and options are shuffled each time, so you're answering, not memorising positions.

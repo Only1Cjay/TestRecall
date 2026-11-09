@@ -49,15 +49,22 @@
 
   <!-- ============ HOME ============ -->
   <section id="screen-home">
-    <div id="streak-chip" class="streak-chip hidden">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-      <span id="streak-text"></span>
+    <div class="home-top-row">
+      <div id="streak-chip" class="streak-chip hidden">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        <span id="streak-text"></span><span class="streak-suffix"> · keep it going</span>
+      </div>
+      <button class="add-course-btn" id="btn-add-course" aria-label="Add a course" title="Add a course">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
     </div>
-    <h2>Your sets</h2>
-    <p class="sub">Pick a set to start. Questions and options shuffle every attempt, so you learn the answers, not the order.</p>
-    <input class="timer-input search-input" type="search" id="home-search" placeholder="Search sets..." aria-label="Search sets" autocomplete="off">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" type="search" id="home-search" placeholder="Search sets..." aria-label="Search sets" autocomplete="off">
+    </div>
     <div id="missed-card-home"></div>
-    <div id="set-list" style="margin-top: 16px;"></div>
+    <div class="section-label" id="courses-label">YOUR COURSES</div>
+    <div id="set-list"></div>
   </section>
 
   <!-- ============ COURSE ============ -->
@@ -65,7 +72,10 @@
     <div class="btn-row"><button class="btn ghost" id="btn-course-back">← All courses</button></div>
     <h2 id="course-title">Course</h2>
     <p class="sub" id="course-sub"></p>
-    <input class="timer-input search-input" type="search" id="course-search" placeholder="Search sets..." aria-label="Search sets in this course" autocomplete="off">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" type="search" id="course-search" placeholder="Search sets..." aria-label="Search sets in this course" autocomplete="off">
+    </div>
     <div id="missed-card-course"></div>
     <div id="course-set-list"></div>
     <button class="upload-card" id="course-upload">+ Upload a set to this course</button>
@@ -271,6 +281,26 @@
   </section>
 
   <footer class="app-foot">Made by Only1Cjay</footer>
+
+  <!-- ============ ADD A COURSE (modal) ============ -->
+  <div class="modal-backdrop hidden" id="course-modal" role="dialog" aria-modal="true" aria-label="Add a course">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Add a course</h3>
+        <button class="icon-btn" id="course-close" aria-label="Close">✕</button>
+      </div>
+      <p class="sub">The course shows on home once a set is added to it.</p>
+      <label class="timer-label" for="course-code">Course code</label>
+      <input class="timer-input" type="text" id="course-code" placeholder="e.g. PCH 201" autocomplete="off">
+      <label class="timer-label" for="course-name" style="margin-top: 12px;">Full name (optional)</label>
+      <input class="timer-input" type="text" id="course-name" placeholder="e.g. Pharmaceutical Chemistry" autocomplete="off">
+      <p class="timer-error hidden" id="course-error">Enter a course code first.</p>
+      <div class="btn-row">
+        <button class="btn ghost" id="course-cancel">Cancel</button>
+        <button class="btn primary" id="course-save">Add course</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ CONFIRM MODAL ============ -->
   <div class="modal-backdrop hidden" id="confirm-modal">

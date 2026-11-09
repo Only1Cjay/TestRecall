@@ -158,26 +158,128 @@ html[data-theme="dark"] a { color: var(--accent); }
 .icon-btn:hover { color: var(--danger); }
 
 /* ---------- home: streak, search, missed review, courses ---------- */
+.home-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 0;
+}
 .streak-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--amber-soft);
-  color: var(--amber);
-  border: 1px solid var(--amber);
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 5px 12px;
+  padding: 7px 13px;
   font-size: 13px;
   font-weight: 700;
-  margin: 14px 0 0;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
 }
-.streak-chip svg { width: 15px; height: 15px; flex: 0 0 auto; }
-.search-input { margin-bottom: 14px; }
-.missed-card { background: var(--accent-soft); border-color: var(--accent); }
-.missed-card .set-desc { margin-bottom: 12px; }
-.course-card { cursor: pointer; }
+.streak-chip svg { width: 15px; height: 15px; flex: 0 0 auto; color: var(--amber); }
+.streak-suffix { color: var(--muted); font-weight: 500; }
+.add-course-btn {
+  margin-left: auto;
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: center;
+}
+.add-course-btn:active { transform: scale(0.96); }
+.add-course-btn svg { width: 20px; height: 20px; }
+.search-wrap { position: relative; margin: 14px 0; }
+.search-wrap > svg {
+  position: absolute; left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  color: var(--muted);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: var(--card-2);
+  border: 1px solid transparent;
+  border-radius: 14px;
+  font-size: 16px;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+.search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: var(--card); }
+.search-input::placeholder { color: var(--muted); }
+.section-label {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 18px 0 12px;
+}
+/* Missed review as the big blue card from the preview: vivid blue,
+   white title and subtitle, white pill button. */
+.missed-hero {
+  background: linear-gradient(135deg, #2E7DD1 0%, #1D5FA8 100%);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  color: #FFFFFF;
+}
+.missed-hero .set-title { color: #FFFFFF; font-size: 19px; }
+.missed-hero-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.missed-hero-head .set-title { flex: 1; min-width: 0; }
+.missed-dismiss {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.missed-dismiss:active { background: rgba(255, 255, 255, 0.28); color: #FFFFFF; }
+.missed-hero-sub { color: rgba(255, 255, 255, 0.88); font-size: 14px; line-height: 1.5; margin: 5px 0 14px; }
+.missed-hero-btn {
+  background: #FFFFFF;
+  color: var(--accent-deep);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.missed-hero-btn:active { transform: scale(0.98); }
+.course-card { cursor: pointer; display: flex; align-items: center; gap: 14px; }
 .course-card:active { transform: scale(0.99); }
-.course-chev { color: var(--muted); font-size: 26px; line-height: 1; font-weight: 400; }
+.course-icon {
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  display: flex; align-items: center; justify-content: center;
+}
+html[data-theme="dark"] .course-icon { color: var(--accent); }
+.course-icon svg { width: 24px; height: 24px; }
+.course-text { flex: 1; min-width: 0; }
+.course-text .set-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.course-text .set-desc { margin: 2px 0 0; }
+.course-chev { color: var(--muted); font-size: 26px; line-height: 1; font-weight: 400; flex: 0 0 auto; }
 .upload-card {
   display: block;
   width: 100%;
@@ -219,6 +321,8 @@ html[data-theme="dark"] a { color: var(--accent); }
   color: var(--text-soft);
 }
 .pill.warn { color: var(--amber); border-color: var(--amber); background: var(--amber-soft); }
+.pill.starter { color: var(--accent-deep); border-color: var(--accent); background: var(--accent-soft); }
+html[data-theme="dark"] .pill.starter { color: var(--accent); }
 
 .add-hint { color: var(--muted); font-size: 13px; text-align: center; margin-top: 18px; }
 
@@ -383,11 +487,10 @@ html[data-theme="dark"] a { color: var(--accent); }
   border: 1px solid transparent;
   font-size: 15px;
 }
-.miss-opt.correct { border-color: var(--accent); background: var(--accent-soft); }
+.miss-opt.correct { border-color: var(--ok); background: var(--ok-soft); }
 .miss-opt.wrong { border-color: var(--danger); background: var(--danger-soft); }
 .miss-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
-.miss-opt.correct .miss-tag { color: var(--accent-deep); }
-html[data-theme="dark"] .miss-opt.correct .miss-tag { color: var(--accent); }
+.miss-opt.correct .miss-tag { color: var(--ok); }
 .miss-opt.wrong .miss-tag { color: var(--danger); }
 .miss-note { color: var(--amber); font-size: 13px; margin-top: 8px; }
 
@@ -408,7 +511,7 @@ html[data-theme="dark"] .miss-opt.correct .miss-tag { color: var(--accent); }
   font-weight: 600;
   cursor: pointer;
 }
-.heat-num.correct { background: var(--accent-deep); border-color: var(--accent-deep); color: #FFFFFF; }
+.heat-num.correct { background: var(--ok); border-color: var(--ok); color: #FFFFFF; }
 .heat-num.wrong { background: var(--danger); border-color: var(--danger); color: #FFFFFF; }
 .heat-num.flagged { box-shadow: 0 0 0 2px var(--amber); }
 .heatmap-legend { margin-bottom: 12px; }
@@ -430,7 +533,7 @@ html[data-theme="dark"] .miss-opt.correct .miss-tag { color: var(--accent); }
   border-radius: 999px;
   white-space: nowrap;
 }
-.miss-status.ok { color: var(--accent-deep); background: var(--accent-soft); }
+.miss-status.ok { color: var(--ok); background: var(--ok-soft); }
 .miss-status.bad { color: var(--danger); background: var(--danger-soft); }
 .miss-status.flagged { color: var(--amber); background: var(--amber-soft); }
 #review-empty { text-align: center; margin: 18px 0; }

@@ -27,14 +27,27 @@
      is stored on the set; sets uploaded before courses existed default
      to PHM 201. */
   var COURSES = ['PHM 201', 'PCG', 'PCH 201', 'PCT', 'PIO'];
+  /* Full names shown as the subtitle on course cards ("7 sets · Microbiology").
+     Custom courses keep the full name entered in the + course modal. */
+  var COURSE_NAMES = {
+    'PHM 201': 'Microbiology',
+    'PCG': 'Pharmacognosy',
+    'PCH 201': 'Pharmaceutical Chemistry',
+    'PCT': 'Pharmaceutics',
+    'PIO': 'Physiology',
+  };
+  function courseFullName(code) {
+    if (state.courseNames && state.courseNames[code]) return state.courseNames[code];
+    return COURSE_NAMES[code] || '';
+  }
 
   /* ---------- storage ---------- */
   function loadState() {
     try {
       var s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-      if (s && typeof s === 'object') return { sets: s.sets || {}, attempts: s.attempts || {}, uploads: s.uploads || [], hiddenStarters: s.hiddenStarters || [] };
+      if (s && typeof s === 'object') return { sets: s.sets || {}, attempts: s.attempts || {}, uploads: s.uploads || [], hiddenStarters: s.hiddenStarters || [], courseNames: s.courseNames || {} };
     } catch (e) { /* corrupted storage: start fresh */ }
-    return { sets: {}, attempts: {}, uploads: [], hiddenStarters: [] };
+    return { sets: {}, attempts: {}, uploads: [], hiddenStarters: [], courseNames: {} };
   }
   function saveState() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { /* storage full/blocked */ }
@@ -122,10 +135,21 @@
   }
   function allCourses() {
     var list = COURSES.slice();
+    Object.keys(state.courseNames || {}).forEach(function (c) {
+      if (list.indexOf(c) === -1) list.push(c);
+    });
     allSets().forEach(function (s) {
       if (s.course && list.indexOf(s.course) === -1) list.push(s.course);
     });
     return list;
+  }
+  /* Only courses with at least one set appear on home — empty folders
+     stay hidden until a set is added to them. */
+  function visibleCourses() {
+    return allCourses().filter(function (c) { return courseSetCount(c) > 0; });
+  }
+  function courseSetCount(course) {
+    return allSets().filter(function (s) { return s.course === course; }).length;
   }
   function courseStats(course) {
     var sets = allSets().filter(function (s) { return s.course === course && s.questions; });
@@ -139,6 +163,10 @@
     return found;
   }
   function attemptsFor(setId) { return state.attempts[setId] || []; }
+  function lastAttempt(setId) {
+    var atts = attemptsFor(setId);
+    return atts.length ? atts[atts.length - 1] : null;
+  }
   function bestScore(setId) {
     var best = null;
     attemptsFor(setId).forEach(function (a) {
@@ -332,16 +360,30 @@
   /* ---------- home: course folders, search, missed review ---------- */
   function missedCardEl(courseName) {
     var count = missedCount(courseName);
-    var card = el('div', 'set-card missed-card');
-    card.appendChild(el('div', 'set-title', 'Review everything I missed'));
+    var dismissed = loadMissedDismissed();
+    var key = courseName || 'all';
+    // Dismissed at this exact count: stay hidden until a quiz changes it.
+    if (dismissed[key] != null && dismissed[key] === count) return el('div');
+    var card = el('div', 'missed-hero');
+    var head = el('div', 'missed-hero-head');
+    head.appendChild(el('div', 'set-title', 'Review everything I missed'));
+    var x = el('button', 'missed-dismiss', '✕');
+    x.setAttribute('aria-label', 'Dismiss');
+    x.title = 'Dismiss';
+    x.addEventListener('click', function () {
+      dismissMissedCard(courseName);
+      refreshMissedCards();
+    });
+    head.appendChild(x);
+    card.appendChild(head);
     if (count > 0) {
-      card.appendChild(el('div', 'set-desc', count + ' missed question' + (count === 1 ? '' : 's') +
-        (courseName ? ' in ' + courseName : ' across your courses') + ', from your latest attempts.'));
-      var btn = el('button', 'btn primary', 'Start missed review');
+      card.appendChild(el('div', 'missed-hero-sub', count + ' missed question' + (count === 1 ? '' : 's') +
+        (courseName ? ' in ' + courseName : ' across your courses') + ', shuffled into one session.'));
+      var btn = el('button', 'missed-hero-btn', 'Start missed review');
       btn.addEventListener('click', function () { askStartMissed(courseName); });
       card.appendChild(btn);
     } else {
-      card.appendChild(el('div', 'set-desc', 'No missed questions yet — finish a quiz and the ones you miss will gather here.'));
+      card.appendChild(el('div', 'missed-hero-sub', 'No missed questions yet — finish a quiz and the ones you miss will gather here.'));
     }
     return card;
   }
@@ -368,11 +410,17 @@
     card.appendChild(el('div', 'set-desc', set.desc));
     var stats = el('div', 'set-stats');
     if (showCourse) stats.appendChild(el('span', 'pill', set.course));
+    if (set.builtin) stats.appendChild(el('span', 'pill starter', 'Starter'));
     if (set.questions) {
       stats.appendChild(el('span', 'pill', set.questions.length + ' questions'));
-      var best = bestScore(set.id);
-      stats.appendChild(el('span', 'pill', best === null ? 'Not tried yet' : 'Best: ' + best + '%'));
-      stats.appendChild(el('span', 'pill', attemptsFor(set.id).length + ' attempt' + (attemptsFor(set.id).length === 1 ? '' : 's')));
+      var last = lastAttempt(set.id);
+      if (last) {
+        var lastPct = last.total ? Math.round((last.score / last.total) * 100) : 0;
+        stats.appendChild(el('span', 'pill', 'LAST SCORE ' + lastPct + '%'));
+        stats.appendChild(el('span', 'pill', last.score + '/' + last.total));
+      } else {
+        stats.appendChild(el('span', 'pill', 'Not tried yet'));
+      }
     } else {
       stats.appendChild(el('span', 'pill warn', 'Could not load — check connection, then reopen'));
     }
@@ -391,12 +439,16 @@
 
   function courseCard(course) {
     var st = courseStats(course);
+    var full = courseFullName(course);
     var card = el('div', 'set-card course-card');
-    var head = el('div', 'set-head');
-    head.appendChild(el('div', 'set-title', course));
-    head.appendChild(el('span', 'course-chev', '›'));
-    card.appendChild(head);
-    card.appendChild(el('div', 'set-desc', st.sets + (st.sets === 1 ? ' set' : ' sets') + ' · ' + st.questions + ' questions'));
+    var icon = el('div', 'course-icon');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>';
+    card.appendChild(icon);
+    var text = el('div', 'course-text');
+    text.appendChild(el('div', 'set-title', course));
+    text.appendChild(el('div', 'set-desc', st.sets + (st.sets === 1 ? ' set' : ' sets') + (full ? ' · ' + full : '')));
+    card.appendChild(text);
+    card.appendChild(el('span', 'course-chev', '›'));
     card.addEventListener('click', function () { openCourse(course); });
     return card;
   }
@@ -430,8 +482,10 @@
     var list = $('set-list');
     if (!list) return;
     list.innerHTML = '';
+    var label = $('courses-label');
     var q = (homeQuery || '').trim().toLowerCase();
     if (q) {
+      if (label) label.classList.add('hidden');
       var matches = allSets().filter(function (s) { return s.title.toLowerCase().indexOf(q) !== -1; });
       if (!matches.length) {
         list.appendChild(el('p', 'sub', 'No sets match "' + homeQuery.trim() + '".'));
@@ -439,7 +493,13 @@
       }
       matches.forEach(function (s) { list.appendChild(setCard(s, true)); });
     } else {
-      allCourses().forEach(function (c) { list.appendChild(courseCard(c)); });
+      var courses = visibleCourses();
+      if (label) label.classList.toggle('hidden', courses.length === 0);
+      if (!courses.length) {
+        list.appendChild(el('p', 'sub', 'No courses yet — tap + above to add a course, or add a set with the + button below.'));
+        return;
+      }
+      courses.forEach(function (c) { list.appendChild(courseCard(c)); });
     }
   }
 
@@ -454,8 +514,9 @@
   function renderCourse(course) {
     currentCourse = course;
     var st = courseStats(course);
+    var full = courseFullName(course);
     $('course-title').textContent = course;
-    $('course-sub').textContent = st.sets + (st.sets === 1 ? ' set' : ' sets') + ' · ' + st.questions + ' questions';
+    $('course-sub').textContent = st.sets + (st.sets === 1 ? ' set' : ' sets') + (full ? ' · ' + full : '');
     var missedBox = $('missed-card-course');
     if (missedBox) {
       missedBox.innerHTML = '';
@@ -475,6 +536,53 @@
       return;
     }
     sets.forEach(function (s) { list.appendChild(setCard(s, false)); });
+  }
+
+  /* ---------- add a course: + button, top right of home ---------- */
+  function openCourseModal() {
+    $('course-code').value = '';
+    $('course-name').value = '';
+    $('course-error').classList.add('hidden');
+    $('course-modal').classList.remove('hidden');
+  }
+  function closeCourseModal() {
+    $('course-modal').classList.add('hidden');
+  }
+  function saveCourse() {
+    var code = $('course-code').value.trim();
+    if (!code) {
+      $('course-error').classList.remove('hidden');
+      return;
+    }
+    var name = $('course-name').value.trim();
+    state.courseNames = state.courseNames || {};
+    state.courseNames[code] = name;
+    saveState();
+    closeCourseModal();
+    renderHome();
+    showToast('Course added — upload a set to see it on home.', false);
+  }
+
+  /* ---------- missed-review card dismissal ----------
+     A dismiss is "not now", not permanent: the card is hidden only while
+     the missed count for that scope (home = all courses, or one course)
+     is unchanged. A quiz that changes the count brings it back. */
+  var MISSED_DISMISS_KEY = 'testrecall.missedDismissed';
+  function loadMissedDismissed() {
+    try {
+      var d = JSON.parse(localStorage.getItem(MISSED_DISMISS_KEY) || 'null');
+      if (d && typeof d === 'object') return d;
+    } catch (e) {}
+    return {};
+  }
+  function dismissMissedCard(courseName) {
+    var d = loadMissedDismissed();
+    d[courseName || 'all'] = missedCount(courseName);
+    try { localStorage.setItem(MISSED_DISMISS_KEY, JSON.stringify(d)); } catch (e) {}
+  }
+  function refreshMissedCards() {
+    renderHome();
+    if (currentCourse) renderCourse(currentCourse);
   }
 
   /* ---------- quiz ---------- */
@@ -1108,7 +1216,8 @@
     on('add-modal', 'click', function (ev) { if (ev.target === $('add-modal')) closeAddModal(); });
     document.addEventListener('keydown', function (ev) {
       if (ev.key !== 'Escape') return;
-      if (!$('add-modal').classList.contains('hidden')) closeAddModal();
+      if (!$('course-modal').classList.contains('hidden')) closeCourseModal();
+      else if (!$('add-modal').classList.contains('hidden')) closeAddModal();
       else if (!$('start-modal').classList.contains('hidden')) closeStartModal();
       else if (!$('grid-backdrop').classList.contains('hidden')) $('grid-backdrop').classList.add('hidden');
       else if (!$('confirm-modal').classList.contains('hidden')) closeConfirm();
@@ -1121,6 +1230,21 @@
       ev.target.value = '';
     });
     on('btn-parse-paste', 'click', handlePasteText);
+    /* ---------- add a course ---------- */
+    on('btn-add-course', 'click', openCourseModal);
+    on('course-close', 'click', closeCourseModal);
+    on('course-cancel', 'click', closeCourseModal);
+    on('course-save', 'click', saveCourse);
+    on('course-code', 'input', function (ev) {
+      // Prefill the full name when the code is one the app already knows.
+      var nameInput = $('course-name');
+      if (!nameInput || nameInput.value.trim() !== '') return;
+      var code = ev.target.value.trim();
+      var known = courseFullName(code);
+      if (known) nameInput.value = known;
+    });
+    on('course-modal', 'click', function (ev) { if (ev.target === $('course-modal')) closeCourseModal(); });
+
     /* ---------- home search + course screen ---------- */
     on('home-search', 'input', function (ev) { homeQuery = ev.target.value; renderHomeList(); });
     on('course-search', 'input', function (ev) { courseQuery = ev.target.value; renderCourseList(); });
