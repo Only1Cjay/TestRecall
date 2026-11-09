@@ -136,6 +136,24 @@
     </div>
   </section>
 
+  <!-- ============ TIMER MODAL ============ -->
+  <div class="modal-backdrop hidden" id="timer-modal" role="dialog" aria-modal="true" aria-label="Set a timer">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Set a timer?</h3>
+        <button class="icon-btn" id="timer-close" aria-label="Close">✕</button>
+      </div>
+      <p class="sub" id="timer-modal-set"></p>
+      <label class="timer-label" for="timer-minutes">Minutes</label>
+      <input class="timer-input" type="number" id="timer-minutes" min="1" max="600" inputmode="numeric" placeholder="e.g. 30">
+      <p class="timer-error hidden" id="timer-error">Enter a number of minutes (1–600).</p>
+      <div class="btn-row">
+        <button class="btn primary" id="timer-start">Start with timer</button>
+        <button class="btn ghost" id="timer-untimed">Untimed</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ ADD A SET (modal) ============ -->
   <div class="modal-backdrop hidden" id="add-modal" role="dialog" aria-modal="true" aria-label="Add a set">
     <div class="modal wide" id="add-modal-card">

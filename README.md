@@ -12,6 +12,7 @@ MCQ practice for pharmacy exams — minus the paper. Pick a set to start. Questi
 - **Auto-graded** — submit (with a confirm step) and get your score plus a review of every question: a colour heatmap (green = correct, red = missed, amber outline = flagged), filter tabs for All / Failed / Correct / Flagged, and pages of 20 questions at a time. You can also re-practise just the missed ones.
 - **Add your own sets** — tap the floating (+) button to open the add-a-set modal, upload an MCQ PDF and the app reads the questions, options and answer key out of it, then shows you a review screen to check everything (and fix any wrong key) before saving. Or paste questions as text instead.
 - **Offline-first PWA** — after the first visit, a service worker caches the app and the PDF reader, so it works with no connection. Your sets and scores live in your browser's local storage; there is no server and no account. Install it from the banner or the menu for an app icon on your home screen, and a toast tells you when you're offline.
+- **Timer** — before each set, choose a custom timer in minutes or go Untimed. A timed session counts down in the header (red under a minute) and submits automatically when it runs out.
 - **Settings** — switch light/dark theme from the header or Settings, and see the PDFs you've uploaded, grouped by day.
 
 ## How to use it

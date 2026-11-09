@@ -266,7 +266,7 @@
       var btn = el('button', 'btn primary', set.questions ? 'Start practice' : 'Retry loading');
       btn.addEventListener('click', function () {
         if (!set.questions) { loadBuiltin().then(renderHome); return; }
-        startQuiz(set.id, null);
+        askTimer(set.id, null);
       });
       card.appendChild(btn);
       list.appendChild(card);
@@ -276,7 +276,7 @@
   /* ---------- quiz ---------- */
   var quiz = null; // {setId, title, items, pos, picked{}, flagged:Set, startedAt, timerId}
 
-  function startQuiz(setId, subset) {
+  function startQuiz(setId, subset, timeLimit) {
     var set = getSet(setId);
     if (!set || !set.questions) return;
     var pool = subset || set.questions;
@@ -289,15 +289,50 @@
     quiz = {
       setId: set.id, title: set.title, items: items, pos: 0,
       picked: {}, flagged: {}, startedAt: Date.now(), elapsed: 0, timerId: null,
+      timeLimit: timeLimit || null,
     };
     $('quiz-title').textContent = set.title;
+    var timerEl = $('quiz-timer');
+    timerEl.classList.remove('timer-low');
+    timerEl.textContent = timeLimit ? fmtTime(timeLimit) : '00:00';
     quiz.timerId = setInterval(function () {
       quiz.elapsed = Math.floor((Date.now() - quiz.startedAt) / 1000);
-      $('quiz-timer').textContent = fmtTime(quiz.elapsed);
+      if (quiz.timeLimit) {
+        var left = quiz.timeLimit - quiz.elapsed;
+        timerEl.textContent = fmtTime(Math.max(0, left));
+        timerEl.classList.toggle('timer-low', left <= 60);
+        if (left <= 0) { endOnTimeout(); return; }
+      } else {
+        timerEl.textContent = fmtTime(quiz.elapsed);
+      }
     }, 1000);
-    $('quiz-timer').textContent = '00:00';
     renderQuestion();
     show('quiz');
+  }
+
+  function endOnTimeout() {
+    if (!quiz) return;
+    clearInterval(quiz.timerId);
+    $('grid-panel').classList.add('hidden');
+    $('confirm-modal').classList.add('hidden');
+    submitQuiz();
+    showToast("Time's up — your answers were submitted.", false);
+  }
+
+  /* ---------- timer choice: ask before each practice set ---------- */
+  var pendingQuiz = null; // {setId, subset} waiting for the timer choice
+  function askTimer(setId, subset) {
+    var set = getSet(setId);
+    if (!set) return;
+    pendingQuiz = { setId: setId, subset: subset || null };
+    $('timer-modal-set').textContent = set.title;
+    $('timer-minutes').value = '';
+    $('timer-error').classList.add('hidden');
+    $('timer-modal').classList.remove('hidden');
+  }
+  function closeTimer() {
+    $('timer-modal').classList.add('hidden');
+    pendingQuiz = null;
   }
 
   function answeredCount() { return Object.keys(quiz.picked).length; }
@@ -792,6 +827,7 @@
     on('add-modal', 'click', function (ev) { if (ev.target === $('add-modal')) closeAddModal(); });
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && !$('add-modal').classList.contains('hidden')) closeAddModal();
+      if (ev.key === 'Escape' && !$('timer-modal').classList.contains('hidden')) closeTimer();
     });
     on('tab-pdf', 'click', function () { setAddTab('pdf'); });
     on('tab-paste', 'click', function () { setAddTab('paste'); });
@@ -843,6 +879,27 @@
       submitQuiz();
     });
 
+    /* ---------- timer choice modal ---------- */
+    on('timer-start', 'click', function () {
+      if (!pendingQuiz) return;
+      var mins = parseInt($('timer-minutes').value, 10);
+      if (isNaN(mins) || mins < 1 || mins > 600) {
+        $('timer-error').classList.remove('hidden');
+        return;
+      }
+      var pq = pendingQuiz;
+      closeTimer();
+      startQuiz(pq.setId, pq.subset, mins * 60);
+    });
+    on('timer-untimed', 'click', function () {
+      if (!pendingQuiz) return;
+      var pq = pendingQuiz;
+      closeTimer();
+      startQuiz(pq.setId, pq.subset, null);
+    });
+    on('timer-close', 'click', closeTimer);
+    on('timer-modal', 'click', function (ev) { if (ev.target === $('timer-modal')) closeTimer(); });
+
     document.querySelectorAll('#review-filter button').forEach(function (b) {
       b.addEventListener('click', function () { setReviewFilter(b.getAttribute('data-filter')); });
     });
@@ -850,7 +907,7 @@
     on('heat-next', 'click', function () { if (lastResult && heatPage < Math.ceil(lastResult.all.length / HEAT_PER_PAGE)) { heatPage++; renderHeatmap(lastResult); } });
     on('review-prev', 'click', function () { if (reviewPage > 1) { reviewPage--; applyReviewFilter(); } });
     on('review-next', 'click', function () { reviewPage++; applyReviewFilter(); });
-    on('btn-retake', 'click', function () { startQuiz(quiz.setId, null); });
+    on('btn-retake', 'click', function () { askTimer(quiz.setId, null); });
     on('btn-retry-missed', 'click', function () {
       // Rebuild from the original set questions (original option order),
       // not the shuffled quiz items, so the answer letters still match.
@@ -858,7 +915,7 @@
       var missedNums = {};
       lastResult.missed.forEach(function (m) { missedNums[m.item.n] = true; });
       var missedQs = set.questions.filter(function (q) { return missedNums[q.n]; });
-      startQuiz(quiz.setId, missedQs);
+      askTimer(quiz.setId, missedQs);
     });
     on('btn-results-home', 'click', function () { renderHome(); show('home'); });
 

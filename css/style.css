@@ -509,6 +509,24 @@ input[type="text"] {
   margin-bottom: 6px;
 }
 .modal-head h2 { margin: 0; font-size: 20px; }
+.modal-head h3 { margin: 0; font-size: 18px; }
+
+/* ---------- timer modal ---------- */
+.timer-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-soft); margin-bottom: 6px; }
+.timer-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: var(--font-body);
+  background: var(--card);
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.timer-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.timer-error { color: var(--danger); font-size: 13px; margin: 2px 0 8px; }
+.timer-low { color: var(--danger); }
 @media (min-width: 640px) {
   .modal-backdrop { align-items: center; padding: 24px; }
   .modal { border-radius: 22px; padding-bottom: 24px; }
