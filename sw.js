@@ -1,6 +1,6 @@
 /* TestRecall service worker — caches the app shell and the pdf.js CDN files
    so the app works offline after the first visit. No build step. */
-const CACHE_NAME = 'testrecall-v21';
+const CACHE_NAME = 'testrecall-v22';
 
 const APP_SHELL = [
   './',

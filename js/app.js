@@ -637,12 +637,28 @@
       setId: opts.setId || null, title: opts.title || (set && set.title), items: items, pos: 0,
       picked: {}, flagged: {}, startedAt: Date.now(), elapsed: 0, timerId: null,
       timeLimit: opts.timeLimit || null, mode: opts.mode || 'exam',
-      isMissedReview: !!opts.isMissedReview, saveAttempt: !opts.isMissedReview,
+      isMissedReview: !!opts.isMissedReview, saveAttempt: !opts.isMissedReview, submitted: false,
     };
     $('quiz-title').textContent = quiz.title;
+    startTimer();
+    renderQuestion();
+    show('quiz');
+  }
+
+  /* One timer for a fresh quiz and a resumed one: elapsed is always
+     recomputed from startedAt, so a resumed session keeps its real
+     elapsed time and a timed one keeps its original deadline. */
+  function startTimer() {
     var timerEl = $('quiz-timer');
     timerEl.classList.remove('timer-low');
-    timerEl.textContent = quiz.timeLimit ? fmtTime(quiz.timeLimit) : '00:00';
+    quiz.elapsed = Math.floor((Date.now() - quiz.startedAt) / 1000);
+    if (quiz.timeLimit) {
+      timerEl.textContent = fmtTime(Math.max(0, quiz.timeLimit - quiz.elapsed));
+      timerEl.classList.toggle('timer-low', quiz.timeLimit - quiz.elapsed <= 60);
+    } else {
+      timerEl.textContent = fmtTime(quiz.elapsed);
+    }
+    if (quiz.timerId) clearInterval(quiz.timerId);
     quiz.timerId = setInterval(function () {
       quiz.elapsed = Math.floor((Date.now() - quiz.startedAt) / 1000);
       if (quiz.timeLimit) {
@@ -654,8 +670,6 @@
         timerEl.textContent = fmtTime(quiz.elapsed);
       }
     }, 1000);
-    renderQuestion();
-    show('quiz');
   }
 
   function endOnTimeout() {
@@ -665,6 +679,93 @@
     $('confirm-modal').classList.add('hidden');
     submitQuiz();
     showToast("Time's up — your answers were submitted.", false);
+  }
+
+  /* ---------- resume an interrupted quiz ----------
+     The quiz used to live only in the page's memory, so when Android
+     reloaded the page mid-quiz the session was gone. The in-progress
+     quiz is now autosaved to localStorage on every change (and on
+     pagehide), including the shuffled question/option order, so a
+     resume rebuilds the exact same session. */
+  var IN_PROGRESS_KEY = 'testrecall.inProgress';
+  var pendingResume = null; // saved session shown in the resume modal
+  function saveInProgress() {
+    if (!quiz || quiz.submitted) return;
+    try {
+      localStorage.setItem(IN_PROGRESS_KEY, JSON.stringify({
+        setId: quiz.setId, title: quiz.title, items: quiz.items, pos: quiz.pos,
+        picked: quiz.picked, flagged: quiz.flagged, startedAt: quiz.startedAt,
+        timeLimit: quiz.timeLimit,
+        deadline: quiz.timeLimit ? quiz.startedAt + quiz.timeLimit * 1000 : null,
+        mode: quiz.mode, isMissedReview: quiz.isMissedReview, saveAttempt: quiz.saveAttempt,
+      }));
+    } catch (e) { /* storage full/blocked: resume just won't be offered */ }
+  }
+  function clearInProgress() {
+    try { localStorage.removeItem(IN_PROGRESS_KEY); } catch (e) {}
+  }
+  function loadInProgress() {
+    try {
+      var s = JSON.parse(localStorage.getItem(IN_PROGRESS_KEY) || 'null');
+      if (s && s.items && s.items.length) return s;
+    } catch (e) {}
+    return null;
+  }
+  function buildQuizFromSaved(saved) {
+    if (quiz && quiz.timerId) clearInterval(quiz.timerId);
+    quiz = {
+      setId: saved.setId, title: saved.title, items: saved.items, pos: saved.pos,
+      picked: saved.picked || {}, flagged: saved.flagged || {},
+      startedAt: saved.startedAt, elapsed: 0, timerId: null,
+      timeLimit: saved.timeLimit || null, mode: saved.mode || 'exam',
+      isMissedReview: !!saved.isMissedReview,
+      saveAttempt: saved.saveAttempt !== false, submitted: false,
+    };
+    $('quiz-title').textContent = quiz.title;
+  }
+  function resumeQuiz(saved) {
+    // Guard against the deadline passing between the modal and the tap.
+    if (saved.timeLimit && saved.deadline && Date.now() >= saved.deadline) {
+      buildQuizFromSaved(saved);
+      endOnTimeout();
+      return;
+    }
+    buildQuizFromSaved(saved);
+    startTimer();
+    renderQuestion();
+    show('quiz');
+  }
+  function showResumeModal(saved) {
+    $('resume-set').textContent = saved.title;
+    var bits = ['Question ' + (saved.pos + 1) + ' of ' + saved.items.length,
+      saved.mode === 'instant' ? 'Instant marking' : 'Exam simulation'];
+    if (saved.timeLimit && saved.deadline) {
+      var left = Math.max(0, Math.round((saved.deadline - Date.now()) / 1000));
+      bits.push(fmtTime(left) + ' remaining');
+    }
+    $('resume-detail').textContent = bits.join(' · ');
+    pendingResume = saved;
+    $('resume-modal').classList.remove('hidden');
+  }
+  function closeResumeModal() {
+    $('resume-modal').classList.add('hidden');
+    pendingResume = null;
+  }
+  function maybeShowResume() {
+    var saved = loadInProgress();
+    if (!saved) return;
+    if (!saved.isMissedReview && !getSet(saved.setId)) {
+      // The set was deleted meanwhile: drop the session quietly.
+      clearInProgress();
+      return;
+    }
+    if (saved.timeLimit && saved.deadline && Date.now() >= saved.deadline) {
+      // Ran out of time while away: submit through the timeout path.
+      buildQuizFromSaved(saved);
+      endOnTimeout();
+      return;
+    }
+    showResumeModal(saved);
   }
 
   /* ---------- start choice: mode + timer, one popup before each session ---------- */
@@ -777,6 +878,7 @@
     $('quiz-prev').disabled = quiz.pos === 0;
     $('quiz-next').textContent = quiz.pos === quiz.items.length - 1 ? 'Finish' : 'Next';
     renderGrid();
+    saveInProgress();
   }
 
   function renderGrid() {
@@ -816,6 +918,8 @@
   }
 
   function submitQuiz() {
+    quiz.submitted = true;
+    clearInProgress();
     var result = grade();
     clearInterval(quiz.timerId);
     var seconds = Math.floor((Date.now() - quiz.startedAt) / 1000);
@@ -1351,6 +1455,13 @@
     /* ---------- offline / online toast ---------- */
     window.addEventListener('offline', function () { showToast("You're offline — your saved sets still work.", true); });
     window.addEventListener('online', function () { showToast('Back online.', false); });
+    /* Safety net for a reload or a switch away mid-quiz: the autosave
+       in renderQuestion already covers every tap, this catches a
+       page that dies between renders. */
+    window.addEventListener('pagehide', saveInProgress);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) saveInProgress();
+    });
     if (!navigator.onLine) showToast("You're offline — your saved sets still work.", true);
 
     on('btn-add-fab', 'click', function () { openAddModal(null); });
@@ -1362,6 +1473,7 @@
       else if (!$('add-modal').classList.contains('hidden')) closeAddModal();
       else if (!$('guide-modal').classList.contains('hidden')) closeGuideModal();
       else if (!$('start-modal').classList.contains('hidden')) closeStartModal();
+      else if (!$('resume-modal').classList.contains('hidden')) closeResumeModal();
       else if (!$('grid-backdrop').classList.contains('hidden')) $('grid-backdrop').classList.add('hidden');
       else if (!$('confirm-modal').classList.contains('hidden')) closeConfirm();
     });
@@ -1442,14 +1554,16 @@
     on('quiz-exit', 'click', function () {
       askConfirm({
         title: 'Leave this attempt?',
-        text: 'Your answers so far will not be saved.',
+        text: 'Your progress is saved — you can pick up where you left off.',
         cancelLabel: 'Stay',
         confirmLabel: 'Leave',
         onConfirm: function () {
           clearInterval(quiz.timerId);
+          saveInProgress();
           quiz = null;
           renderHome();
           show('home');
+          maybeShowResume();
         },
       });
     });
@@ -1491,6 +1605,19 @@
     on('start-close', 'click', closeStartModal);
     on('start-modal', 'click', function (ev) { if (ev.target === $('start-modal')) closeStartModal(); });
 
+    /* ---------- resume an interrupted quiz ---------- */
+    on('resume-close', 'click', closeResumeModal);
+    on('resume-discard', 'click', function () {
+      clearInProgress();
+      closeResumeModal();
+    });
+    on('resume-go', 'click', function () {
+      var saved = pendingResume;
+      closeResumeModal();
+      if (saved) resumeQuiz(saved);
+    });
+    on('resume-modal', 'click', function (ev) { if (ev.target === $('resume-modal')) closeResumeModal(); });
+
     document.querySelectorAll('#review-filter button').forEach(function (b) {
       b.addEventListener('click', function () { setReviewFilter(b.getAttribute('data-filter')); });
     });
@@ -1516,7 +1643,10 @@
       });
     }
 
-    loadBuiltin().then(renderHome);
+    loadBuiltin().then(function () {
+      renderHome();
+      maybeShowResume();
+    });
     show('home');
   }
 
