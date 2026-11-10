@@ -122,12 +122,22 @@
   function allSets() {
     var hidden = state.hiddenStarters || [];
     var list = BUILTIN.filter(function (meta) { return hidden.indexOf(meta.id) === -1; }).map(function (meta) {
+      var ov = state.sets[meta.id];
+      if (ov) {
+        // An edited starter set: the stored copy overrides the baked-in
+        // title and questions (the files in the repo stay untouched).
+        return {
+          id: meta.id, title: ov.title, desc: meta.desc, course: ov.course || meta.course,
+          questions: ov.questions, builtin: true,
+        };
+      }
       return {
         id: meta.id, title: meta.title, desc: meta.desc, course: meta.course,
         questions: builtinData[meta.id] || null, builtin: true,
       };
     });
     Object.keys(state.sets).forEach(function (id) {
+      if (BUILTIN.some(function (m) { return m.id === id; })) return; // builtin override, listed above
       var s = state.sets[id];
       list.push({ id: id, title: s.title, desc: s.questions.length + ' questions · added ' + fmtDate(s.createdAt), course: s.course || 'PHM 201', questions: s.questions, builtin: false });
     });
@@ -392,7 +402,17 @@
     var card = el('div', 'set-card');
     var head = el('div', 'set-head');
     head.appendChild(el('div', 'set-title', set.title));
-    var del = el('button', 'set-del');
+    var actions = el('div', 'set-actions');
+    var edit = el('button', 'set-icon-btn set-edit');
+    edit.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>';
+    edit.title = 'Edit this set';
+    edit.setAttribute('aria-label', 'Edit ' + set.title);
+    edit.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      openEditModal(set);
+    });
+    actions.appendChild(edit);
+    var del = el('button', 'set-icon-btn set-del');
     del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
     del.title = 'Delete this set';
     del.setAttribute('aria-label', 'Delete ' + set.title);
@@ -406,7 +426,8 @@
         onConfirm: function () { deleteSet(set.id); },
       });
     });
-    head.appendChild(del);
+    actions.appendChild(del);
+    head.appendChild(actions);
     card.appendChild(head);
     // Subtitle: just the question count, like the preview.
     card.appendChild(el('div', 'set-desc', set.questions ? set.questions.length + ' questions' : set.desc));
@@ -1000,12 +1021,22 @@
   /* ---------- add a set: PDF + paste ---------- */
   var pendingImport = null; // {title, questions, warnings}
 
+  /* ---------- import review + edit a set ----------
+     Both use the same review panel: an editable title, the question
+     list with per-question answer dropdowns and a remove button.
+     Import mode saves a new set; edit mode writes back to the set
+     being edited (title, answers, removals). */
+  var editSetId = null; // set id being edited, if the panel is in edit mode
+
   function openAddModal(course) {
     addCourse = course || null;
+    editSetId = null;
     setAddTab('pdf');
     $('modal-add-panel').classList.remove('hidden');
     $('modal-review-panel').classList.add('hidden');
     $('add-modal-title').textContent = 'Add a set';
+    $('review-course-row').classList.remove('hidden');
+    $('btn-review-save').textContent = 'Save set';
     $('pdf-status').textContent = '';
     $('paste-status').textContent = '';
     $('add-modal').classList.remove('hidden');
@@ -1013,15 +1044,17 @@
   function closeAddModal() {
     $('add-modal').classList.add('hidden');
     pendingImport = null;
+    editSetId = null;
     addCourse = null;
   }
-  function showReviewPanel() {
+  function showReviewPanel(title) {
     $('modal-add-panel').classList.add('hidden');
     $('modal-review-panel').classList.remove('hidden');
-    $('add-modal-title').textContent = 'Check this set';
+    $('add-modal-title').textContent = title || 'Check this set';
   }
   function showAddPanel() {
     pendingImport = null;
+    editSetId = null;
     $('modal-review-panel').classList.add('hidden');
     $('modal-add-panel').classList.remove('hidden');
     $('add-modal-title').textContent = 'Add a set';
@@ -1061,7 +1094,7 @@
         status.className = 'status error';
         return;
       }
-      openReview(file.name.replace(/\.pdf$/i, ''), parsed, file.name);
+      openReview(cleanSetTitle(file.name), parsed, file.name);
       status.textContent = '';
     } catch (e) {
       console.error(e);
@@ -1069,6 +1102,22 @@
         ' Try saving the PDF to your phone (e.g. Downloads) and picking it from there.';
       status.className = 'status error';
     }
+  }
+
+  /* Turn a raw file name into a readable set title: underscores and
+     hyphens become spaces, the .pdf extension and a trailing "Exam
+     MCQs" / "MCQs" go away, and a leading course code ("PHM 201 ",
+     "PCG201 ") is dropped — the course is already shown by the folder.
+     E.g. "PHM_201_Fungi_and_Molds_108_Exam_MCQs" → "Fungi and Molds 108". */
+  function cleanSetTitle(name) {
+    var t = String(name || '').replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+    t = t.replace(/\s+pdf$/i, '').trim();
+    t = t.replace(/\s+(exam\s+)?mcqs?$/i, '').trim();
+    t = t.replace(/\s+exam$/i, '').trim();
+    t = t.replace(/^[A-Z]{2,4}\s*\d{3}\s+/i, '').trim();
+    t = t.replace(/^(PHM|PCH|PCT|PIO|PCG)\s+/i, '').trim();
+    t = t.replace(/^\d{3}L\s+/i, '').trim();
+    return t || String(name || '').replace(/\.pdf$/i, '').trim() || 'Untitled set';
   }
 
   function handlePasteText() {
@@ -1196,6 +1245,63 @@
     openCourse(course);
   }
 
+  /* Edit a set already in the app: the review panel opens with a deep
+     copy of its questions. Saving writes the title, any answer fixes
+     and any removals back to the stored set. For a baked-in starter
+     set the edited copy is stored as an override in state.sets (the
+     files in the repo stay untouched); deleting that starter still
+     only hides it, and restoring it brings the edited copy back. */
+  function openEditModal(set) {
+    if (!set || !set.questions) {
+      showToast('This set is still loading — try again in a moment.', false);
+      return;
+    }
+    editSetId = set.id;
+    pendingImport = {
+      title: set.title,
+      sourceFile: null,
+      questions: set.questions.map(function (q) {
+        return { n: q.n, q: q.q, options: q.options.slice(), answer: q.answer };
+      }),
+      warnings: [],
+    };
+    populateCourseSelect();
+    $('review-title').value = set.title;
+    $('review-meta').textContent = pendingImport.questions.length + ' questions';
+    $('review-warnings').innerHTML = '';
+    $('review-samples').innerHTML = '';
+    $('review-course-row').classList.add('hidden');
+    $('btn-review-save').textContent = 'Save changes';
+    renderReviewList();
+    showReviewPanel('Edit set');
+    $('add-modal').classList.remove('hidden');
+  }
+
+  function saveEdit() {
+    var title = $('review-title').value.trim();
+    if (!title) { alert('Give the set a title first.'); return; }
+    if (!pendingImport.questions.length) { alert('The set has no questions left.'); return; }
+    var missing = pendingImport.questions.filter(function (q) { return !q.answer; });
+    if (missing.length) {
+      alert('Set an answer for every question first — ' + missing.length + ' still missing (question ' + missing[0].n + ').');
+      return;
+    }
+    var set = getSet(editSetId);
+    var entry = state.sets[editSetId] || {};
+    entry.title = title;
+    entry.questions = pendingImport.questions;
+    entry.course = (set && set.course) || entry.course || 'PHM 201';
+    entry.createdAt = entry.createdAt || Date.now();
+    state.sets[editSetId] = entry;
+    saveState();
+    editSetId = null;
+    pendingImport = null;
+    closeAddModal();
+    renderHome();
+    if (currentCourse) renderCourse(currentCourse);
+    showToast('Set updated', false);
+  }
+
   /* ---------- wire up ---------- */
   function init() {
     /* ---------- theme ---------- */
@@ -1304,8 +1410,8 @@
     on('review-course', 'change', function () {
       $('review-course-new').classList.toggle('hidden', $('review-course').value !== '__new');
     });
-    on('btn-review-cancel', 'click', showAddPanel);
-    on('btn-review-save', 'click', saveImport);
+    on('btn-review-cancel', 'click', function () { if (editSetId) closeAddModal(); else showAddPanel(); });
+    on('btn-review-save', 'click', function () { if (editSetId) saveEdit(); else saveImport(); });
 
     on('quiz-flag', 'click', function () {
       quiz.flagged[quiz.pos] = !quiz.flagged[quiz.pos];

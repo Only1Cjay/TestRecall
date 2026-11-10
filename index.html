@@ -232,17 +232,19 @@
 
       <div id="modal-review-panel" class="hidden">
         <p class="sub">Look it over before saving. Fix any wrong answer, or remove a bad question.</p>
-        <label for="review-title">Set title</label>
+        <label for="review-title">Set title — tap to edit</label>
         <input type="text" id="review-title" style="margin: 6px 0 10px;">
-        <label for="review-course">Course</label>
-        <select id="review-course"></select>
-        <input type="text" id="review-course-new" class="hidden" placeholder="New course name, e.g. PCH 201" style="margin: 6px 0 10px;">
+        <div id="review-course-row">
+          <label for="review-course">Course</label>
+          <select id="review-course"></select>
+          <input type="text" id="review-course-new" class="hidden" placeholder="New course name, e.g. PCH 201" style="margin: 6px 0 10px;">
+        </div>
         <p class="sub" id="review-meta"></p>
         <div id="review-warnings"></div>
         <div id="review-samples"></div>
         <h2 style="font-size: 17px;">All questions</h2>
         <div id="review-list"></div>
-        <div class="btn-row">
+        <div class="btn-row sticky-actions">
           <button class="btn ghost" id="btn-review-cancel">Cancel</button>
           <button class="btn primary" id="btn-review-save">Save set</button>
         </div>
