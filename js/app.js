@@ -4,6 +4,9 @@
   'use strict';
 
   var LS_KEY = 'testrecall.v1';
+  /* Shown in Settings → About, so Cjay can tell which version his phone
+     is running. Keep in step with the service worker CACHE_NAME. */
+  var APP_VERSION = '23';
   var PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 
   var BUILTIN = [
@@ -1412,6 +1415,9 @@
     var savedTheme = 'light';
     try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
     applyTheme(savedTheme);
+    /* Version label in Settings → About, rendered from the constant. */
+    var verEl = $('app-version');
+    if (verEl) verEl.textContent = 'Version ' + APP_VERSION;
     on('theme-toggle', 'click', toggleTheme);
     on('settings-theme', 'click', toggleTheme);
 

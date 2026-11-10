@@ -1,6 +1,6 @@
 /* TestRecall service worker — caches the app shell and the pdf.js CDN files
    so the app works offline after the first visit. No build step. */
-const CACHE_NAME = 'testrecall-v22';
+const CACHE_NAME = 'testrecall-v23';
 
 const APP_SHELL = [
   './',
@@ -48,16 +48,29 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  if (url.origin === self.location.origin) {
+    // App shell (navigation, index.html, css/js, data/*.json, manifest,
+    // icon): network first, so a new push reaches the phone on the very
+    // next load instead of serving the old cached shell. The cache is
+    // only the fallback, so offline use still works.
+    event.respondWith(
+      fetch(event.request).then((res) => {
+        if (res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
+        return res;
+      }).catch(() => caches.match(event.request, { ignoreSearch: true }))
+    );
+    return;
+  }
+  // pdf.js CDN files: cache first — large and rarely changes.
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
+    caches.match(event.request).then((cached) => {
       if (cached) return cached;
       return fetch(event.request).then((res) => {
-        // Cache successful same-origin and pdf.js CDN responses for later.
-        const url = new URL(event.request.url);
-        const cacheable =
-          (url.origin === self.location.origin || url.hostname === 'cdnjs.cloudflare.com') &&
-          (res.ok || res.type === 'opaque');
-        if (cacheable) {
+        if (res.ok || res.type === 'opaque') {
           const copy = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         }
