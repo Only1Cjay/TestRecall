@@ -6,7 +6,7 @@
   var LS_KEY = 'testrecall.v1';
   /* Shown in Settings → About, so Cjay can tell which version his phone
      is running. Keep in step with the service worker CACHE_NAME. */
-  var APP_VERSION = '23';
+  var APP_VERSION = '24';
   var PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 
   var BUILTIN = [

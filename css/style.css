@@ -1,5 +1,5 @@
 /* TestRecall — Ocean Blue on a soft blue background, minimalist like the
-   theme-picker preview. Light-first with a dark toggle, Sora + Inter.
+   theme-picker preview. Light-first with a dark toggle, Fraunces + Plus Jakarta Sans.
    Mobile-first, no framework. Tokens follow the user's other apps:
    tinted background, white cards, layered soft shadows, 22px radii. */
 :root,
@@ -30,8 +30,8 @@ html[data-theme="light"] {
   --overlay: rgba(13, 25, 45, 0.55);
   --radius: 22px;
   --radius-sm: 14px;
-  --font-head: 'Sora', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-head: 'Fraunces', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 html[data-theme="dark"] {
