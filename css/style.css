@@ -1,5 +1,5 @@
 /* TestRecall — Ocean Blue on a soft blue background, minimalist like the
-   theme-picker preview. Light-first with a dark toggle, Fraunces + Plus Jakarta Sans.
+   theme-picker preview. Light-first with a dark toggle, Plus Jakarta Sans throughout.
    Mobile-first, no framework. Tokens follow the user's other apps:
    tinted background, white cards, layered soft shadows, 22px radii. */
 :root,
@@ -30,7 +30,7 @@ html[data-theme="light"] {
   --overlay: rgba(13, 25, 45, 0.55);
   --radius: 22px;
   --radius-sm: 14px;
-  --font-head: 'Fraunces', Georgia, serif;
+  --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
