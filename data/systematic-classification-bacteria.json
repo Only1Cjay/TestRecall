@@ -269,9 +269,9 @@
   "q": "What shape is a coccobacillus?",
   "options": [
    "Ovoid, between coccus and bacillus",
-   "Spherical",
-   "Rod-shaped",
-   "Comma-shaped"
+   "Perfectly spherical, like a coccus",
+   "Long and rod-shaped, like a bacillus",
+   "Curved and comma-shaped, like a vibrio"
   ],
   "answer": "A"
  },
@@ -424,9 +424,9 @@
   "topic": "C",
   "q": "How does a bacterial cell detect a change in chemical concentration?",
   "options": [
-   "By its capsule",
-   "By its cell wall thickness",
-   "By its endospores",
+   "By its capsule, which senses chemicals",
+   "By changes in its cell wall thickness",
+   "By its endospores, which detect chemicals",
    "By receptors in the cell envelope"
   ],
   "answer": "D"
@@ -448,10 +448,10 @@
   "topic": "G",
   "q": "Which statement about facultative anaerobes is correct?",
   "options": [
-   "They die on exposure to oxygen",
-   "They are ordinarily aerobic but can grow without oxygen, though less abundantly",
-   "They require 5-10% carbon dioxide",
-   "They grow best at low oxygen tension"
+   "They die on exposure to oxygen, like strict anaerobes",
+   "They are ordinarily aerobic but can grow without oxygen",
+   "They require 5-10% carbon dioxide to grow",
+   "They grow best at low oxygen tension, like microaerophiles"
   ],
   "answer": "B"
  },
@@ -604,10 +604,10 @@
   "topic": "N",
   "q": "When may Escherichia coli be abbreviated to E. coli?",
   "options": [
-   "Always, from the first mention",
+   "Always, from the first mention in any text",
    "Only when the full genus name has been mentioned earlier",
-   "Only in handwritten notes",
-   "Never; abbreviations are not allowed"
+   "Only in handwritten notes, never in print",
+   "Never; abbreviations are not allowed in science"
   ],
   "answer": "B"
  },
@@ -616,10 +616,10 @@
   "topic": "S",
   "q": "Where does the largest bacterium, Epulopiscium fishelsoni, live?",
   "options": [
-   "In hot springs",
+   "In hot springs, at very high temperatures",
    "In the gut of the surgeonfish Acanthurus nigrofuscus",
-   "In soil",
-   "In the human gut"
+   "In soil, among the roots of plants",
+   "In the human gut, as normal flora"
   ],
   "answer": "B"
  },
@@ -628,10 +628,10 @@
   "topic": "M",
   "q": "Pleomorphism is a change in bacterial shape that:",
   "options": [
-   "Varies quickly from cell to cell and can be induced by temperature or physical or chemical stimulus",
-   "Is permanent and inherited",
-   "Occurs only in spore-formers",
-   "Occurs only at pH 2-4"
+   "Varies from cell to cell and is induced by the environment",
+   "Is permanent and inherited by daughter cells",
+   "Occurs only in spore-forming bacteria",
+   "Occurs only at pH 2-4, in acid conditions"
   ],
   "answer": "A"
  },
@@ -653,9 +653,9 @@
   "q": "What does lophotrichous mean?",
   "options": [
    "Two or more flagella at one end",
-   "One flagellum at one end",
-   "Flagella at both ends",
-   "No flagella"
+   "One flagellum at one end of the cell",
+   "Flagella at both ends of the cell",
+   "No flagella at all on the cell"
   ],
   "answer": "A"
  },
@@ -700,9 +700,9 @@
   "topic": "T",
   "q": "Thermophilic bacteria occur mostly in:",
   "options": [
-   "The human gut",
-   "Cold seawater",
-   "Acidic mine water",
+   "In the human gut of mammals",
+   "In cold seawater, near the poles",
+   "In acidic mine water, at low pH",
    "Compost and hot springs"
   ],
   "answer": "D"
