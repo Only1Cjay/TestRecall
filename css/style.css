@@ -498,6 +498,19 @@ html[data-theme="dark"] .pill.starter { color: var(--accent); }
   font-weight: 600;
   cursor: pointer;
 }
+.grid-num.answered {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: #FFFFFF;
+}
+.grid-num.flagged {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 2px var(--amber);
+}
+.grid-num.current {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
 .grid-panel .btn-row { flex: 0 0 auto; margin-top: 12px; }
 
 /* ---------- results ---------- */
