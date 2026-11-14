@@ -6,7 +6,7 @@
   var LS_KEY = 'testrecall.v1';
   /* Shown in Settings → About, so Cjay can tell which version his phone
      is running. Keep in step with the service worker CACHE_NAME. */
-  var APP_VERSION = '27';
+  var APP_VERSION = '28';
   var PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 
   var BUILTIN = [
@@ -91,17 +91,42 @@
     return new Date(ts).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
   }
 
-  /* ---------- screens ---------- */
+  /* ---------- screens ----------
+     The phone back button only knows browser history, and the app used
+     to never touch it — every screen was just a hidden div on one page,
+     so Back exited the app. show() now records each real screen change
+     in history: push for course/quiz/settings, replace for home (so the
+     stack never grows on the way home) and for results (so Back from
+     results goes to the course, never back into a submitted quiz).
+     popstate (in init) walks the stack back. v28. */
   var screens = ['home', 'course', 'quiz', 'results', 'settings'];
   var currentCourse = null; // course open on the course screen, if any
   var homeQuery = '';
   var courseQuery = '';
   var addCourse = null; // course preselected when the add modal was opened
-  function show(name) {
+  var currentScreen = ''; // '' until the first show(), so it records home
+  function show(name, nav) {
+    if (name !== 'quiz' && currentScreen === 'quiz' && quiz && !quiz.submitted) {
+      // Leaving a quiz: stop its timer and autosave, so it cannot time
+      // out while on another screen. Returning restarts the timer from
+      // startedAt, so a timed quiz keeps its real deadline.
+      clearInterval(quiz.timerId);
+      quiz.timerId = null;
+      saveInProgress();
+    }
+    if (nav !== false && name !== currentScreen) {
+      var state = { screen: name, course: name === 'course' ? currentCourse : null };
+      try {
+        if (name === 'home' || name === 'results') history.replaceState(state, '');
+        else history.pushState(state, '');
+      } catch (e) { /* history unavailable: screens still work, Back exits */ }
+    }
+    currentScreen = name;
     screens.forEach(function (s) { $('screen-' + s).classList.toggle('hidden', s !== name); });
     var fab = $('btn-add-fab');
     if (fab) fab.classList.toggle('hidden', name !== 'home');
     window.scrollTo(0, 0);
+    if (name === 'quiz' && quiz && !quiz.submitted) startTimer();
   }
 
   /* ---------- sets ---------- */
@@ -1482,6 +1507,34 @@
       else if (!$('resume-modal').classList.contains('hidden')) closeResumeModal();
       else if (!$('grid-backdrop').classList.contains('hidden')) $('grid-backdrop').classList.add('hidden');
       else if (!$('confirm-modal').classList.contains('hidden')) closeConfirm();
+    });
+    /* Phone back button: walk the history show() recorded. If a modal
+       is open, Back closes that modal first and stays on the screen —
+       the popped entry is restored so the next Back still goes to the
+       previous screen. */
+    function closeTopModal() {
+      if (!$('course-modal').classList.contains('hidden')) { closeCourseModal(); return true; }
+      if (!$('add-modal').classList.contains('hidden')) { closeAddModal(); return true; }
+      if (!$('guide-modal').classList.contains('hidden')) { closeGuideModal(); return true; }
+      if (!$('start-modal').classList.contains('hidden')) { closeStartModal(); return true; }
+      if (!$('resume-modal').classList.contains('hidden')) { closeResumeModal(); return true; }
+      if (!$('grid-backdrop').classList.contains('hidden')) { $('grid-backdrop').classList.add('hidden'); return true; }
+      if (!$('confirm-modal').classList.contains('hidden')) { closeConfirm(); return true; }
+      return false;
+    }
+    window.addEventListener('popstate', function (ev) {
+      if (closeTopModal()) {
+        // Stay on this screen: put back the history entry Back just popped.
+        try { history.pushState({ screen: currentScreen, course: currentScreen === 'course' ? currentCourse : null }, ''); } catch (e) {}
+        return;
+      }
+      var st = ev.state;
+      if (!st || !st.screen || screens.indexOf(st.screen) === -1) return;
+      if (st.screen === 'course' && st.course) renderCourse(st.course);
+      else if (st.screen === 'course') { renderHome(); show('home', false); return; }
+      else if (st.screen === 'home') renderHome();
+      else if (st.screen === 'quiz' && !quiz) { renderHome(); show('home', false); return; }
+      show(st.screen, false);
     });
     on('tab-pdf', 'click', function () { setAddTab('pdf'); });
     on('tab-paste', 'click', function () { setAddTab('paste'); });
